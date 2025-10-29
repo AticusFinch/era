@@ -6,7 +6,7 @@ import Link from "next/link";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Button from "@/app/components/button";
 import { RxCross1 } from "react-icons/rx";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import Container from "@/app/components/container";
 import { RxChevronRight } from "react-icons/rx";
 
@@ -75,7 +75,7 @@ const Navbar = () => {
   }, [isOpen]);
 
   // Measure navbar height and expose as CSS variable for remaining-height menu
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = navRef.current;
     if (!element) return;
 
@@ -84,6 +84,7 @@ const Navbar = () => {
       document.documentElement.style.setProperty("--nav-h", `${rect.height}px`);
     };
 
+    // Set initial height synchronously before paint
     setNavHeightVar();
 
     const ro = new ResizeObserver(setNavHeightVar);
@@ -101,7 +102,13 @@ const Navbar = () => {
       <Container>
         <div className={styles.navbar_container}>
           <Link href="/" className={styles.navbar_logo}>
-            <Image src="/logo/era@3x.png" alt="logo" width={100} height={100} />
+            <Image
+              src="/logo/era@3x.png"
+              alt="logo"
+              width={100}
+              height={100}
+              priority
+            />
           </Link>
           <div className={styles.navbar_hamburger} onClick={toggleMenu}>
             <AnimatePresence mode="wait">
