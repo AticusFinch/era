@@ -104,7 +104,7 @@ const Navbar = () => {
           <Link href="/" className={styles.navbar_logo}>
             <Image
               src="/logo/era@3x.png"
-              alt="logo"
+              alt="ERA logo"
               width={302}
               height={97}
               priority

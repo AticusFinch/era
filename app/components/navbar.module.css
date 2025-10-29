@@ -330,6 +330,18 @@
     position: relative;
   }
 
+  /* Invisible bridge to maintain hover state through the gap */
+  .navbar_link_container::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 0.5rem;
+    background: transparent;
+    z-index: 1002;
+  }
+
   .navbar_dropdown {
     position: absolute;
     top: 100%;
@@ -351,7 +363,10 @@
     z-index: 1003;
   }
 
-  .navbar_link_container:hover .navbar_dropdown {
+  /* Keep dropdown visible when hovering over container, bridge, or dropdown */
+  .navbar_link_container:hover .navbar_dropdown,
+  .navbar_link_container:hover::after,
+  .navbar_dropdown:hover {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
