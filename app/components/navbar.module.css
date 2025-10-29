@@ -350,6 +350,12 @@
     z-index: 1003;
   }
 
+  .navbar_link_container:hover .navbar_dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
   .navbar_dropdown::before {
     content: "";
     position: absolute;
@@ -360,12 +366,6 @@
     border-left: 8px solid transparent;
     border-right: 8px solid transparent;
     border-bottom: 8px solid var(--color-font-primary);
-  }
-
-  .navbar_link_container:hover .navbar_dropdown {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
   }
 
   .navbar_dropdown a {
