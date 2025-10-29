@@ -80,19 +80,12 @@ const Navbar = () => {
     if (!element) return;
 
     const setNavHeightVar = () => {
-      // Force a reflow to ensure layout is calculated
-      void element.offsetHeight;
       const rect = element.getBoundingClientRect();
       document.documentElement.style.setProperty("--nav-h", `${rect.height}px`);
     };
 
     // Set initial height synchronously before paint
     setNavHeightVar();
-
-    // Set again after a microtask to catch any async layout changes
-    Promise.resolve().then(() => {
-      setNavHeightVar();
-    });
 
     const ro = new ResizeObserver(setNavHeightVar);
     ro.observe(element);
@@ -112,8 +105,8 @@ const Navbar = () => {
             <Image
               src="/logo/era@3x.png"
               alt="logo"
-              width={150}
-              height={150}
+              width={302}
+              height={97}
               priority
             />
           </Link>
