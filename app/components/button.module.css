@@ -1,0 +1,42 @@
+.button {
+  padding: 0.4rem 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  cursor: pointer;
+  border: 1px solid var(--color-primary);
+  transition: all 0.4s ease-in-out;
+  line-height: 1;
+  text-decoration: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button:hover {
+  box-shadow: 0 4px 12px rgba(63, 63, 63, 0.3);
+}
+
+@media (min-width: 1440px) {
+  .button {
+    padding: 0.6rem 1.2rem;
+  }
+}
+
+@media (min-width: 1600px) {
+}
+
+@media (min-width: 1920px) {
+  .button {
+    padding: 0.6rem 1.4rem;
+  }
+}
+
+@media (min-width: 2560px) {
+  .button {
+    padding: 0.6rem 1.6rem;
+  }
+}
