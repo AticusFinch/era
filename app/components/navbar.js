@@ -80,12 +80,19 @@ const Navbar = () => {
     if (!element) return;
 
     const setNavHeightVar = () => {
+      // Force a reflow to ensure layout is calculated
+      void element.offsetHeight;
       const rect = element.getBoundingClientRect();
       document.documentElement.style.setProperty("--nav-h", `${rect.height}px`);
     };
 
     // Set initial height synchronously before paint
     setNavHeightVar();
+
+    // Set again after a microtask to catch any async layout changes
+    Promise.resolve().then(() => {
+      setNavHeightVar();
+    });
 
     const ro = new ResizeObserver(setNavHeightVar);
     ro.observe(element);
