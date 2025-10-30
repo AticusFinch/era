@@ -113,6 +113,30 @@
   }
 }
 
+@media (min-width: 393px) {
+  .hero {
+    padding: 5.5rem 0;
+  }
+
+  .hero_title {
+    font-size: 2.1rem;
+  }
+
+  .hero_subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero_buttons {
+    gap: 0.8rem;
+    margin-top: 1.5rem;
+  }
+
+  .hero_button_member,
+  .hero_button_about {
+    font-size: 1rem;
+  }
+}
+
 @media (min-width: 402px) {
   .hero_content {
     gap: 0.8rem;
