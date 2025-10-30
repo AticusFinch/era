@@ -36,6 +36,7 @@ const Hero = () => {
                 alt="LGBTQIA+ Equality"
                 width={6000}
                 height={4000}
+                priority
               />
             </div>
           </div>
