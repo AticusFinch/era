@@ -2,11 +2,13 @@
   padding: 1rem 0;
   min-height: 64px;
   height: fit-content;
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   background-color: var(--color-background);
   z-index: 1001;
-  position: relative;
 }
 
 .navbar_container {
@@ -78,6 +80,7 @@
   flex-direction: column;
   align-items: left;
   gap: 1.5rem;
+  will-change: transform, opacity;
 }
 
 .navbar_mobile_link {
@@ -97,6 +100,7 @@
   font-weight: 500;
   transition: color 0.3s ease;
   text-align: left;
+  will-change: transform, opacity;
 }
 
 .navbar_mobile_links a:hover {
@@ -316,6 +320,7 @@
     text-decoration: none;
     color: var(--color-font-primary);
     transition: color 0.3s ease;
+    will-change: transform;
   }
 
   .navbar_links a:hover {
@@ -324,6 +329,7 @@
 
   .navbar_link_container {
     position: relative;
+    will-change: transform;
   }
 
   .navbar_link_container > a {

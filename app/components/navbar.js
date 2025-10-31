@@ -131,24 +131,47 @@ const Navbar = () => {
 
           {/* Desktop Menu */}
           <div className={styles.navbar_links}>
-            <div className={styles.navbar_link_container}>
+            <motion.div
+              className={styles.navbar_link_container}
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
               <Link href="/about-us">About Us</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/mission">Mission</Link>
                 <Link href="/team">Team</Link>
                 <Link href="/history">History</Link>
               </div>
-            </div>
-            <div className={styles.navbar_link_container}>
+            </motion.div>
+            <motion.div
+              className={styles.navbar_link_container}
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
               <Link href="/resources">Resources</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/resources/publications">Publications</Link>
                 <Link href="/resources/events">Documents</Link>
               </div>
-            </div>
-            <Link href="/trainings">Trainings</Link>
-            <Link href="/get-involved">Get Involved</Link>
-            <Link href="/contact">Contact</Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Link href="/trainings">Trainings</Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Link href="/get-involved">Get Involved</Link>
+            </motion.div>
+            <motion.div
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Link href="/contact">Contact</Link>
+            </motion.div>
           </div>
           <div className={styles.navbar_buttons}>
             <Button
@@ -182,7 +205,11 @@ const Navbar = () => {
             <Container>
               <div className={styles.navbar_mobile_content}>
                 <div className={styles.navbar_mobile_links}>
-                  <div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.1 }}
+                  >
                     <div className={styles.navbar_mobile_link}>
                       <Link href="/about-us">About Us</Link>
                       <motion.div
@@ -226,8 +253,12 @@ const Navbar = () => {
                         </div>
                       </motion.div>
                     )}
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.15 }}
+                  >
                     <div className={styles.navbar_mobile_link}>
                       <Link href="/resources" onClick={toggleMenu}>
                         Resources
@@ -272,22 +303,34 @@ const Navbar = () => {
                         </div>
                       </motion.div>
                     )}
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.2 }}
+                  >
                     <Link href="/trainings" onClick={toggleMenu}>
                       Trainings
                     </Link>
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                  >
                     <Link href="/get-involved" onClick={toggleMenu}>
                       Get Involved
                     </Link>
-                  </div>
-                  <div>
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.3 }}
+                  >
                     <Link href="/contact" onClick={toggleMenu}>
                       Contact
                     </Link>
-                  </div>
+                  </motion.div>
                 </div>
                 <div className={styles.navbar_mobile_buttons}>
                   <div>
