@@ -390,6 +390,18 @@
   }
 }
 
+@media (min-width: 1512px) {
+  .hero_title {
+    font-size: 3.6rem;
+  }
+}
+
+@media (min-width: 1512px) {
+  .hero_subtitle {
+    font-size: 1.6rem;
+  }
+}
+
 @media (min-width: 1920px) {
   .hero {
     padding: 14rem 0 8rem 0;

@@ -33,7 +33,7 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               Advancing{" "}
-              <span className={styles.hero_title_accent}>LGBTQIA+</span>{" "}
+              <span className={styles.hero_title_accent}>LGBTIQA+</span>{" "}
               Equality across the Western Balkans & Türkiye since 2015.
             </motion.h1>
             <motion.h2
@@ -42,7 +42,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              We connect, empower, and advocate for LGBQIA+ organizations to
+              We connect, empower, and advocate for LGBTIQA+ organizations to
               create a region where every person is free, safe, and equal.
             </motion.h2>
             <motion.div
