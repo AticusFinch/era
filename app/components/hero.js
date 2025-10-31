@@ -37,6 +37,10 @@ const Hero = () => {
                 width={6000}
                 height={4000}
                 priority
+                fetchPriority="high"
+                loading="eager"
+                sizes="(max-width: 1279px) 0vw, 40vw"
+                quality={90}
               />
             </div>
           </div>
