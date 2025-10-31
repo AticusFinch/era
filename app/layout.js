@@ -23,6 +23,12 @@ export default function RootLayout({ children }) {
           as="image"
           fetchPriority="high"
         />
+        <link
+          rel="preload"
+          href="/img/hero/hero-gradient.jpg"
+          as="image"
+          fetchPriority="high"
+        />
       </head>
       <body className={`${poppins.variable} antialiased`}>{children}</body>
     </html>

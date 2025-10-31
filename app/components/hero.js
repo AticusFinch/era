@@ -4,8 +4,23 @@ import Button from "@/app/components/button";
 import Container from "@/app/components/container";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const Hero = () => {
+  // Preload gradient image early
+  useEffect(() => {
+    const link = document.createElement("link");
+    link.rel = "preload";
+    link.as = "image";
+    link.href = "/img/hero/hero-gradient.jpg";
+    link.fetchPriority = "high";
+    document.head.appendChild(link);
+
+    // Also preload via Image API
+    const img = new window.Image();
+    img.src = "/img/hero/hero-gradient.jpg";
+  }, []);
+
   return (
     <div className={styles.hero}>
       <Container>
