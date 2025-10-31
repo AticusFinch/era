@@ -84,6 +84,23 @@
   color: var(--color-background);
 }
 
+.hero_title_accent {
+  position: relative;
+  display: inline-block;
+}
+
+.hero_title_accent::before {
+  content: "";
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  right: 0;
+  height: 0.3em;
+  background-color: var(--color-accent);
+  border-radius: 0.1em;
+  z-index: -1;
+}
+
 .hero_subtitle {
   font-size: 0.75rem;
   font-weight: 300;

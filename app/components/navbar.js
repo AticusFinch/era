@@ -132,7 +132,7 @@ const Navbar = () => {
           {/* Desktop Menu */}
           <div className={styles.navbar_links}>
             <div className={styles.navbar_link_container}>
-              <Link href="/">About Us</Link>
+              <Link href="/about-us">About Us</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/mission">Mission</Link>
                 <Link href="/team">Team</Link>
@@ -146,8 +146,8 @@ const Navbar = () => {
                 <Link href="/resources/events">Documents</Link>
               </div>
             </div>
-            <Link href="/about">Trainings</Link>
-            <Link href="/contact">Get Involved</Link>
+            <Link href="/trainings">Trainings</Link>
+            <Link href="/get-involved">Get Involved</Link>
             <Link href="/contact">Contact</Link>
           </div>
           <div className={styles.navbar_buttons}>
@@ -184,7 +184,7 @@ const Navbar = () => {
                 <div className={styles.navbar_mobile_links}>
                   <div>
                     <div className={styles.navbar_mobile_link}>
-                      <Link href="/">About Us</Link>
+                      <Link href="/about-us">About Us</Link>
                       <motion.div
                         onClick={toggleAboutDropdown}
                         initial={{ rotate: 0 }}
@@ -274,12 +274,12 @@ const Navbar = () => {
                     )}
                   </div>
                   <div>
-                    <Link href="/about" onClick={toggleMenu}>
+                    <Link href="/trainings" onClick={toggleMenu}>
                       Trainings
                     </Link>
                   </div>
                   <div>
-                    <Link href="/contact" onClick={toggleMenu}>
+                    <Link href="/get-involved" onClick={toggleMenu}>
                       Get Involved
                     </Link>
                   </div>

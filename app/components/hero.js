@@ -10,8 +10,9 @@ const Hero = () => {
         <div className={styles.hero_container}>
           <div className={styles.hero_content}>
             <h1 className={styles.hero_title}>
-              Advancing LGBTQIA+ Equality across the Western Balkans & Türkiye
-              since 2015.
+              Advancing{" "}
+              <span className={styles.hero_title_accent}>LGBTQIA+</span>{" "}
+              Equality across the Western Balkans & Türkiye since 2015.
             </h1>
             <h2 className={styles.hero_subtitle}>
               We connect, empower, and advocate for LGBQIA+ organizations to
