@@ -148,10 +148,10 @@ const Navbar = () => {
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <Link href="/resources">Resources</Link>
+              <Link href="/our-work">Our Work</Link>
               <div className={styles.navbar_dropdown}>
-                <Link href="/resources/publications">Publications</Link>
-                <Link href="/resources/events">Documents</Link>
+                <Link href="/our-work/projects">Projects</Link>
+                <Link href="/our-work/publications">Publications</Link>
               </div>
             </motion.div>
             <motion.div
@@ -260,8 +260,8 @@ const Navbar = () => {
                     transition={{ duration: 0.3, delay: 0.15 }}
                   >
                     <div className={styles.navbar_mobile_link}>
-                      <Link href="/resources" onClick={toggleMenu}>
-                        Resources
+                      <Link href="/our-work" onClick={toggleMenu}>
+                        Our Work
                       </Link>
                       <motion.div
                         onClick={toggleResourcesDropdown}
@@ -289,16 +289,16 @@ const Navbar = () => {
                         className={styles.navbar_mobile_dropdown}
                       >
                         <div>
-                          <Link
-                            href="/resources/publications"
-                            onClick={toggleMenu}
-                          >
-                            Publications
+                          <Link href="/our-work/projects" onClick={toggleMenu}>
+                            Projects
                           </Link>
                         </div>
                         <div>
-                          <Link href="/resources/events" onClick={toggleMenu}>
-                            Documents
+                          <Link
+                            href="/our-work/publications"
+                            onClick={toggleMenu}
+                          >
+                            Publications
                           </Link>
                         </div>
                       </motion.div>

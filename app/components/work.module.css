@@ -1,0 +1,159 @@
+.work {
+  padding: 2rem 0;
+  display: flex;
+}
+
+.work_images {
+  display: none;
+}
+
+.work_text {
+  margin-bottom: 1rem;
+}
+
+.work_links {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 0.75rem;
+  margin-top: 3rem;
+}
+
+.work_link {
+  background-color: var(--color-background);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+.work_link a {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  width: 100%;
+  text-decoration: none;
+  color: var(--color-font-primary);
+  font-size: 1rem;
+  font-weight: 800;
+  text-align: center;
+  position: relative;
+  display: inline-block;
+}
+
+.work_link_accent {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+
+.work_link_accent::before {
+  content: "";
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  right: 0;
+  height: 0.5em;
+  background-color: var(--color-accent);
+  border-radius: 0.1em;
+  z-index: -1;
+}
+
+.work_link_image {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--color-background);
+  background-color: var(--color-background);
+}
+
+.work_link_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 375px) {
+  .work {
+    padding: 2.5rem 0;
+  }
+
+  .work_link a {
+    font-size: 1.1rem;
+  }
+}
+
+@media (min-width: 412px) {
+  .work {
+    padding: 3rem 0;
+  }
+
+  .work_link a {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 430px) {
+  .work {
+    padding: 3.5rem 0;
+  }
+
+  .work_link a {
+    font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .work {
+    padding: 4rem 0;
+  }
+
+  .work_link a {
+    font-size: 1.4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .work {
+    padding: 4.5rem 0;
+  }
+}
+
+@media (min-width: 1280px) {
+  .work {
+    padding: 5rem 0;
+  }
+
+  .work_images {
+    display: block;
+  }
+}
+
+@media (min-width: 1440px) {
+  .work {
+    padding: 5.5rem 0;
+  }
+}
+
+@media (min-width: 1600px) {
+  .work {
+    padding: 6rem 0;
+  }
+}
+
+@media (min-width: 1920px) {
+  .work {
+    padding: 6.5rem 0;
+  }
+}
+
+@media (min-width: 2560px) {
+  .work {
+    padding: 7rem 0;
+  }
+}
