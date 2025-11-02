@@ -113,6 +113,9 @@
   .work_link a {
     font-size: 1.2rem;
   }
+  .work_link_image {
+    border-width: 5px;
+  }
 }
 
 @media (min-width: 430px) {
@@ -153,6 +156,10 @@
   .work_image_container {
     width: 50%;
     height: 100%;
+  }
+
+  .work_link_image {
+    border-width: 5px;
   }
 
   .work_link a {

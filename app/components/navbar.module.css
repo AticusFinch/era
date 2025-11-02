@@ -9,6 +9,7 @@
   width: 100%;
   background-color: var(--color-background);
   z-index: 1001;
+  border-bottom: 1px solid var(--color-font-primary);
 }
 
 .navbar_container {
@@ -307,6 +308,7 @@
 @media (min-width: 1280px) {
   .navbar {
     padding: 2rem 0;
+    border-bottom: 2px solid var(--color-font-primary);
   }
 
   .navbar_links {
