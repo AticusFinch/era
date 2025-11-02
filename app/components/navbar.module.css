@@ -308,7 +308,6 @@
 @media (min-width: 1280px) {
   .navbar {
     padding: 2rem 0;
-    border-bottom: 2px solid var(--color-font-primary);
   }
 
   .navbar_links {
@@ -453,6 +452,10 @@
 }
 
 @media (min-width: 1600px) {
+  .navbar {
+    border-bottom: 2px solid var(--color-font-primary);
+  }
+
   .navbar_logo {
     width: 130px;
   }
@@ -465,6 +468,16 @@
   .navbar_buttons {
     gap: 1.1rem;
     font-size: 1.1rem;
+  }
+
+  .navbar_button_member,
+  .navbar_button_donate {
+    border-width: 2px !important;
+  }
+
+  .navbar_button_member:hover,
+  .navbar_button_donate:hover {
+    border-width: 2px !important;
   }
 
   .navbar_dropdown a {
