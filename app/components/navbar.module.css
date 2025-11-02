@@ -452,10 +452,6 @@
 }
 
 @media (min-width: 1600px) {
-  .navbar {
-    border-bottom: 2px solid var(--color-font-primary);
-  }
-
   .navbar_logo {
     width: 130px;
   }
