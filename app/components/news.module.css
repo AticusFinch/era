@@ -340,6 +340,10 @@
 }
 
 @media (min-width: 1440px) {
+  .news_items {
+    gap: 1.5rem;
+  }
+
   .news_item {
     min-height: 140px;
     padding: 1.5rem;
@@ -391,6 +395,10 @@
   .news_button {
     font-size: 1.3rem;
   }
+
+  .news_items {
+    gap: 2rem;
+  }
 }
 
 @media (min-width: 2560px) {
@@ -409,5 +417,9 @@
 
   .news_button {
     font-size: 1.4rem;
+  }
+
+  .news_items {
+    gap: 2.5rem;
   }
 }
