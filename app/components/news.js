@@ -76,7 +76,7 @@ const News = () => {
         </h2>
         <div className={styles.news_items}>
           {newsItems.map((item, index) => (
-            <div key={index} className={styles.news_item}>
+            <Link href="/news" key={index} className={styles.news_item}>
               <div className={`${styles.news_item_text} text`}>
                 <span className={styles.news_item_category}>
                   {item.category}
@@ -101,7 +101,7 @@ const News = () => {
                   height={6000}
                 />
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className={styles.news_button_container}>
