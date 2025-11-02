@@ -3,6 +3,7 @@ import styles from "./page.module.css";
 import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Work from "./components/work";
+import News from "./components/news";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Work />
+      <News />
     </>
   );
 }
