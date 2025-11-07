@@ -50,7 +50,7 @@ body {
   font-size: 1.8rem;
   font-weight: 800;
   color: var(--color-font-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .title-accent::before {
@@ -73,6 +73,7 @@ body {
 @media (min-width: 375px) {
   .title {
     font-size: 2rem;
+    margin-bottom: 1.8rem;
   }
 
   .text {
@@ -83,7 +84,7 @@ body {
 @media (min-width: 412px) {
   .title {
     font-size: 2.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
   }
 
   .text {

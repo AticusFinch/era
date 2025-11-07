@@ -1,8 +1,11 @@
+"use client";
+
 import styles from "./news.module.css";
 import Container from "@/app/components/container";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/components/button";
+import { motion } from "framer-motion";
 
 import { IoIosArrowForward } from "react-icons/io";
 import { IoReaderOutline } from "react-icons/io5";
@@ -71,10 +74,22 @@ const News = () => {
   return (
     <div className={styles.news}>
       <Container>
-        <h2 className={`${styles.news_title} title`}>
+        <motion.h2
+          className={`${styles.news_title} title`}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           <span className="title-accent">News</span>
-        </h2>
-        <div className={styles.news_items}>
+        </motion.h2>
+        <motion.div
+          className={styles.news_items}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
           {newsItems.map((item, index) => (
             <Link href="/news" key={index} className={styles.news_item}>
               <div className={`${styles.news_item_text} text`}>
@@ -103,12 +118,18 @@ const News = () => {
               </div>
             </Link>
           ))}
-        </div>
-        <div className={styles.news_button_container}>
+        </motion.div>
+        <motion.div
+          className={styles.news_button_container}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
           <Button href="/news" className={styles.news_button}>
             Read More <IoIosArrowForward className={styles.news_button_icon} />
           </Button>
-        </div>
+        </motion.div>
       </Container>
     </div>
   );

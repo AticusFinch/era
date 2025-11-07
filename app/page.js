@@ -4,6 +4,7 @@ import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Work from "./components/work";
 import News from "./components/news";
+import Publications from "./components/publications";
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <Work />
       <News />
+      <Publications />
     </>
   );
 }
