@@ -6,7 +6,8 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Button from "@/app/components/button";
 import Link from "next/link";
-import { FaDownload } from "react-icons/fa";
+
+import { BsDownload } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
 const publicationsItems = [
@@ -93,7 +94,7 @@ const Publications = () => {
                   href="/publications/a-guide-to-the-lgbt-community"
                   className={styles.publications_item_download}
                 >
-                  <FaDownload />
+                  <BsDownload />
                 </Link>
               </div>
               <div className={styles.publications_item_text}>

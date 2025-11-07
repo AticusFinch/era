@@ -20,6 +20,12 @@
   box-shadow: 0 4px 12px rgba(63, 63, 63, 0.3);
 }
 
+@media (min-width: 1024px) {
+  .button {
+    padding: 0.8rem 1.6rem;
+  }
+}
+
 @media (min-width: 1440px) {
   .button {
     padding: 0.6rem 1.2rem;
