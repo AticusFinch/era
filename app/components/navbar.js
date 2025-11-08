@@ -139,7 +139,7 @@ const Navbar = () => {
               <Link href="/about-us">About Us</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/mission">Mission</Link>
-                <Link href="/team">Team</Link>
+                <Link href="/team">Our Team</Link>
                 <Link href="/history">History</Link>
               </div>
             </motion.div>
@@ -151,6 +151,7 @@ const Navbar = () => {
               <Link href="/our-work">Our Work</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/our-work/projects">Projects</Link>
+                <Link href="/our-work/donations">Donators</Link>
                 <Link href="/our-work/publications">Publications</Link>
               </div>
             </motion.div>
