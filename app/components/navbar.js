@@ -244,7 +244,7 @@ const Navbar = () => {
                         </div>
                         <div>
                           <Link href="/team" onClick={toggleMenu}>
-                            Team
+                            Our Team
                           </Link>
                         </div>
                         <div>
@@ -292,6 +292,11 @@ const Navbar = () => {
                         <div>
                           <Link href="/our-work/projects" onClick={toggleMenu}>
                             Projects
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href="/our-work/donators" onClick={toggleMenu}>
+                            Donators
                           </Link>
                         </div>
                         <div>
