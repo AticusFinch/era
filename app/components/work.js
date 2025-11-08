@@ -34,17 +34,14 @@ const Work = () => {
               egestas.
             </motion.p>
           </div>
-          <motion.div
-            className={styles.work_links}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-          >
+          <div className={styles.work_links}>
             <motion.div
               className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
             >
               <div className={styles.work_link_image}>
                 <Image
@@ -60,8 +57,11 @@ const Work = () => {
             </motion.div>
             <motion.div
               className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.8 }}
               whileHover={{ y: -5, scale: 1.02 }}
-              transition={{ duration: 0.2, ease: "easeOut" }}
             >
               <div className={styles.work_link_image}>
                 <Image
@@ -75,7 +75,7 @@ const Work = () => {
                 <span className={styles.work_link_accent}>Publications</span>
               </Link>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </Container>
       <div className={styles.work_images}>

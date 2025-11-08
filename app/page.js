@@ -5,6 +5,7 @@ import Hero from "./components/hero";
 import Work from "./components/work";
 import News from "./components/news";
 import Publications from "./components/publications";
+import Counter from "./components/counter";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Work />
       <News />
       <Publications />
+      <Counter />
     </>
   );
 }
