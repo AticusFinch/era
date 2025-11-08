@@ -26,7 +26,6 @@
   grid-template-columns: 2fr 3fr;
   border-radius: 0.5rem;
   gap: 1rem;
-  padding: 1rem;
 }
 
 .publications_item_image {
