@@ -227,15 +227,27 @@
 
 @media (min-width: 1024px) {
   .footer_container {
-    gap: 8rem;
+    gap: 7rem;
   }
 
   .footer {
-    padding: 4.5rem 0 4rem 0;
+    padding: 4rem 0 3.5rem 0;
   }
 
   .footer_top {
     flex-direction: row;
+  }
+
+  .footer_link {
+    font-size: 1.1rem;
+  }
+
+  .footer_contact_text_value {
+    font-size: 1.1rem;
+  }
+
+  .footer_contact_text_value svg {
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -244,17 +256,22 @@
   }
 
   .footer_social {
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+
+  .footer_social a {
+    font-size: 1.3rem;
   }
 
   .footer_bottom_text {
     text-align: left;
+    font-size: 1rem;
   }
 }
 
 @media (min-width: 1280px) {
   .footer {
-    padding: 5rem 0 4.5rem 0;
+    padding: 4.5rem 0 4rem 0;
   }
 
   .footer_container {
@@ -270,16 +287,16 @@
   }
 
   .footer_link {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     gap: 0.8rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.6rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -292,13 +309,13 @@
   }
 
   .footer_bottom_text {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 }
 
 @media (min-width: 1440px) {
   .footer_logo {
-    max-width: 120px;
+    max-width: 100px;
   }
 
   .footer_links {
@@ -306,16 +323,24 @@
   }
 
   .footer_link {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
+  }
+
+  .footer_social {
+    gap: 1.5rem;
+  }
+
+  .footer_social a {
+    font-size: 1.1rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     gap: 0.9rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -329,7 +354,7 @@
   }
 
   .footer_logo {
-    max-width: 130px;
+    max-width: 110px;
   }
 
   .footer_links {
@@ -337,16 +362,16 @@
   }
 
   .footer_link {
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
 
   .footer_contact_text_value {
     gap: 1rem;
-    font-size: 1.5rem;
+    font-size: 1.1rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -358,7 +383,7 @@
   }
 
   .footer_bottom_text {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
 }
 
@@ -372,7 +397,7 @@
   }
 
   .footer_logo {
-    max-width: 150px;
+    max-width: 120px;
   }
 
   .footer_links {
@@ -380,16 +405,16 @@
   }
 
   .footer_link {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     gap: 1.1rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.9rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -401,11 +426,11 @@
   }
 
   .footer_social a {
-    font-size: 2rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom_text {
-    font-size: 1.4rem;
+    font-size: 1rem;
   }
 }
 
@@ -419,7 +444,7 @@
   }
 
   .footer_logo {
-    max-width: 170px;
+    max-width: 150px;
   }
 
   .footer_links {
@@ -427,16 +452,16 @@
   }
 
   .footer_link {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     gap: 1.2rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 2rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -444,10 +469,10 @@
   }
 
   .footer_social {
-    gap: 4rem;
+    gap: 2.5rem;
   }
 
   .footer_social a {
-    font-size: 2.2rem;
+    font-size: 1.3rem;
   }
 }
