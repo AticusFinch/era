@@ -1,0 +1,58 @@
+.pageUnderConstruction {
+  background-color: var(--color-background);
+  padding-top: 6rem;
+}
+
+.pageUnderConstruction_title {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.pageUnderConstruction_subtitle {
+  font-size: 1rem;
+  color: var(--color-font-secondary);
+  text-align: center;
+  margin-top: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 375px) {
+}
+
+@media (min-width: 412px) {
+}
+
+@media (min-width: 430px) {
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1280px) {
+  .pageUnderConstruction_container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pageUnderConstruction_text {
+    order: 2;
+  }
+}
+
+@media (min-width: 1440px) {
+}
+
+@media (min-width: 1600px) {
+}
+
+@media (min-width: 1920px) {
+}
+
+@media (min-width: 2560px) {
+}
