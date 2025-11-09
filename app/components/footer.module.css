@@ -4,6 +4,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.195);
 }
 
 .footer_container {
@@ -222,7 +223,7 @@
   }
 
   .footer_container {
-    gap: 7rem;
+    gap: 5rem;
   }
 
   .footer_logo {
@@ -252,6 +253,10 @@
   .footer_bottom {
     flex-direction: row;
     gap: 1.5rem;
+  }
+
+  .footer_social {
+    gap: 1.4rem;
   }
 
   .footer_social a {
@@ -290,7 +295,8 @@
   }
 
   .footer_bottom {
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
     gap: 2rem;
   }
 
