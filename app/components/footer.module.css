@@ -1,5 +1,5 @@
 .footer {
-  padding: 2.5rem 0 2rem 0;
+  padding: 2.5rem 0 1.8rem 0;
   background: url("/img/gradients/footer-gradient.jpg");
   background-size: cover;
   background-position: center;
@@ -41,32 +41,32 @@
 
 .footer_link {
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
 }
 
 .footer_contact_text_value {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   line-height: 1;
 }
 
 .footer_contact_text_value svg {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .footer_social {
   display: flex;
   gap: 0.5rem;
   justify-content: space-between;
-  padding: 1rem 1.5rem;
+  padding: 0.8rem 1.2rem;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.256);
   border-radius: 0.5rem;
 }
 
 .footer_social a {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: var(--color-background);
 }
 
@@ -78,15 +78,57 @@
 }
 
 .footer_bottom_text {
-  font-size: 0.8rem;
-  text-align: center;
+  font-size: 0.7rem;
+  text-align: left;
 }
 
 @media (min-width: 375px) {
   .footer {
-    padding: 3rem 0 2.5rem 0;
+    padding: 2.5rem 0 2rem 0;
   }
 
+  .footer_container {
+    gap: 2.5rem;
+  }
+
+  .footer_logo {
+    max-width: 75px;
+  }
+
+  .footer_top {
+    gap: 2rem;
+  }
+
+  .footer_links {
+    gap: 0.5rem;
+  }
+
+  .footer_link {
+    font-size: 0.85rem;
+  }
+
+  .footer_contact_text_value {
+    font-size: 0.85rem;
+  }
+
+  .footer_contact_text_value svg {
+    font-size: 1.1rem;
+  }
+
+  .footer_bottom {
+    gap: 2.5rem;
+  }
+
+  .footer_social a {
+    font-size: 1.2rem;
+  }
+
+  .footer_bottom_text {
+    font-size: 0.8rem;
+  }
+}
+
+@media (min-width: 412px) {
   .footer_container {
     gap: 2.5rem;
   }
@@ -104,15 +146,15 @@
   }
 
   .footer_link {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .footer_bottom {
@@ -128,12 +170,9 @@
   }
 }
 
-@media (min-width: 412px) {
-}
-
 @media (min-width: 430px) {
   .footer {
-    padding: 3.5rem 0 3rem 0;
+    padding: 3rem 0 2rem 0;
   }
 
   .footer_container {
@@ -153,15 +192,15 @@
   }
 
   .footer_link {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .footer_contact_text_value {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .footer_contact_text_value svg {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom {
@@ -169,11 +208,11 @@
   }
 
   .footer_social a {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   .footer_bottom_text {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 }
 

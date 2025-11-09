@@ -9,7 +9,7 @@
   width: 100%;
   background-color: var(--color-background);
   z-index: 1001;
-  border-bottom: 1px solid var(--color-font-primary);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .navbar_container {
@@ -356,7 +356,7 @@
     margin-top: 0.5rem;
     background-color: var(--color-background);
     border-radius: 0.4rem;
-    border: 1px solid var(--color-font-primary);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     will-change: opacity, visibility, transform;
     padding: 1rem 1.5rem;
     min-width: 150px;
@@ -377,18 +377,6 @@
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
-  }
-
-  .navbar_dropdown::before {
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 20px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid var(--color-font-primary);
   }
 
   .navbar_dropdown a {

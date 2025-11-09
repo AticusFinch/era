@@ -102,10 +102,14 @@ const Footer = () => {
                 </Link>
               ))}
             </div>
-            <p className={styles.footer_bottom_text}>
-              &copy; {new Date().getFullYear()} ERA. All rights reserved.
-              Website by Kaizen Web Solutions.
-            </p>
+            <div>
+              <p className={styles.footer_bottom_text}>
+                &copy; {new Date().getFullYear()} ERA. All rights reserved.
+              </p>
+              <p className={styles.footer_bottom_text}>
+                Website by Kaizen Web Solutions.
+              </p>
+            </div>
           </div>
         </div>
       </Container>
