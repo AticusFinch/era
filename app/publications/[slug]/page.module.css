@@ -1,0 +1,90 @@
+.publication {
+  padding: 2rem 0;
+  min-height: 60vh;
+}
+
+.publication_header {
+  margin-bottom: 2rem;
+}
+
+.publication_image {
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.256);
+}
+
+.publication_meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.publication_title {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.publication_author {
+  font-size: 1rem;
+  color: var(--color-text-secondary, #666);
+  margin: 0;
+}
+
+.publication_date {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary, #666);
+}
+
+.publication_excerpt {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+
+.publication_content {
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.publication_content h2,
+.publication_content h3,
+.publication_content h4 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.publication_content p {
+  margin-bottom: 1rem;
+}
+
+.publication_content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.publication_content a {
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+
+.publication_content a:hover {
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .publication_title {
+    font-size: 3rem;
+  }
+
+  .publication_excerpt {
+    font-size: 1.4rem;
+  }
+}

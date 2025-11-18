@@ -11,66 +11,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 
-const newsItems = [
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-  {
-    title:
-      "Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas.",
-    image: "/img/hero/lgbt.jpg",
-    category: "Category",
-    date: "2025-01-01",
-    readingTime: "10 min read",
-  },
-];
-
-const News = () => {
+const News = ({ newsItems = [], debugInfo = null }) => {
   return (
     <div className={styles.news}>
       <Container>
@@ -90,34 +31,57 @@ const News = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {newsItems.map((item, index) => (
-            <Link href="/news" key={index} className={styles.news_item}>
-              <div className={`${styles.news_item_text} text`}>
-                <span className={styles.news_item_category}>
-                  {item.category}
-                </span>
-                <h3 className={styles.news_item_title}>{item.title}</h3>
-                <div className={styles.news_item_info}>
-                  <span className={styles.news_item_date}>
-                    <CiCalendarDate />
-                    {item.date}
+          {newsItems.length > 0 ? (
+            newsItems.map((item) => (
+              <Link
+                href={`/news/${item.slug}`}
+                key={item.id}
+                className={styles.news_item}
+              >
+                <div className={`${styles.news_item_text} text`}>
+                  <span className={styles.news_item_category}>
+                    {item.category}
                   </span>
-                  <span className={styles.news_item_readingTime}>
-                    <IoReaderOutline />
-                    {item.readingTime}
-                  </span>
+                  <div className={styles.news_item_title_wrapper}>
+                    <h3 className={styles.news_item_title}>{item.title}</h3>
+                  </div>
+                  <div className={styles.news_item_info}>
+                    <span className={styles.news_item_date}>
+                      <CiCalendarDate />
+                      {item.date}
+                    </span>
+                    <span className={styles.news_item_readingTime}>
+                      <IoReaderOutline />
+                      {item.readingTime}
+                    </span>
+                  </div>
                 </div>
-              </div>
-              <div className={styles.news_item_image}>
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={4000}
-                  height={6000}
-                />
-              </div>
-            </Link>
-          ))}
+                <div className={styles.news_item_image}>
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={4000}
+                    height={6000}
+                  />
+                </div>
+              </Link>
+            ))
+          ) : (
+            <div className={styles.news_empty}>
+              <p>No news available at the moment.</p>
+              {debugInfo && (
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    fontSize: "0.875rem",
+                    color: "#666",
+                  }}
+                >
+                  <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+                </div>
+              )}
+            </div>
+          )}
         </motion.div>
         <motion.div
           className={styles.news_button_container}

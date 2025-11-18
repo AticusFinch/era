@@ -1,9 +1,6 @@
 .footer {
   padding: 2.5rem 0 1.8rem 0;
-  background: url("/img/gradients/footer-gradient.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  background-color: var(--color-background);
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.195);
 }
 
@@ -19,7 +16,7 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 1.5rem;
-  color: var(--color-background);
+  color: var(--color-font-primary);
 }
 
 .footer_logo {
@@ -43,6 +40,7 @@
 .footer_link {
   text-decoration: none;
   font-size: 0.7rem;
+  color: var(--color-font-primary);
 }
 
 .footer_contact_text_value {
@@ -51,10 +49,12 @@
   gap: 0.4rem;
   font-size: 0.7rem;
   line-height: 1;
+  color: var(--color-font-primary);
 }
 
 .footer_contact_text_value svg {
   font-size: 1.1rem;
+  color: var(--color-font-primary);
 }
 
 .footer_social {
@@ -62,25 +62,26 @@
   gap: 0.5rem;
   justify-content: space-between;
   padding: 0.8rem 1.2rem;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.256);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.086);
   border-radius: 0.5rem;
 }
 
 .footer_social a {
   font-size: 1.1rem;
-  color: var(--color-background);
+  color: var(--color-font-primary);
 }
 
 .footer_bottom {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  color: var(--color-background);
+  color: var(--color-font-primary);
 }
 
 .footer_bottom_text {
   font-size: 0.7rem;
   text-align: left;
+  color: var(--color-font-primary);
 }
 
 @media (min-width: 375px) {

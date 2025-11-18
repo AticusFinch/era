@@ -5,7 +5,6 @@ import Container from "@/app/components/container";
 import Image from "next/image";
 import Link from "next/link";
 
-import { MdOutlineEmail } from "react-icons/md";
 import { MdEmail } from "react-icons/md";
 
 import {
@@ -68,7 +67,7 @@ const Footer = () => {
           <div className={styles.footer_top}>
             <div className={styles.footer_logo}>
               <Image
-                src="/logo/era-white.png"
+                src="/logo/era@3x.png"
                 alt="Logo"
                 width={302}
                 height={97}
