@@ -1,6 +1,10 @@
 .publications {
   padding: 2.5rem 0;
-  background: url("/img/gradients/publi_gradient.jpg") no-repeat center center;
+  background: linear-gradient(
+    to bottom,
+    var(--color-font-primary),
+    var(--color-font-secondary)
+  );
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
