@@ -36,7 +36,7 @@ const Hero = () => {
               <span className={styles.hero_title_accent}>LGBTIQA+</span>{" "}
               Equality across the Western Balkans & Türkiye since 2015.
             </motion.h1>
-            <motion.h2
+            <motion.h5
               className={styles.hero_subtitle}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -44,7 +44,7 @@ const Hero = () => {
             >
               We connect, empower, and advocate for LGBTIQA+ organizations to
               create a region where every person is free, safe, and equal.
-            </motion.h2>
+            </motion.h5>
             <motion.div
               className={styles.hero_buttons}
               initial={{ opacity: 0, y: 10 }}

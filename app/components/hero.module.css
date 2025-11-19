@@ -81,7 +81,6 @@
 }
 
 .hero_title {
-  font-size: 1.65rem;
   font-weight: 800;
   color: var(--color-background);
 }
@@ -104,7 +103,6 @@
 }
 
 .hero_subtitle {
-  font-size: 0.75rem;
   font-weight: 300;
   color: var(--color-background);
 }
@@ -118,14 +116,6 @@
     padding: 8rem 0 5rem 0;
   }
 
-  .hero_title {
-    font-size: 1.9rem;
-  }
-
-  .hero_subtitle {
-    font-size: 0.9rem;
-  }
-
   .hero_button_member,
   .hero_button_about {
     font-size: 0.9rem;
@@ -135,14 +125,6 @@
 @media (min-width: 393px) {
   .hero {
     padding: 8.5rem 0 5.5rem 0;
-  }
-
-  .hero_title {
-    font-size: 2.1rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1.1rem;
   }
 
   .hero_buttons {
@@ -160,14 +142,6 @@
     gap: 0.8rem;
   }
 
-  .hero_title {
-    font-size: 2.2rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1rem;
-  }
-
   .hero_buttons {
     margin-top: 1.5rem;
   }
@@ -176,14 +150,6 @@
 @media (min-width: 412px) {
   .hero {
     padding: 10rem 0 7rem 0;
-  }
-
-  .hero_title {
-    font-size: 2.1rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1rem;
   }
 
   .hero_buttons {
@@ -202,14 +168,6 @@
     padding: 10rem 0 8rem 0;
   }
 
-  .hero_title {
-    font-size: 2.2rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1.1rem;
-  }
-
   .hero_button_member,
   .hero_button_about {
     font-size: 1rem;
@@ -217,12 +175,7 @@
 }
 
 @media (min-width: 768px) {
-  .hero_title {
-    font-size: 3.8rem;
-  }
-
   .hero_subtitle {
-    font-size: 1.3rem;
     width: 70%;
   }
 
@@ -238,12 +191,10 @@
   }
 
   .hero_title {
-    font-size: 3.5rem;
     width: 75%;
   }
 
   .hero_subtitle {
-    font-size: 1.4rem;
     width: 60%;
   }
 
@@ -320,12 +271,10 @@
   }
 
   .hero_title {
-    font-size: 2.8rem;
     width: 100%;
   }
 
   .hero_subtitle {
-    font-size: 1.2rem;
     width: 75%;
   }
 
@@ -361,12 +310,10 @@
 
 @media (min-width: 1440px) {
   .hero_title {
-    font-size: 3rem;
     width: 100%;
   }
 
   .hero_subtitle {
-    font-size: 1.4rem;
     width: 75%;
   }
 
@@ -376,29 +323,9 @@
 }
 
 @media (min-width: 1600px) {
-  .hero_title {
-    font-size: 3.4rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1.5rem;
-  }
-
   .hero_button_member,
   .hero_button_about {
     font-size: 1.2rem;
-  }
-}
-
-@media (min-width: 1512px) {
-  .hero_title {
-    font-size: 3.6rem;
-  }
-}
-
-@media (min-width: 1512px) {
-  .hero_subtitle {
-    font-size: 1.5rem;
   }
 }
 
@@ -409,14 +336,6 @@
 
   .hero_content {
     gap: 1.5rem;
-  }
-
-  .hero_title {
-    font-size: 4rem;
-  }
-
-  .hero_subtitle {
-    font-size: 1.8rem;
   }
 
   .hero_buttons {
@@ -436,14 +355,6 @@
 
   .hero_content {
     gap: 2rem;
-  }
-
-  .hero_title {
-    font-size: 5.2rem;
-  }
-
-  .hero_subtitle {
-    font-size: 2.3rem;
   }
 
   .hero_buttons {

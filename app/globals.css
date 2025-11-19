@@ -44,10 +44,58 @@ body {
   text-size-adjust: 100%;
 }
 
+/* Base Typography - Fluid Scale with clamp() */
+body,
+p {
+  font-size: clamp(0.75rem, 0.643rem + 0.54vw, 1.5rem);
+  line-height: 1.6;
+}
+
+h1 {
+  font-size: clamp(1.625rem, 0.964rem + 3.3vw, 6.25rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(1.25rem, 0.643rem + 3.04vw, 5.5rem);
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: clamp(1.125rem, 0.554rem + 2.86vw, 5.125rem);
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+h4 {
+  font-size: clamp(1rem, 0.446rem + 2.77vw, 4.875rem);
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+h5 {
+  font-size: clamp(0.875rem, 0.732rem + 0.71vw, 1.875rem);
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+h6 {
+  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+a {
+  font-size: inherit;
+  text-decoration: none;
+}
+
 .title {
   position: relative;
   display: inline-block;
-  font-size: 1.8rem;
+  font-size: clamp(1.8rem, 6vw, 3.2rem);
   font-weight: 800;
   color: var(--color-font-primary);
   margin-bottom: 1.5rem;
@@ -80,7 +128,7 @@ body {
 .title-accent-secondary::before {
   content: "";
   position: absolute;
-  bottom: 10%;
+  bottom: 20%;
   left: 0;
   right: 0;
   height: 0.3em;
@@ -90,115 +138,60 @@ body {
 }
 
 .text {
-  font-size: 0.75rem;
+  font-size: clamp(0.75rem, 2.5vw, 1.25rem);
   color: var(--color-font-secondary);
 }
 
 @media (min-width: 375px) {
   .title {
-    font-size: 2rem;
     margin-bottom: 1.8rem;
-  }
-
-  .text {
-    font-size: 0.9rem;
   }
 }
 
 @media (min-width: 412px) {
   .title {
-    font-size: 2.2rem;
     margin-bottom: 2rem;
-  }
-
-  .text {
-    font-size: 1rem;
-  }
-}
-
-@media (min-width: 430px) {
-  .title {
-    font-size: 2.4rem;
-  }
-
-  .text {
-    font-size: 1.1rem;
   }
 }
 
 @media (min-width: 768px) {
   .title {
-    font-size: 3rem;
     margin-bottom: 2.5rem;
-  }
-
-  .text {
-    font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1024px) {
   .title {
-    font-size: 2.8rem;
     margin-bottom: 3rem;
-  }
-
-  .text {
-    font-size: 1.2rem;
   }
 }
 
 @media (min-width: 1280px) {
   .title {
-    font-size: 3rem;
     margin-bottom: 2rem;
-  }
-
-  .text {
-    font-size: 1.3rem;
   }
 }
 
 @media (min-width: 1440px) {
   .title {
-    font-size: 3.2rem;
     margin-bottom: 2.5rem;
-  }
-
-  .text {
-    font-size: 1.4rem;
   }
 }
 
 @media (min-width: 1600px) {
   .title {
-    font-size: 3.4rem;
     margin-bottom: 3rem;
-  }
-
-  .text {
-    font-size: 1.6rem;
   }
 }
 
 @media (min-width: 1920px) {
   .title {
-    font-size: 4.5rem;
     margin-bottom: 3.5rem;
-  }
-
-  .text {
-    font-size: 1.8rem;
   }
 }
 
 @media (min-width: 2560px) {
   .title {
-    font-size: 5rem;
     margin-bottom: 6rem;
-  }
-
-  .text {
-    font-size: 2rem;
   }
 }

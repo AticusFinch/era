@@ -66,13 +66,11 @@ const Publications = ({ publications = [], debugInfo = null }) => {
                   </div>
                 </div>
                 <div className={styles.publications_item_text}>
-                  <span className={styles.publications_item_type}>
-                    {item.type}
-                  </span>
+                  <p className={styles.publications_item_type}>{item.type}</p>
                   <div className={styles.publications_item_title_author}>
-                    <h3 className={styles.publications_item_title}>
+                    <h6 className={styles.publications_item_title}>
                       {item.title}
-                    </h3>
+                    </h6>
                     {item.authors && (
                       <div className={styles.publications_item_authors}>
                         {item.authors

@@ -54,14 +54,12 @@
 }
 
 .counter_number {
-  font-size: 2.5rem;
   font-weight: 800;
   margin: 0;
   line-height: 1;
 }
 
 .counter_label {
-  font-size: 0.9rem;
   font-weight: 500;
   margin: 0;
   line-height: 1.3;
@@ -75,14 +73,6 @@
   .counter_items {
     gap: 3rem;
   }
-
-  .counter_number {
-    font-size: 3rem;
-  }
-
-  .counter_label {
-    font-size: 1rem;
-  }
 }
 
 @media (min-width: 412px) {
@@ -93,14 +83,6 @@
   .counter_items {
     padding-top: 1.5rem;
   }
-
-  .counter_number {
-    font-size: 3.2rem;
-  }
-
-  .counter_label {
-    font-size: 1.1rem;
-  }
 }
 
 @media (min-width: 430px) {
@@ -110,14 +92,6 @@
 
   .counter_items {
     padding-top: 2rem;
-  }
-
-  .counter_number {
-    font-size: 3.5rem;
-  }
-
-  .counter_label {
-    font-size: 1.2rem;
   }
 }
 
@@ -154,14 +128,6 @@
     gap: 3rem;
     padding: 3rem 0;
   }
-
-  .counter_number {
-    font-size: 4.2rem;
-  }
-
-  .counter_label {
-    font-size: 1.3rem;
-  }
 }
 
 @media (min-width: 1280px) {
@@ -184,20 +150,8 @@
 }
 
 @media (min-width: 1440px) {
-  .counter_number {
-    font-size: 4.5rem;
-  }
-
   .counter_items {
     gap: 5rem;
-  }
-
-  .counter_number {
-    font-size: 5rem;
-  }
-
-  .counter_label {
-    font-size: 1.5rem;
   }
 }
 
@@ -208,14 +162,6 @@
 
   .counter_items {
     gap: 5.5rem;
-  }
-
-  .counter_number {
-    font-size: 5.5rem;
-  }
-
-  .counter_label {
-    font-size: 1.7rem;
   }
 }
 
@@ -228,14 +174,6 @@
     gap: 6rem;
     padding: 5rem 0;
   }
-
-  .counter_number {
-    font-size: 7rem;
-  }
-
-  .counter_label {
-    font-size: 1.9em;
-  }
 }
 
 @media (min-width: 2560px) {
@@ -246,13 +184,5 @@
   .counter_items {
     gap: 6.5rem;
     padding: 6rem 0;
-  }
-
-  .counter_number {
-    font-size: 8rem;
-  }
-
-  .counter_label {
-    font-size: 2.5rem;
   }
 }

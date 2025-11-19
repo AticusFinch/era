@@ -21,7 +21,6 @@
 }
 
 .publication_title {
-  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
@@ -39,7 +38,6 @@
 }
 
 .publication_excerpt {
-  font-size: 1.2rem;
   line-height: 1.6;
   color: var(--color-text-secondary, #666);
   margin-bottom: 2rem;
@@ -47,7 +45,6 @@
 }
 
 .publication_content {
-  font-size: 1rem;
   line-height: 1.8;
 }
 
@@ -77,14 +74,4 @@
 
 .publication_content a:hover {
   text-decoration: none;
-}
-
-@media (min-width: 768px) {
-  .publication_title {
-    font-size: 3rem;
-  }
-
-  .publication_excerpt {
-    font-size: 1.4rem;
-  }
 }

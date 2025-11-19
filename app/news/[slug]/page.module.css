@@ -33,7 +33,6 @@
 }
 
 .news_post_title {
-  font-size: 2rem;
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
@@ -71,7 +70,6 @@
 }
 
 .news_post_excerpt {
-  font-size: 1.2rem;
   line-height: 1.6;
   color: var(--color-font-secondary);
   margin-bottom: 2rem;
@@ -79,7 +77,6 @@
 }
 
 .news_post_content {
-  font-size: 1rem;
   line-height: 1.8;
   color: var(--color-font-primary);
 }
@@ -111,14 +108,4 @@
 
 .news_post_content a:hover {
   text-decoration: none;
-}
-
-@media (min-width: 768px) {
-  .news_post_title {
-    font-size: 3rem;
-  }
-
-  .news_post_excerpt {
-    font-size: 1.4rem;
-  }
 }

@@ -1,10 +1,6 @@
 .publications {
   padding: 2.5rem 0;
-  background: linear-gradient(
-    to bottom,
-    var(--color-font-primary),
-    var(--color-font-secondary)
-  );
+  background: url("/img/gradients/publi_gradient.jpg") no-repeat center center;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -58,7 +54,6 @@
 }
 
 .publications_item_type {
-  font-size: 0.5rem;
   text-transform: lowercase;
   color: var(--color-accent);
   padding: 0.2rem 0.4rem;
@@ -66,6 +61,7 @@
   border: 1px solid var(--color-accent);
   display: inline-block;
   width: fit-content;
+  font-size: clamp(0.5rem, 0.411rem + 0.45vw, 1.125rem);
 }
 
 .publications_item_title_author {
@@ -81,8 +77,6 @@
   gap: 0.5rem;
   justify-content: flex-start;
   padding-top: 0.5rem;
-  font-weight: 700;
-  font-size: 0.8rem;
   font-weight: 700;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -101,13 +95,12 @@
 }
 
 .publications_item_author {
-  font-size: 0.7rem;
   margin: 0;
   line-height: 1.1;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
 }
 
 .publications_item_download {
-  font-size: 1rem;
   color: var(--color-background);
   background-color: var(--color-accent);
   position: absolute;
@@ -144,7 +137,6 @@
   }
 
   .publications_button {
-    font-size: 0.8rem;
     padding: 0;
     color: var(--color-background);
     background-color: transparent;
@@ -172,17 +164,11 @@
   }
 
   .publications_item_type {
-    font-size: 0.6rem;
     padding: 0.2rem 0.5rem;
   }
 
   .publications_item_title {
     gap: 0.5rem;
-    font-size: 0.9rem;
-  }
-
-  .publications_item_author {
-    font-size: 0.8rem;
   }
 
   .publications_item_download {
@@ -199,32 +185,14 @@
     padding: 3.5rem 0;
   }
 
-  .publications_item_type {
-    font-size: 0.7rem;
-  }
-
   .publications_item_title {
     gap: 0.5rem;
-    font-size: 1rem;
-  }
-
-  .publications_item_author {
-    font-size: 0.9rem;
   }
 }
 
 @media (min-width: 430px) {
-  .publications_item_type {
-    font-size: 0.7rem;
-  }
-
   .publications_item_title {
     gap: 0.5rem;
-    font-size: 1rem;
-  }
-
-  .publications_item_author {
-    font-size: 0.9rem;
   }
 }
 
@@ -250,10 +218,6 @@
 
   .publications_item:nth-child(n + 7) {
     display: grid;
-  }
-
-  .publications_button {
-    font-size: 1rem;
   }
 }
 
@@ -291,18 +255,6 @@
   .publications_button_icon {
     display: none;
   }
-
-  .publications_item_type {
-    font-size: 0.65rem;
-  }
-
-  .publications_item_title {
-    font-size: 0.9rem;
-  }
-
-  .publications_item_author {
-    font-size: 0.7rem;
-  }
 }
 
 @media (min-width: 1280px) {
@@ -312,18 +264,6 @@
 
   .publications_button_container {
     margin-top: 2.5rem;
-  }
-
-  .publications_item_type {
-    font-size: 0.7rem;
-  }
-
-  .publications_item_title {
-    font-size: 1rem;
-  }
-
-  .publications_item_author {
-    font-size: 0.8rem;
   }
 
   .publications_item_download {
@@ -338,18 +278,6 @@
 @media (min-width: 1440px) {
   .publications_items {
     gap: 2rem;
-  }
-
-  .publications_item_type {
-    font-size: 0.8rem;
-  }
-
-  .publications_item_title {
-    font-size: 1.2rem;
-  }
-
-  .publications_item_author {
-    font-size: 1rem;
   }
 
   .publications_item_download {
@@ -367,20 +295,7 @@
   }
 
   .publications_button {
-    font-size: 1.2rem;
     border-radius: 0.8rem !important;
-  }
-
-  .publications_item_type {
-    font-size: 0.9rem;
-  }
-
-  .publications_item_title {
-    font-size: 1.4rem;
-  }
-
-  .publications_item_author {
-    font-size: 1.2rem;
   }
 
   .publications_item_download {
@@ -402,24 +317,11 @@
   }
 
   .publications_button {
-    font-size: 1.5rem;
     margin-top: 2.5rem;
   }
 
   .publications_items {
     gap: 3rem;
-  }
-
-  .publications_item_type {
-    font-size: 1.1rem;
-  }
-
-  .publications_item_title {
-    font-size: 1.7rem;
-  }
-
-  .publications_item_author {
-    font-size: 1.5rem;
   }
 
   .publications_item_download {
@@ -441,24 +343,11 @@
   }
 
   .publications_button {
-    font-size: 1.8rem;
     margin-top: 3rem;
   }
 
   .publications_items {
     gap: 5rem;
-  }
-
-  .publications_item_type {
-    font-size: 1.3rem;
-  }
-
-  .publications_item_title {
-    font-size: 2rem;
-  }
-
-  .publications_item_author {
-    font-size: 1.7rem;
   }
 
   .publications_item_download {

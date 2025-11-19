@@ -43,7 +43,7 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                     {item.category}
                   </span>
                   <div className={styles.news_item_title_wrapper}>
-                    <h3 className={styles.news_item_title}>{item.title}</h3>
+                    <h5 className={styles.news_item_title}>{item.title}</h5>
                   </div>
                   <div className={styles.news_item_info}>
                     <span className={styles.news_item_date}>

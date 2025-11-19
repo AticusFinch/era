@@ -52,7 +52,7 @@ const Work = () => {
                 />
               </div>
               <Link href="/our-work/projects">
-                <span className={styles.work_link_accent}>Projects</span>
+                <h5 className={styles.work_link_accent}>Projects</h5>
               </Link>
             </motion.div>
             <motion.div
@@ -72,7 +72,7 @@ const Work = () => {
                 />
               </div>
               <Link href="/our-work/publications">
-                <span className={styles.work_link_accent}>Publications</span>
+                <h5 className={styles.work_link_accent}>Publications</h5>
               </Link>
             </motion.div>
           </div>
