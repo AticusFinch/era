@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
 
 :root {
   /* Custom brand colors */
@@ -97,7 +99,7 @@ a {
   display: inline-block;
   font-weight: 800;
   color: var(--color-font-primary);
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .title-accent {
@@ -144,19 +146,19 @@ a {
 
 @media (min-width: 375px) {
   .title {
-    margin-bottom: 1.8rem;
+    margin-bottom: 3.5rem;
   }
 }
 
 @media (min-width: 412px) {
   .title {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
   }
 }
 
 @media (min-width: 768px) {
   .title {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 }
 

@@ -6,9 +6,11 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Button from "@/app/components/button";
 import Link from "next/link";
-
-import { BsDownload } from "react-icons/bs";
-import { IoIosArrowForward } from "react-icons/io";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
+import { useRef, useEffect, useState } from "react";
 
 const Publications = ({
   publications = [],
@@ -18,6 +20,92 @@ const Publications = ({
 }) => {
   // Fallback to empty array if no publications
   const publicationsItems = publications.length > 0 ? publications : [];
+  const sliderRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure component is mounted before rendering slider (fixes SSR issues)
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Custom arrow components
+  const NextArrow = ({ onClick, className, style }) => {
+    return (
+      <button
+        className={`${styles.slick_arrow_next} ${className || ""}`}
+        onClick={onClick}
+        style={style}
+        aria-label="Next slide"
+      >
+        <IoIosArrowForward />
+      </button>
+    );
+  };
+
+  const PrevArrow = ({ onClick, className, style }) => {
+    return (
+      <button
+        className={`${styles.slick_arrow_prev} ${className || ""}`}
+        onClick={onClick}
+        style={style}
+        aria-label="Previous slide"
+      >
+        <IoIosArrowBack />
+      </button>
+    );
+  };
+
+  // Slick carousel settings - simple responsive
+  // Note: Slick breakpoints are max-width (viewport <= breakpoint)
+  // Base applies to viewports > largest breakpoint
+  // Breakpoints cascade from largest to smallest
+  //
+  // How it works:
+  // - > 1280px: 5 slides (base)
+  // - <= 1280px: 6 slides
+  // - <= 1024px: 4 slides (overrides 1280)
+  // - <= 740px: 2 slides (overrides 1024)
+  const sliderSettings = {
+    dots: false,
+    infinite: !showAll && publicationsItems.length > 5, // Infinite scroll only on homepage and when enough items
+    speed: 500,
+    slidesToShow: 5, // Base: 5 slides for > 1280px
+    slidesToScroll: 1,
+    autoplay: false,
+    arrows: publicationsItems.length > 5, // Only show arrows if there are more items than visible
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    adaptiveHeight: false,
+    swipe: true,
+    touchMove: true,
+    responsive: [
+      {
+        breakpoint: 1280,
+        settings: {
+          slidesToShow: 6, // <= 1280px: 6 slides
+          slidesToScroll: 1,
+          arrows: publicationsItems.length > 6,
+        },
+      },
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4, // <= 1024px: 4 slides
+          slidesToScroll: 1,
+          arrows: publicationsItems.length > 4,
+        },
+      },
+      {
+        breakpoint: 740,
+        settings: {
+          slidesToShow: 2, // <= 740px: 2 slides
+          slidesToScroll: 1,
+          arrows: false, // Hide arrows on mobile
+        },
+      },
+    ],
+  };
+
   return (
     <div
       className={`${styles.publications} ${
@@ -35,70 +123,86 @@ const Publications = ({
           <span className="title-accent">Publications</span>
         </motion.h2>
         <motion.div
-          className={styles.publications_items}
+          className={styles.publications_items_wrapper}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {publicationsItems.length > 0 ? (
-            publicationsItems.map((item, index) => (
-              <Link
-                key={item.id || index}
-                href={`/publications/${item.slug}`}
-                className={styles.publications_item}
-              >
-                <div className={styles.publications_item_image}>
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
-                  <div
-                    className={styles.publications_item_download}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      console.log("Download clicked:", item.downloadUrl);
-                      if (item.downloadUrl) {
-                        window.open(item.downloadUrl, "_blank");
-                      } else {
-                        console.warn(
-                          "No download URL available for:",
-                          item.title
-                        );
-                      }
-                    }}
+          {publicationsItems.length > 0 && isMounted ? (
+            <Slider
+              ref={sliderRef}
+              {...sliderSettings}
+              className={styles.publications_slider}
+            >
+              {publicationsItems.map((item, index) => (
+                <div
+                  key={item.id || index}
+                  className={styles.publications_slide}
+                >
+                  <Link
+                    href={`/publications/${item.slug}`}
+                    className={styles.publications_item}
                   >
-                    download
-                  </div>
-                </div>
-                <div className={styles.publications_item_text}>
-                  <p className={styles.publications_item_type}>{item.type}</p>
-                  <div className={styles.publications_item_title_author}>
-                    <h6 className={styles.publications_item_title}>
-                      {item.title}
-                    </h6>
-                    {item.authors && (
-                      <div className={styles.publications_item_authors}>
-                        {item.authors
-                          .split(",")
-                          .slice(0, 3)
-                          .map((author, authorIndex) => (
-                            <p
-                              key={authorIndex}
-                              className={styles.publications_item_author}
-                            >
-                              {author.trim()}
-                            </p>
-                          ))}
+                    <div className={styles.publications_item_image}>
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        fill
+                        style={{ objectFit: "cover" }}
+                      />
+                      <div
+                        className={styles.publications_item_download}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          e.stopPropagation();
+                          console.log("Download clicked:", item.downloadUrl);
+                          if (item.downloadUrl) {
+                            window.open(item.downloadUrl, "_blank");
+                          } else {
+                            console.warn(
+                              "No download URL available for:",
+                              item.title
+                            );
+                          }
+                        }}
+                      >
+                        download
                       </div>
-                    )}
-                  </div>
+                    </div>
+                    <div className={styles.publications_item_text}>
+                      <p className={styles.publications_item_type}>
+                        {item.type}
+                      </p>
+                      <div className={styles.publications_item_title_author}>
+                        <h6 className={styles.publications_item_title}>
+                          {item.title}
+                        </h6>
+                        {item.authors && (
+                          <div className={styles.publications_item_authors}>
+                            {item.authors
+                              .split(",")
+                              .slice(0, 3)
+                              .map((author, authorIndex) => (
+                                <p
+                                  key={authorIndex}
+                                  className={styles.publications_item_author}
+                                >
+                                  {author.trim()}
+                                </p>
+                              ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
                 </div>
-              </Link>
-            ))
+              ))}
+            </Slider>
+          ) : publicationsItems.length > 0 ? (
+            <div className={styles.publications_loading}>
+              Loading carousel...
+            </div>
           ) : (
             <div>
               <p>No publications available at the moment.</p>

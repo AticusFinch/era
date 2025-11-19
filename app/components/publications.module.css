@@ -11,26 +11,140 @@
   color: var(--color-font-primary);
 }
 
-.publications_items {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.4rem;
+.publications_items_wrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible; /* Changed from hidden to visible to show arrows */
+  padding: 0 30px; /* Add padding to accommodate arrows */
 }
 
-.publications_item:nth-child(n + 3) {
-  display: none;
+.publications_slider {
+  position: relative;
+  width: 100%;
 }
 
-/* Show all items on the all publications page */
-.publications_all .publications_item {
-  display: grid !important;
+.publications_slider .slick-track {
+  display: flex;
+  align-items: stretch;
 }
 
-.publications_all .publications_item:nth-child(n + 3),
-.publications_all .publications_item:nth-child(n + 7),
-.publications_all .publications_item:nth-child(n + 5) {
-  display: grid !important;
+.publications_slide {
+  padding: 0 0.7rem;
+  height: 100%;
+  outline: none; /* Remove focus outline */
 }
+
+.publications_loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-font-secondary);
+}
+
+/* Grid styles removed - using Slick carousel instead */
+/* .publications_items is no longer used when carousel is active */
+
+/* Slick Carousel Custom Styles */
+.publications_slider .slick-list {
+  margin: 0 -0.7rem;
+  overflow: visible;
+}
+
+.publications_slider .slick-slide {
+  padding: 0;
+  height: auto;
+}
+
+.publications_slider .slick-slide > div {
+  padding: 0 0.7rem;
+  height: 100%;
+}
+
+/* Custom Arrow Styles */
+.publications_slider .slick_arrow_prev,
+.publications_slider .slick_arrow_next {
+  position: absolute !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  z-index: 10 !important;
+  width: 50px !important;
+  height: 50px !important;
+  background-color: var(--color-font-primary) !important;
+  color: var(--color-background) !important;
+  border: none !important;
+  border-radius: 50% !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 24px !important;
+  transition: all 0.3s ease !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.publications_slider .slick_arrow_prev {
+  left: -25px;
+}
+
+.publications_slider .slick_arrow_next {
+  right: -25px;
+}
+
+.publications_slider .slick_arrow_prev:hover,
+.publications_slider .slick_arrow_next:hover {
+  background-color: var(--color-primary);
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.publications_slider .slick_arrow_prev:active,
+.publications_slider .slick_arrow_next:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.publications_slider .slick_arrow_prev:disabled,
+.publications_slider .slick_arrow_next:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Default Slick Arrow Override */
+.publications_slider .slick-prev,
+.publications_slider .slick-next {
+  z-index: 10;
+  width: 50px;
+  height: 50px;
+}
+
+.publications_slider .slick-prev {
+  left: -25px;
+}
+
+.publications_slider .slick-next {
+  right: -25px;
+}
+
+.publications_slider .slick-prev:before,
+.publications_slider .slick-next:before {
+  display: none; /* Hide default arrows since we're using custom ones */
+}
+
+@media (max-width: 740px) {
+  .publications_items_wrapper {
+    padding: 0; /* Remove padding on mobile */
+  }
+
+  .publications_slider .slick-prev,
+  .publications_slider .slick-next,
+  .publications_slider .slick_arrow_prev,
+  .publications_slider .slick_arrow_next {
+    display: none !important;
+  }
+}
+
+/* Show all items on the all publications page - only when NOT using carousel */
+/* Note: When using carousel, these styles don't apply */
 
 .publications_item {
   display: flex;
@@ -214,20 +328,9 @@
     margin-bottom: 4rem;
   }
 
-  .publications_items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-  }
-
+  /* Grid styles removed - using Slick carousel */
   .publications_item {
-    display: grid;
-    grid-template-columns: 2fr 3fr;
     gap: 1.5rem;
-  }
-
-  .publications_item:nth-child(n + 7) {
-    display: grid;
   }
 }
 
@@ -236,15 +339,11 @@
     margin-bottom: 4.5rem;
   }
 
-  .publications_items {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+  .publications_items_wrapper {
+    padding: 0 40px; /* More padding on larger screens */
   }
 
-  .publications_item:nth-child(n + 5) {
-    display: grid;
-  }
+  /* Grid styles removed - using Slick carousel */
 
   .publications_button {
     border: 2px solid var(--color-font-primary);
@@ -296,13 +395,12 @@
   .publications_item_download svg {
     font-size: 1rem;
   }
+
+  /* Grid styles removed - using Slick carousel */
 }
 
 @media (min-width: 1440px) {
-  .publications_items {
-    gap: 2rem;
-  }
-
+  /* Grid styles removed - using Slick carousel */
   .publications_item_download {
     height: 2.5em;
   }
@@ -343,10 +441,7 @@
     margin-top: 2.5rem;
   }
 
-  .publications_items {
-    gap: 3rem;
-  }
-
+  /* Grid styles removed - using Slick carousel */
   .publications_item_download {
     height: 3em;
   }
@@ -369,10 +464,7 @@
     margin-top: 3rem;
   }
 
-  .publications_items {
-    gap: 5rem;
-  }
-
+  /* Grid styles removed - using Slick carousel */
   .publications_item_download {
     height: 3.5em;
   }
