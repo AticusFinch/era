@@ -61,6 +61,12 @@
   opacity: 1;
 }
 
+.publications_loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-font-secondary);
+}
+
 @media (max-width: 740px) {
   .publications_slider .slick-prev,
   .publications_slider .slick-next {

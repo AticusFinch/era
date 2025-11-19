@@ -10,6 +10,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useEffect, useState } from "react";
 
 const Publications = ({
   publications = [],
@@ -19,13 +20,58 @@ const Publications = ({
 }) => {
   // Fallback to empty array if no publications
   const publicationsItems = publications.length > 0 ? publications : [];
+  const [isMounted, setIsMounted] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  // Ensure component is mounted and get window width
+  useEffect(() => {
+    setIsMounted(true);
+
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    // Set initial width
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+    }
+
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
+
+  // Determine initial slidesToShow based on window width
+  const getInitialSlidesToShow = () => {
+    if (typeof window === "undefined" || windowWidth === 0) {
+      return 2; // Default to mobile for SSR
+    }
+    if (windowWidth <= 740) {
+      return 2;
+    }
+    if (windowWidth <= 1024) {
+      return 4;
+    }
+    return 5;
+  };
+
+  // Get breakpoint key for forcing re-render
+  const getBreakpointKey = () => {
+    if (windowWidth === 0) return "mobile";
+    if (windowWidth <= 740) return "mobile";
+    if (windowWidth <= 1024) return "tablet";
+    return "desktop";
+  };
 
   // Simple slick carousel settings
   const sliderSettings = {
     dots: false,
-    infinite: !showAll && publicationsItems.length > 5,
+    infinite: !showAll && publicationsItems.length > getInitialSlidesToShow(),
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: getInitialSlidesToShow(),
     slidesToScroll: 1,
     arrows: true,
     responsive: [
@@ -33,12 +79,14 @@ const Publications = ({
         breakpoint: 1024,
         settings: {
           slidesToShow: 4,
+          slidesToScroll: 1,
         },
       },
       {
         breakpoint: 740,
         settings: {
           slidesToShow: 2,
+          slidesToScroll: 1,
         },
       },
     ],
@@ -67,8 +115,12 @@ const Publications = ({
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {publicationsItems.length > 0 ? (
-            <Slider {...sliderSettings} className={styles.publications_slider}>
+          {publicationsItems.length > 0 && isMounted ? (
+            <Slider
+              key={getBreakpointKey()}
+              {...sliderSettings}
+              className={styles.publications_slider}
+            >
               {publicationsItems.map((item, index) => (
                 <div
                   key={item.id || index}
@@ -133,6 +185,8 @@ const Publications = ({
                 </div>
               ))}
             </Slider>
+          ) : publicationsItems.length > 0 ? (
+            <div className={styles.publications_loading}>Loading...</div>
           ) : (
             <div>
               <p>No publications available at the moment.</p>
