@@ -10,11 +10,20 @@ import Link from "next/link";
 import { BsDownload } from "react-icons/bs";
 import { IoIosArrowForward } from "react-icons/io";
 
-const Publications = ({ publications = [], debugInfo = null }) => {
+const Publications = ({
+  publications = [],
+  debugInfo = null,
+  showButton = true,
+  showAll = false,
+}) => {
   // Fallback to empty array if no publications
   const publicationsItems = publications.length > 0 ? publications : [];
   return (
-    <div className={styles.publications}>
+    <div
+      className={`${styles.publications} ${
+        showAll ? styles.publications_all : ""
+      }`}
+    >
       <Container>
         <motion.h2
           className={`${styles.publications_title} title`}
@@ -62,7 +71,7 @@ const Publications = ({ publications = [], debugInfo = null }) => {
                       }
                     }}
                   >
-                    <BsDownload />
+                    download
                   </div>
                 </div>
                 <div className={styles.publications_item_text}>
@@ -144,18 +153,23 @@ const Publications = ({ publications = [], debugInfo = null }) => {
             </div>
           )}
         </motion.div>
-        <motion.div
-          className={styles.publications_button_container}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <Button href="/publications" className={styles.publications_button}>
-            Discover More{" "}
-            <IoIosArrowForward className={styles.publications_button_icon} />
-          </Button>
-        </motion.div>
+        {showButton && (
+          <motion.div
+            className={styles.publications_button_container}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <Button
+              href="/our-work/publications"
+              className={styles.publications_button}
+            >
+              Discover More{" "}
+              <IoIosArrowForward className={styles.publications_button_icon} />
+            </Button>
+          </motion.div>
+        )}
       </Container>
     </div>
   );
