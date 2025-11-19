@@ -6,11 +6,10 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Button from "@/app/components/button";
 import Link from "next/link";
+import { IoIosArrowForward } from "react-icons/io";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
-import { useRef, useEffect, useState } from "react";
 
 const Publications = ({
   publications = [],
@@ -20,87 +19,26 @@ const Publications = ({
 }) => {
   // Fallback to empty array if no publications
   const publicationsItems = publications.length > 0 ? publications : [];
-  const sliderRef = useRef(null);
-  const [isMounted, setIsMounted] = useState(false);
 
-  // Ensure component is mounted before rendering slider (fixes SSR issues)
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Custom arrow components
-  const NextArrow = ({ onClick, className, style }) => {
-    return (
-      <button
-        className={`${styles.slick_arrow_next} ${className || ""}`}
-        onClick={onClick}
-        style={style}
-        aria-label="Next slide"
-      >
-        <IoIosArrowForward />
-      </button>
-    );
-  };
-
-  const PrevArrow = ({ onClick, className, style }) => {
-    return (
-      <button
-        className={`${styles.slick_arrow_prev} ${className || ""}`}
-        onClick={onClick}
-        style={style}
-        aria-label="Previous slide"
-      >
-        <IoIosArrowBack />
-      </button>
-    );
-  };
-
-  // Slick carousel settings - simple responsive
-  // Note: Slick breakpoints are max-width (viewport <= breakpoint)
-  // Base applies to viewports > largest breakpoint
-  // Breakpoints cascade from largest to smallest
-  //
-  // How it works:
-  // - > 1280px: 5 slides (base)
-  // - <= 1280px: 6 slides
-  // - <= 1024px: 4 slides (overrides 1280)
-  // - <= 740px: 2 slides (overrides 1024)
+  // Simple slick carousel settings
   const sliderSettings = {
     dots: false,
-    infinite: !showAll && publicationsItems.length > 5, // Infinite scroll only on homepage and when enough items
+    infinite: !showAll && publicationsItems.length > 5,
     speed: 500,
-    slidesToShow: 5, // Base: 5 slides for > 1280px
+    slidesToShow: 5,
     slidesToScroll: 1,
-    autoplay: false,
-    arrows: publicationsItems.length > 5, // Only show arrows if there are more items than visible
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    adaptiveHeight: false,
-    swipe: true,
-    touchMove: true,
+    arrows: true,
     responsive: [
-      {
-        breakpoint: 1280,
-        settings: {
-          slidesToShow: 6, // <= 1280px: 6 slides
-          slidesToScroll: 1,
-          arrows: publicationsItems.length > 6,
-        },
-      },
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 4, // <= 1024px: 4 slides
-          slidesToScroll: 1,
-          arrows: publicationsItems.length > 4,
+          slidesToShow: 4,
         },
       },
       {
         breakpoint: 740,
         settings: {
-          slidesToShow: 2, // <= 740px: 2 slides
-          slidesToScroll: 1,
-          arrows: false, // Hide arrows on mobile
+          slidesToShow: 2,
         },
       },
     ],
@@ -129,12 +67,8 @@ const Publications = ({
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {publicationsItems.length > 0 && isMounted ? (
-            <Slider
-              ref={sliderRef}
-              {...sliderSettings}
-              className={styles.publications_slider}
-            >
+          {publicationsItems.length > 0 ? (
+            <Slider {...sliderSettings} className={styles.publications_slider}>
               {publicationsItems.map((item, index) => (
                 <div
                   key={item.id || index}
@@ -199,10 +133,6 @@ const Publications = ({
                 </div>
               ))}
             </Slider>
-          ) : publicationsItems.length > 0 ? (
-            <div className={styles.publications_loading}>
-              Loading carousel...
-            </div>
           ) : (
             <div>
               <p>No publications available at the moment.</p>
