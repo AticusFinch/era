@@ -14,7 +14,7 @@
   overflow: hidden;
   display: inline-block;
   vertical-align: middle;
-  font-size: clamp(0.85rem, 2.5vw, 1rem);
+  font-size: clamp(0.7rem, 0.514rem + 0.93vw, 2rem);
 }
 
 .button:hover {
@@ -23,14 +23,12 @@
 
 @media (min-width: 1024px) {
   .button {
-    padding: 0.8rem 1.6rem;
+    padding: 0.6rem 1.1rem;
+    border-radius: 0.8rem;
   }
 }
 
 @media (min-width: 1440px) {
-  .button {
-    padding: 0.6rem 1.2rem;
-  }
 }
 
 @media (min-width: 1600px) {

@@ -47,7 +47,7 @@ body {
 /* Base Typography - Fluid Scale with clamp() */
 body,
 p {
-  font-size: clamp(0.75rem, 0.643rem + 0.54vw, 1.5rem);
+  font-size: clamp(0.75rem, 0.643rem + 0.54vw, 2rem);
   line-height: 1.6;
 }
 
@@ -58,7 +58,7 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(1.25rem, 0.643rem + 3.04vw, 5.5rem);
+  font-size: clamp(2rem, 1.571rem + 2.14vw, 5rem);
   line-height: 1.2;
   font-weight: 600;
 }
@@ -76,7 +76,7 @@ h4 {
 }
 
 h5 {
-  font-size: clamp(0.875rem, 0.732rem + 0.71vw, 1.875rem);
+  font-size: clamp(0.875rem, 0.732rem + 0.71vw, 1.8rem);
   line-height: 1.5;
   font-weight: 600;
 }
@@ -95,7 +95,6 @@ a {
 .title {
   position: relative;
   display: inline-block;
-  font-size: clamp(1.8rem, 6vw, 3.2rem);
   font-weight: 800;
   color: var(--color-font-primary);
   margin-bottom: 1.5rem;
@@ -110,7 +109,7 @@ a {
 .title-accent::before {
   content: "";
   position: absolute;
-  bottom: 20%;
+  bottom: 15%;
   left: 0;
   right: 0;
   height: 0.3em;
@@ -128,7 +127,7 @@ a {
 .title-accent-secondary::before {
   content: "";
   position: absolute;
-  bottom: 20%;
+  bottom: 10%;
   left: 0;
   right: 0;
   height: 0.3em;
@@ -138,7 +137,8 @@ a {
 }
 
 .text {
-  font-size: clamp(0.75rem, 2.5vw, 1.25rem);
+  font-size: clamp(0.75rem, 0.6rem + 0.75vw, 1.8rem);
+  line-height: 1.6;
   color: var(--color-font-secondary);
 }
 
@@ -162,7 +162,7 @@ a {
 
 @media (min-width: 1024px) {
   .title {
-    margin-bottom: 3rem;
+    margin-bottom: 1.8rem;
   }
 }
 
@@ -174,24 +174,24 @@ a {
 
 @media (min-width: 1440px) {
   .title {
-    margin-bottom: 2.5rem;
+    margin-bottom: 2.3rem;
   }
 }
 
 @media (min-width: 1600px) {
   .title {
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
   }
 }
 
 @media (min-width: 1920px) {
   .title {
-    margin-bottom: 3.5rem;
+    margin-bottom: 3rem;
   }
 }
 
 @media (min-width: 2560px) {
   .title {
-    margin-bottom: 6rem;
+    margin-bottom: 4rem;
   }
 }
