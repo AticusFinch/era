@@ -302,10 +302,7 @@
   }
 }
 
-@media (min-width: 1024px) {
-}
-
-@media (min-width: 1280px) {
+@media (min-width: 900px) {
   .navbar {
     padding: 2rem 0;
   }
@@ -431,6 +428,9 @@
   .navbar_mobile_menu {
     display: none;
   }
+}
+
+@media (min-width: 1024px) {
 }
 
 @media (min-width: 1440px) {

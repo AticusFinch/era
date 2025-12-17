@@ -40,19 +40,11 @@ const Work = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.5 }}
               whileHover={{ y: -5, scale: 1.02 }}
             >
-              <div className={styles.work_link_image}>
-                <Image
-                  src="/img/hero/lgbt.jpg"
-                  alt="Projects"
-                  width={200}
-                  height={200}
-                />
-              </div>
               <Link href="/our-work/projects">
-                <h5 className={styles.work_link_accent}>Projects</h5>
+                <h5>Projects</h5>
               </Link>
             </motion.div>
             <motion.div
@@ -60,19 +52,71 @@ const Work = () => {
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.8 }}
+              transition={{ duration: 0.5 }}
               whileHover={{ y: -5, scale: 1.02 }}
             >
-              <div className={styles.work_link_image}>
-                <Image
-                  src="/img/hero/lgbt.jpg"
-                  alt="Publications"
-                  width={200}
-                  height={200}
-                />
-              </div>
               <Link href="/our-work/publications">
-                <h5 className={styles.work_link_accent}>Publications</h5>
+                <h5>Training Hub</h5>
+              </Link>
+            </motion.div>
+            <motion.div
+              className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Link href="/our-work/publications">
+                <h5>WLW & TNBI Caucuses</h5>
+              </Link>
+            </motion.div>
+            <motion.div
+              className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Link href="/our-work/publications">
+                <h5>Community Support</h5>
+              </Link>
+            </motion.div>
+            <motion.div
+              className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Link href="/our-work/publications">
+                <h5>Advocacy</h5>
+              </Link>
+            </motion.div>
+            <motion.div
+              className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Link href="/our-work/publications">
+                <h5>Research</h5>
+              </Link>
+            </motion.div>
+            <motion.div
+              className={styles.work_link}
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+            >
+              <Link href="/our-work/publications">
+                <h5>Events</h5>
               </Link>
             </motion.div>
           </div>

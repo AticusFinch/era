@@ -16,7 +16,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef(null);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
-  const [isResourcesDropdownOpen, setIsResourcesDropdownOpen] = useState(false);
+  const [isOurWorkDropdownOpen, setIsOurWorkDropdownOpen] = useState(false);
+  const [isGetInvolvedDropdownOpen, setIsGetInvolvedDropdownOpen] =
+    useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,8 +28,12 @@ const Navbar = () => {
     setIsAboutDropdownOpen(!isAboutDropdownOpen);
   };
 
-  const toggleResourcesDropdown = () => {
-    setIsResourcesDropdownOpen(!isResourcesDropdownOpen);
+  const toggleOurWorkDropdown = () => {
+    setIsOurWorkDropdownOpen(!isOurWorkDropdownOpen);
+  };
+
+  const toggleGetInvolvedDropdown = () => {
+    setIsGetInvolvedDropdownOpen(!isGetInvolvedDropdownOpen);
   };
 
   // Close nested dropdown when menu closes
@@ -38,10 +44,16 @@ const Navbar = () => {
   }, [isOpen, isAboutDropdownOpen]);
 
   useEffect(() => {
-    if (!isOpen && isResourcesDropdownOpen) {
-      setIsResourcesDropdownOpen(false);
+    if (!isOpen && isOurWorkDropdownOpen) {
+      setIsOurWorkDropdownOpen(false);
     }
-  }, [isOpen, isResourcesDropdownOpen]);
+  }, [isOpen, isOurWorkDropdownOpen]);
+
+  useEffect(() => {
+    if (!isOpen && isGetInvolvedDropdownOpen) {
+      setIsGetInvolvedDropdownOpen(false);
+    }
+  }, [isOpen, isGetInvolvedDropdownOpen]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -138,9 +150,11 @@ const Navbar = () => {
             >
               <Link href="/about-us">About Us</Link>
               <div className={styles.navbar_dropdown}>
-                <Link href="/mission">Mission</Link>
+                <Link href="/mission">Who We Are</Link>
                 <Link href="/team">Our Team</Link>
-                <Link href="/history">History</Link>
+                <Link href="/history">Member Organizations</Link>
+                <Link href="/history">Partners & Donors</Link>
+                <Link href="/history">Transparency & Policies</Link>
               </div>
             </motion.div>
             <motion.div
@@ -151,21 +165,37 @@ const Navbar = () => {
               <Link href="/our-work">Our Work</Link>
               <div className={styles.navbar_dropdown}>
                 <Link href="/our-work/projects">Projects</Link>
-                <Link href="/our-work/donations">Donators</Link>
-                <Link href="/our-work/publications">Publications</Link>
+                <Link href="/our-work/donations">Training Hub</Link>
+                <Link href="/our-work/publications">WLW & TNBI Caucuses</Link>
+                <Link href="/our-work/publications">Community Support</Link>
+                <Link href="/our-work/publications">Advocacy</Link>
+                <Link href="/our-work/publications">Research</Link>
+                <Link href="/our-work/publications">Events</Link>
               </div>
             </motion.div>
             <motion.div
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <Link href="/trainings">Trainings</Link>
+              <Link href="/resources">Resources</Link>
+            </motion.div>
+            <motion.div
+              className={styles.navbar_link_container}
+              whileHover={{ y: -2 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+            >
+              <Link href="/get-involved">Get Involved</Link>
+              <div className={styles.navbar_dropdown}>
+                <Link href="/our-work/projects">Partner With Us</Link>
+                <Link href="/our-work/donations">Subgranting</Link>
+                <Link href="/our-work/publications">Other Calls</Link>
+              </div>
             </motion.div>
             <motion.div
               whileHover={{ y: -2 }}
               transition={{ duration: 0.2, ease: "easeOut" }}
             >
-              <Link href="/get-involved">Get Involved</Link>
+              <Link href="/news">News</Link>
             </motion.div>
             <motion.div
               whileHover={{ y: -2 }}
@@ -238,18 +268,37 @@ const Navbar = () => {
                         className={styles.navbar_mobile_dropdown}
                       >
                         <div>
-                          <Link href="/mission" onClick={toggleMenu}>
-                            Mission
+                          <Link href="about-us/who-we-are" onClick={toggleMenu}>
+                            Who We Are
                           </Link>
                         </div>
                         <div>
-                          <Link href="/team" onClick={toggleMenu}>
+                          <Link href="about-us/our-team" onClick={toggleMenu}>
                             Our Team
                           </Link>
                         </div>
                         <div>
-                          <Link href="/history" onClick={toggleMenu}>
-                            History
+                          <Link
+                            href="about-us/member-organizations"
+                            onClick={toggleMenu}
+                          >
+                            Member Organizations
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            href="about-us/partners-and-donors"
+                            onClick={toggleMenu}
+                          >
+                            Partners & Donors
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            href="about-us/transparency-and-policies"
+                            onClick={toggleMenu}
+                          >
+                            Transparency & Policies
                           </Link>
                         </div>
                       </motion.div>
@@ -265,9 +314,9 @@ const Navbar = () => {
                         Our Work
                       </Link>
                       <motion.div
-                        onClick={toggleResourcesDropdown}
+                        onClick={toggleOurWorkDropdown}
                         initial={{ rotate: 0 }}
-                        animate={{ rotate: isResourcesDropdownOpen ? 90 : 0 }}
+                        animate={{ rotate: isOurWorkDropdownOpen ? 90 : 0 }}
                         transition={{
                           duration: 0.3,
                           ease: [0.43, 0.13, 0.23, 0.96],
@@ -278,7 +327,7 @@ const Navbar = () => {
                       </motion.div>
                     </div>
 
-                    {isResourcesDropdownOpen && (
+                    {isOurWorkDropdownOpen && (
                       <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -295,16 +344,39 @@ const Navbar = () => {
                           </Link>
                         </div>
                         <div>
-                          <Link href="/our-work/donators" onClick={toggleMenu}>
-                            Donators
+                          <Link
+                            href="/our-work/training-hub"
+                            onClick={toggleMenu}
+                          >
+                            Training Hub
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href="/our-work/caucuses" onClick={toggleMenu}>
+                            WLW & TNBI Caucuses
                           </Link>
                         </div>
                         <div>
                           <Link
-                            href="/our-work/publications"
+                            href="/our-work/community-support"
                             onClick={toggleMenu}
                           >
-                            Publications
+                            Community Support
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href="/our-work/advocacy" onClick={toggleMenu}>
+                            Advocacy
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href="/our-work/research" onClick={toggleMenu}>
+                            Research
+                          </Link>
+                        </div>
+                        <div>
+                          <Link href="/our-work/events" onClick={toggleMenu}>
+                            Events
                           </Link>
                         </div>
                       </motion.div>
@@ -315,8 +387,8 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.2 }}
                   >
-                    <Link href="/trainings" onClick={toggleMenu}>
-                      Trainings
+                    <Link href="/resources" onClick={toggleMenu}>
+                      Resources
                     </Link>
                   </motion.div>
                   <motion.div
@@ -324,8 +396,68 @@ const Navbar = () => {
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.3, delay: 0.25 }}
                   >
-                    <Link href="/get-involved" onClick={toggleMenu}>
-                      Get Involved
+                    <div className={styles.navbar_mobile_link}>
+                      <Link href="get-involved" onClick={toggleMenu}>
+                        Get Involved
+                      </Link>
+                      <motion.div
+                        onClick={toggleGetInvolvedDropdown}
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: isGetInvolvedDropdownOpen ? 90 : 0 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: [0.43, 0.13, 0.23, 0.96],
+                        }}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <RxChevronRight />
+                      </motion.div>
+                    </div>
+                    {isGetInvolvedDropdownOpen && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{
+                          duration: 0.3,
+                          ease: [0.43, 0.13, 0.23, 0.96],
+                        }}
+                        className={styles.navbar_mobile_dropdown}
+                      >
+                        <div>
+                          <Link
+                            href="/get-involved/partner-with-us"
+                            onClick={toggleMenu}
+                          >
+                            Partner With Us
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            href="/get-involved/subgranting"
+                            onClick={toggleMenu}
+                          >
+                            Subgranting
+                          </Link>
+                        </div>
+                        <div>
+                          <Link
+                            href="/get-involved/other-calls"
+                            onClick={toggleMenu}
+                          >
+                            Other Calls
+                          </Link>
+                        </div>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                  <motion.div
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                  >
+                    <Link href="/news" onClick={toggleMenu}>
+                      News
                     </Link>
                   </motion.div>
                   <motion.div

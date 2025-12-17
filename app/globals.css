@@ -97,7 +97,7 @@ a {
   display: inline-block;
   font-weight: 800;
   color: var(--color-font-primary);
-  margin-bottom: 3rem;
+  margin-bottom: 1.5rem;
 }
 
 .title-accent {
@@ -144,13 +144,13 @@ a {
 
 @media (min-width: 375px) {
   .title {
-    margin-bottom: 3.5rem;
+    margin-bottom: 1.6rem;
   }
 }
 
 @media (min-width: 412px) {
   .title {
-    margin-bottom: 4rem;
+    margin-bottom: 1.8rem;
   }
 }
 
