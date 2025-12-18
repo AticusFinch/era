@@ -68,6 +68,21 @@ const Work = () => {
     Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
   );
 
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDesktop(window.innerWidth >= 1024);
+    };
+
+    // Check on mount
+    checkScreenSize();
+
+    // Check on resize
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
   const [emblaRef, emblaApi] = useEmblaCarousel(
     {
       align: "start",
@@ -146,24 +161,26 @@ const Work = () => {
                           },
                         }}
                         viewport={{ once: true }}
-                        whileHover={{
-                          y: -5,
-                          scale: 1.02,
-                          boxShadow: "0 8px 24px 0 rgba(0, 0, 0, 0.12)",
-                          borderColor: "rgba(0, 0, 0, 0.1)",
+                        {...(isDesktop && {
+                          whileHover: {
+                            y: -5,
+                            scale: 1.02,
+                            boxShadow: "0 8px 24px 0 rgba(0, 0, 0, 0.12)",
+                            borderColor: "rgba(0, 0, 0, 0.1)",
+                            transition: {
+                              type: "spring",
+                              stiffness: 600,
+                              damping: 35,
+                              mass: 0.5,
+                            },
+                          },
                           transition: {
                             type: "spring",
                             stiffness: 600,
                             damping: 35,
                             mass: 0.5,
                           },
-                        }}
-                        transition={{
-                          type: "spring",
-                          stiffness: 600,
-                          damping: 35,
-                          mass: 0.5,
-                        }}
+                        })}
                       >
                         <Link
                           href={item.href}
@@ -203,9 +220,7 @@ const Work = () => {
                     onClick={() => scrollTo(index)}
                     aria-label={`Go to slide ${index + 1}`}
                     aria-current={index === selectedIndex ? "true" : "false"}
-                  >
-                    {index + 1}
-                  </button>
+                  />
                 ))}
               </div>
             )}
