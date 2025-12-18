@@ -15,8 +15,8 @@ import {
 } from "react-icons/fa";
 import { IoIosArrowForward } from "react-icons/io";
 import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState, useCallback } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 
 const workItems = [
   {
@@ -64,29 +64,31 @@ const workItems = [
 ];
 
 const Work = () => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    align: "start",
-    slidesToScroll: 1,
-    containScroll: "trimSnaps",
-  });
-  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
-  const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
+  const [autoplayPlugin] = useState(() =>
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      slidesToScroll: 1,
+      containScroll: "trimSnaps",
+    },
+    [autoplayPlugin]
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
+  const scrollTo = useCallback(
+    (index) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
     setSelectedIndex(emblaApi.selectedScrollSnap());
-    setPrevBtnDisabled(!emblaApi.canScrollPrev());
-    setNextBtnDisabled(!emblaApi.canScrollNext());
   }, [emblaApi]);
 
   useEffect(() => {
@@ -135,10 +137,33 @@ const Work = () => {
                       <motion.div
                         className={styles.work_link}
                         initial={{ opacity: 0, y: 10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        whileInView={{
+                          opacity: 1,
+                          y: 0,
+                          transition: {
+                            duration: 0.4,
+                            delay: index * 0.05,
+                          },
+                        }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.5, delay: index * 0.05 }}
-                        whileHover={{ y: -5, scale: 1.02 }}
+                        whileHover={{
+                          y: -5,
+                          scale: 1.02,
+                          boxShadow: "0 8px 24px 0 rgba(0, 0, 0, 0.12)",
+                          borderColor: "rgba(0, 0, 0, 0.1)",
+                          transition: {
+                            type: "spring",
+                            stiffness: 600,
+                            damping: 35,
+                            mass: 0.5,
+                          },
+                        }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 600,
+                          damping: 35,
+                          mass: 0.5,
+                        }}
                       >
                         <Link
                           href={item.href}
@@ -166,23 +191,22 @@ const Work = () => {
               </div>
             </div>
             {scrollSnaps.length > 1 && (
-              <div className={styles.work_carousel_buttons}>
-                <button
-                  className={`${styles.work_carousel_button} ${styles.work_carousel_button_prev}`}
-                  onClick={scrollPrev}
-                  disabled={prevBtnDisabled}
-                  aria-label="Previous slide"
-                >
-                  <IoIosArrowBack />
-                </button>
-                <button
-                  className={`${styles.work_carousel_button} ${styles.work_carousel_button_next}`}
-                  onClick={scrollNext}
-                  disabled={nextBtnDisabled}
-                  aria-label="Next slide"
-                >
-                  <IoIosArrowForward />
-                </button>
+              <div className={styles.work_carousel_pagination}>
+                {scrollSnaps.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`${styles.work_carousel_dot} ${
+                      index === selectedIndex
+                        ? styles.work_carousel_dot_active
+                        : ""
+                    }`}
+                    onClick={() => scrollTo(index)}
+                    aria-label={`Go to slide ${index + 1}`}
+                    aria-current={index === selectedIndex ? "true" : "false"}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
               </div>
             )}
           </div>
