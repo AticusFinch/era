@@ -188,26 +188,6 @@ const Work = () => {
           </div>
         </div>
       </Container>
-      <div className={styles.work_images}>
-        <div className={styles.work_image_container}>
-          <Image
-            src="/img/hero/lgbt.jpg"
-            alt="Our Work"
-            width={1000}
-            height={1000}
-            priority
-          />
-        </div>
-        <div className={styles.work_image_container}>
-          <Image
-            src="/img/hero/lgbt.jpg"
-            alt="Our Work"
-            width={1000}
-            height={1000}
-            priority
-          />
-        </div>
-      </div>
     </div>
   );
 };
