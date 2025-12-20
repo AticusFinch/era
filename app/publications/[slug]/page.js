@@ -8,6 +8,7 @@ import Container from "@/app/components/container";
 import styles from "./page.module.css";
 
 export default async function PublicationPage({ params }) {
+  const { slug } = await params;
   let publication = null;
 
   try {
@@ -15,7 +16,7 @@ export default async function PublicationPage({ params }) {
     const { data, error } = await client.query({
       query: GET_PUBLICATION_BY_SLUG,
       variables: {
-        slug: params.slug,
+        slug: slug,
       },
       fetchPolicy: "cache-first",
     });
@@ -71,13 +72,6 @@ export default async function PublicationPage({ params }) {
               )}
             </div>
           </div>
-
-          {publication.excerpt && (
-            <div
-              className={styles.publication_excerpt}
-              dangerouslySetInnerHTML={{ __html: publication.excerpt }}
-            />
-          )}
 
           {publication.content && (
             <div

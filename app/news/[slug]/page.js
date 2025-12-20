@@ -11,6 +11,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import styles from "./page.module.css";
 
 export default async function NewsPostPage({ params }) {
+  const { slug } = await params;
   let post = null;
 
   try {
@@ -18,7 +19,7 @@ export default async function NewsPostPage({ params }) {
     const { data, error } = await client.query({
       query: GET_POST_BY_SLUG,
       variables: {
-        slug: params.slug,
+        slug: slug,
       },
       fetchPolicy: "cache-first",
     });

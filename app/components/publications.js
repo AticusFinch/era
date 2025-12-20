@@ -7,10 +7,10 @@ import Image from "next/image";
 import Button from "@/app/components/button";
 import Link from "next/link";
 import { IoIosArrowForward } from "react-icons/io";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useEffect, useState } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { useEffect, useState, useCallback } from "react";
+import { IoIosArrowBack } from "react-icons/io";
 
 const Publications = ({
   publications = [],
@@ -20,77 +20,66 @@ const Publications = ({
 }) => {
   // Fallback to empty array if no publications
   const publicationsItems = publications.length > 0 ? publications : [];
-  const [isMounted, setIsMounted] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
 
-  // Ensure component is mounted and get window width
+  const [autoplayPlugin] = useState(() =>
+    Autoplay({
+      delay: 4000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: false,
+    })
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      slidesToScroll: 1,
+      containScroll: "trimSnaps",
+      dragFree: false,
+      loop: false,
+    },
+    [autoplayPlugin]
+  );
+
+  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState([]);
+
+  const scrollPrev = useCallback(() => {
+    if (emblaApi) emblaApi.scrollPrev();
+  }, [emblaApi]);
+
+  const scrollNext = useCallback(() => {
+    if (emblaApi) emblaApi.scrollNext();
+  }, [emblaApi]);
+
+  const scrollTo = useCallback(
+    (index) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi]
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setPrevBtnDisabled(!emblaApi.canScrollPrev());
+    setNextBtnDisabled(!emblaApi.canScrollNext());
+  }, [emblaApi]);
+
   useEffect(() => {
-    setIsMounted(true);
-
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    // Set initial width
-    if (typeof window !== "undefined") {
-      setWindowWidth(window.innerWidth);
-      window.addEventListener("resize", handleResize);
-    }
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
 
     return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("resize", handleResize);
-      }
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
     };
-  }, []);
-
-  // Determine initial slidesToShow based on window width
-  const getInitialSlidesToShow = () => {
-    if (typeof window === "undefined" || windowWidth === 0) {
-      return 2; // Default to mobile for SSR
-    }
-    if (windowWidth <= 740) {
-      return 2;
-    }
-    if (windowWidth <= 1024) {
-      return 4;
-    }
-    return 5;
-  };
-
-  // Get breakpoint key for forcing re-render
-  const getBreakpointKey = () => {
-    if (windowWidth === 0) return "mobile";
-    if (windowWidth <= 740) return "mobile";
-    if (windowWidth <= 1024) return "tablet";
-    return "desktop";
-  };
-
-  // Simple slick carousel settings
-  const sliderSettings = {
-    dots: false,
-    infinite: !showAll && publicationsItems.length > getInitialSlidesToShow(),
-    speed: 500,
-    slidesToShow: getInitialSlidesToShow(),
-    slidesToScroll: 1,
-    arrows: true,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 4,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 740,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
+  }, [emblaApi, onSelect]);
 
   return (
     <div
@@ -106,8 +95,9 @@ const Publications = ({
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          <span className="title-accent">Publications</span>
+          <span className="title-accent">Resources</span>
         </motion.h2>
+
         <motion.div
           className={styles.publications_items_wrapper}
           initial={{ opacity: 0, y: 10 }}
@@ -115,78 +105,64 @@ const Publications = ({
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {publicationsItems.length > 0 && isMounted ? (
-            <Slider
-              key={getBreakpointKey()}
-              {...sliderSettings}
-              className={styles.publications_slider}
-            >
-              {publicationsItems.map((item, index) => (
-                <div
-                  key={item.id || index}
-                  className={styles.publications_slide}
-                >
-                  <Link
-                    href={`/publications/${item.slug}`}
-                    className={styles.publications_item}
-                  >
-                    <div className={styles.publications_item_image}>
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        fill
-                        style={{ objectFit: "cover" }}
-                      />
-                      <div
-                        className={styles.publications_item_download}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          e.stopPropagation();
-                          console.log("Download clicked:", item.downloadUrl);
-                          if (item.downloadUrl) {
-                            window.open(item.downloadUrl, "_blank");
-                          } else {
-                            console.warn(
-                              "No download URL available for:",
-                              item.title
-                            );
-                          }
-                        }}
+          {publicationsItems.length > 0 ? (
+            <div className={styles.publications_carousel_wrapper}>
+              <div className={styles.publications_carousel} ref={emblaRef}>
+                <div className={styles.publications_slider}>
+                  {publicationsItems.map((item, index) => (
+                    <div
+                      key={item.id || index}
+                      className={styles.publications_slide}
+                    >
+                      <Link
+                        href={`/publications/${item.slug}`}
+                        className={styles.publications_item}
                       >
-                        download
-                      </div>
+                        <div className={styles.publications_item_image}>
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            fill
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
+                        <div className={styles.publications_item_text}>
+                          <p className={styles.publications_item_type}>
+                            {item.type}
+                          </p>
+                          <h6 className={styles.publications_item_title}>
+                            {item.title}
+                          </h6>
+                          <p className={styles.publications_item_excerpt}>
+                            {item.excerpt}
+                          </p>
+                        </div>
+                      </Link>
                     </div>
-                    <div className={styles.publications_item_text}>
-                      <p className={styles.publications_item_type}>
-                        {item.type}
-                      </p>
-                      <div className={styles.publications_item_title_author}>
-                        <h6 className={styles.publications_item_title}>
-                          {item.title}
-                        </h6>
-                        {item.authors && (
-                          <div className={styles.publications_item_authors}>
-                            {item.authors
-                              .split(",")
-                              .slice(0, 3)
-                              .map((author, authorIndex) => (
-                                <p
-                                  key={authorIndex}
-                                  className={styles.publications_item_author}
-                                >
-                                  {author.trim()}
-                                </p>
-                              ))}
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </Link>
+                  ))}
                 </div>
-              ))}
-            </Slider>
-          ) : publicationsItems.length > 0 ? (
-            <div className={styles.publications_loading}>Loading...</div>
+              </div>
+              {scrollSnaps.length > 1 && (
+                <div className={styles.publications_buttons}>
+                  <button
+                    className={`${styles.publications_button_nav} ${styles.publications_button_prev}`}
+                    onClick={scrollPrev}
+                    disabled={prevBtnDisabled}
+                    aria-label="Previous slide"
+                  >
+                    <IoIosArrowBack />
+                  </button>
+                  <button
+                    className={`${styles.publications_button_nav} ${styles.publications_button_next}`}
+                    onClick={scrollNext}
+                    disabled={nextBtnDisabled}
+                    aria-label="Next slide"
+                  >
+                    <IoIosArrowForward />
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <div>
               <p>No publications available at the moment.</p>

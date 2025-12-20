@@ -82,7 +82,7 @@ h5 {
 }
 
 h6 {
-  font-size: clamp(0.9rem, 2vw, 1.25rem);
+  font-size: clamp(0.6rem, 0.429rem + 0.86vw, 1.8rem);
   line-height: 1.5;
   font-weight: 600;
 }

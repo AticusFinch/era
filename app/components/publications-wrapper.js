@@ -18,6 +18,21 @@ function makeAbsoluteUrl(url, baseUrl) {
   return url.startsWith("/") ? `${base}${url}` : `${base}/${url}`;
 }
 
+// Helper function to strip HTML tags from text
+function stripHtmlTags(html) {
+  if (!html) return "";
+  // Remove HTML tags and decode HTML entities
+  return html
+    .replace(/<[^>]*>/g, "") // Remove HTML tags
+    .replace(/&nbsp;/g, " ") // Replace &nbsp; with space
+    .replace(/&amp;/g, "&") // Decode &amp;
+    .replace(/&lt;/g, "<") // Decode &lt;
+    .replace(/&gt;/g, ">") // Decode &gt;
+    .replace(/&quot;/g, '"') // Decode &quot;
+    .replace(/&#39;/g, "'") // Decode &#39;
+    .trim(); // Remove leading/trailing whitespace
+}
+
 export default async function PublicationsWrapper() {
   let publications = [];
   let debugInfo = null;
@@ -32,24 +47,6 @@ export default async function PublicationsWrapper() {
       },
       fetchPolicy: "cache-first",
     });
-
-    // Log for debugging
-    console.log("Publications Query Response:", {
-      hasData: !!data,
-      hasPublications: !!data?.publications,
-      hasEdges: !!data?.publications?.edges,
-      edgesLength: data?.publications?.edges?.length || 0,
-      error: error?.message,
-      graphQLErrors: error?.graphQLErrors,
-    });
-
-    // Log first publication's textInputs for debugging
-    if (data?.publications?.edges?.[0]?.node?.textInputs) {
-      console.log(
-        "Sample textInputs structure:",
-        data.publications.edges[0].node.textInputs
-      );
-    }
 
     if (error) {
       console.error("Error fetching publications:", error);
@@ -134,19 +131,12 @@ export default async function PublicationsWrapper() {
           downloadUrl = makeAbsoluteUrl(downloadUrl, wordpressUrl);
         }
 
-        // Log for debugging
-        console.log("Publication data:", {
-          title: node.title,
-          category: textInputs.category,
-          authors: textInputs.authors,
-          authorsFormatted: authors,
-          download: textInputs.download,
-          downloadUrl: downloadUrl,
-        });
-
         // Get featured image or fallback
         const imageUrl =
           node.featuredImage?.node?.sourceUrl || "/img/hero/lgbt.jpg";
+
+        // Get excerpt and strip HTML tags
+        const excerpt = stripHtmlTags(node.excerpt || "");
 
         return {
           id: node.id,
@@ -157,6 +147,7 @@ export default async function PublicationsWrapper() {
           image: imageUrl,
           slug: node.slug || "",
           downloadUrl: downloadUrl,
+          excerpt: excerpt,
         };
       });
     }
