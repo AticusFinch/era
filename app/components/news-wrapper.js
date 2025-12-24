@@ -18,6 +18,26 @@ function formatDate(dateString) {
   return `${year}-${month}-${day}`;
 }
 
+// Helper function to strip HTML tags from text
+function stripHtmlTags(html) {
+  if (!html) return "";
+  // Remove HTML tags and decode HTML entities
+  return html
+    .replace(/<[^>]*>/g, "") // Remove HTML tags
+    .replace(/&nbsp;/g, " ") // Replace &nbsp; with space
+    .replace(/&amp;/g, "&") // Decode &amp;
+    .replace(/&lt;/g, "<") // Decode &lt;
+    .replace(/&gt;/g, ">") // Decode &gt;
+    .replace(/&quot;/g, '"') // Decode &quot;
+    .replace(/&#39;/g, "'") // Decode &#39;
+    .replace(/&#8217;/g, "'") // Decode &#8217; (apostrophe)
+    .replace(/&#8220;/g, '"') // Decode &#8220; (left double quote)
+    .replace(/&#8221;/g, '"') // Decode &#8221; (right double quote)
+    .replace(/&#8211;/g, "–") // Decode &#8211; (en dash)
+    .replace(/&#8212;/g, "—") // Decode &#8212; (em dash)
+    .trim(); // Remove leading/trailing whitespace
+}
+
 export default async function NewsWrapper() {
   let newsItems = [];
   let debugInfo = null;
@@ -31,16 +51,6 @@ export default async function NewsWrapper() {
         first: 7, // Limit to 7 news items for the homepage
       },
       fetchPolicy: "network-only", // Use network-only to avoid cache issues
-    });
-
-    // Log for debugging
-    console.log("News Query Response:", {
-      hasData: !!data,
-      hasPosts: !!data?.posts,
-      hasEdges: !!data?.posts?.edges,
-      edgesLength: data?.posts?.edges?.length || 0,
-      error: error?.message,
-      graphQLErrors: error?.graphQLErrors,
     });
 
     if (error) {
@@ -85,6 +95,9 @@ export default async function NewsWrapper() {
         // Calculate reading time from content
         const readingTime = calculateReadingTime(node.content);
 
+        // Get excerpt and strip HTML tags
+        const excerpt = stripHtmlTags(node.excerpt || "");
+
         return {
           id: node.id,
           title: node.title || "",
@@ -93,6 +106,7 @@ export default async function NewsWrapper() {
           category: category,
           date: formattedDate,
           readingTime: readingTime,
+          excerpt: excerpt,
         };
       });
     }

@@ -47,44 +47,39 @@ body {
 /* Base Typography - Fluid Scale with clamp() */
 body,
 p {
-  font-size: clamp(0.75rem, 0.643rem + 0.54vw, 2rem);
-  line-height: 1.6;
+  font-size: clamp(0.7rem, 0.571rem + 0.64vw, 1.6rem);
+  line-height: 1.2;
 }
 
 h1 {
   font-size: clamp(1.625rem, 0.964rem + 3.3vw, 6.25rem);
-  line-height: 1.1;
   font-weight: 700;
 }
 
 h2 {
   font-size: clamp(2rem, 1.571rem + 2.14vw, 5rem);
-  line-height: 1.2;
   font-weight: 600;
 }
 
 h3 {
   font-size: clamp(1.125rem, 0.554rem + 2.86vw, 5.125rem);
-  line-height: 1.3;
   font-weight: 600;
 }
 
 h4 {
   font-size: clamp(1rem, 0.446rem + 2.77vw, 4.875rem);
-  line-height: 1.4;
   font-weight: 600;
 }
 
 h5 {
   font-size: clamp(0.875rem, 0.732rem + 0.71vw, 1.8rem);
-  line-height: 1.5;
   font-weight: 600;
 }
 
 h6 {
-  font-size: clamp(0.6rem, 0.429rem + 0.86vw, 1.8rem);
-  line-height: 1.5;
+  font-size: clamp(0.9rem, 0.743rem + 0.79vw, 2rem);
   font-weight: 600;
+  line-height: 1.2;
 }
 
 a {

@@ -4,7 +4,7 @@ import Navbar from "./components/navbar";
 import Hero from "./components/hero";
 import Work from "./components/work";
 import NewsWrapper from "./components/news-wrapper";
-import PublicationsWrapper from "./components/publications-wrapper";
+import ResourcesWrapper from "./components/resources-wrapper";
 import Counter from "./components/counter";
 import Footer from "./components/footer";
 
@@ -15,7 +15,7 @@ export default function Home() {
       <Hero />
       <Work />
       <NewsWrapper />
-      <PublicationsWrapper />
+      <ResourcesWrapper />
       <Counter />
       <Footer />
     </>

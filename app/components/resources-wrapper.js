@@ -1,11 +1,11 @@
 /**
- * Server Component Wrapper for Publications
+ * Server Component Wrapper for Resources
  * Fetches data from WordPress and passes it to the client component
  */
 
 import { getClient } from "@/lib/apollo-client";
 import { GET_PUBLICATIONS } from "@/lib/graphql/queries";
-import Publications from "./resources";
+import Resources from "./resources";
 
 // Helper function to make URLs absolute
 function makeAbsoluteUrl(url, baseUrl) {
@@ -33,7 +33,7 @@ function stripHtmlTags(html) {
     .trim(); // Remove leading/trailing whitespace
 }
 
-export default async function PublicationsWrapper() {
+export default async function ResourcesWrapper() {
   let publications = [];
   let debugInfo = null;
 
@@ -152,12 +152,12 @@ export default async function PublicationsWrapper() {
       });
     }
   } catch (error) {
-    console.error("Error in PublicationsWrapper:", error);
+    console.error("Error in ResourcesWrapper:", error);
     debugInfo = {
       error: error.message,
       stack: error.stack,
     };
   }
 
-  return <Publications publications={publications} debugInfo={debugInfo} />;
+  return <Resources resources={publications} debugInfo={debugInfo} />;
 }

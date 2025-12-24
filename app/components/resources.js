@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "./publications.module.css";
+import styles from "./resources.module.css";
 import Container from "@/app/components/container";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -10,16 +10,15 @@ import { IoIosArrowForward } from "react-icons/io";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState, useCallback } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 
-const Publications = ({
-  publications = [],
+const Resources = ({
+  resources = [],
   debugInfo = null,
   showButton = true,
   showAll = false,
 }) => {
-  // Fallback to empty array if no publications
-  const publicationsItems = publications.length > 0 ? publications : [];
+  // Fallback to empty array if no resources
+  const resourcesItems = resources.length > 0 ? resources : [];
 
   const [autoplayPlugin] = useState(() =>
     Autoplay({
@@ -41,18 +40,8 @@ const Publications = ({
     [autoplayPlugin]
   );
 
-  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
-  const [nextBtnDisabled, setNextBtnDisabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) emblaApi.scrollPrev();
-  }, [emblaApi]);
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) emblaApi.scrollNext();
-  }, [emblaApi]);
 
   const scrollTo = useCallback(
     (index) => {
@@ -63,9 +52,9 @@ const Publications = ({
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-    setPrevBtnDisabled(!emblaApi.canScrollPrev());
-    setNextBtnDisabled(!emblaApi.canScrollNext());
+    // Get the selected scroll snap index (first visible slide index)
+    const snapIndex = emblaApi.selectedScrollSnap();
+    setSelectedIndex(snapIndex);
   }, [emblaApi]);
 
   useEffect(() => {
@@ -83,13 +72,11 @@ const Publications = ({
 
   return (
     <div
-      className={`${styles.publications} ${
-        showAll ? styles.publications_all : ""
-      }`}
+      className={`${styles.resources} ${showAll ? styles.resources_all : ""}`}
     >
       <Container>
         <motion.h2
-          className={`${styles.publications_title} title`}
+          className={`${styles.resources_title} title`}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -99,26 +86,26 @@ const Publications = ({
         </motion.h2>
 
         <motion.div
-          className={styles.publications_items_wrapper}
+          className={styles.resources_items_wrapper}
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          {publicationsItems.length > 0 ? (
-            <div className={styles.publications_carousel_wrapper}>
-              <div className={styles.publications_carousel} ref={emblaRef}>
-                <div className={styles.publications_slider}>
-                  {publicationsItems.map((item, index) => (
+          {resourcesItems.length > 0 ? (
+            <div className={styles.resources_carousel_wrapper}>
+              <div className={styles.resources_carousel} ref={emblaRef}>
+                <div className={styles.resources_slider}>
+                  {resourcesItems.map((item, index) => (
                     <div
                       key={item.id || index}
-                      className={styles.publications_slide}
+                      className={styles.resources_slide}
                     >
                       <Link
                         href={`/publications/${item.slug}`}
-                        className={styles.publications_item}
+                        className={styles.resources_item}
                       >
-                        <div className={styles.publications_item_image}>
+                        <div className={styles.resources_item_image}>
                           <Image
                             src={item.image}
                             alt={item.title}
@@ -126,14 +113,14 @@ const Publications = ({
                             style={{ objectFit: "cover" }}
                           />
                         </div>
-                        <div className={styles.publications_item_text}>
-                          <p className={styles.publications_item_type}>
+                        <div className={styles.resources_item_text}>
+                          <p className={styles.resources_item_type}>
                             {item.type}
                           </p>
-                          <h6 className={styles.publications_item_title}>
+                          <h6 className={styles.resources_item_title}>
                             {item.title}
                           </h6>
-                          <p className={styles.publications_item_excerpt}>
+                          <p className={styles.resources_item_excerpt}>
                             {item.excerpt}
                           </p>
                         </div>
@@ -142,30 +129,27 @@ const Publications = ({
                   ))}
                 </div>
               </div>
-              {scrollSnaps.length > 1 && (
-                <div className={styles.publications_buttons}>
-                  <button
-                    className={`${styles.publications_button_nav} ${styles.publications_button_prev}`}
-                    onClick={scrollPrev}
-                    disabled={prevBtnDisabled}
-                    aria-label="Previous slide"
-                  >
-                    <IoIosArrowBack />
-                  </button>
-                  <button
-                    className={`${styles.publications_button_nav} ${styles.publications_button_next}`}
-                    onClick={scrollNext}
-                    disabled={nextBtnDisabled}
-                    aria-label="Next slide"
-                  >
-                    <IoIosArrowForward />
-                  </button>
+              {resourcesItems.length > 1 && (
+                <div className={styles.resources_carousel_pagination}>
+                  {resourcesItems.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`${styles.resources_carousel_dot} ${
+                        index === selectedIndex
+                          ? styles.resources_carousel_dot_active
+                          : ""
+                      }`}
+                      onClick={() => scrollTo(index)}
+                      aria-label={`Go to slide ${index + 1}`}
+                      aria-current={index === selectedIndex ? "true" : "false"}
+                    />
+                  ))}
                 </div>
               )}
             </div>
           ) : (
             <div>
-              <p>No publications available at the moment.</p>
+              <p>No resources available at the moment.</p>
               {debugInfo && (
                 <div
                   style={{
@@ -219,7 +203,7 @@ const Publications = ({
         </motion.div>
         {showButton && (
           <motion.div
-            className={styles.publications_button_container}
+            className={styles.resources_button_container}
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -227,10 +211,10 @@ const Publications = ({
           >
             <Button
               href="/our-work/publications"
-              className={styles.publications_button}
+              className={styles.resources_button}
             >
               Discover More{" "}
-              <IoIosArrowForward className={styles.publications_button_icon} />
+              <IoIosArrowForward className={styles.resources_button_icon} />
             </Button>
           </motion.div>
         )}
@@ -239,4 +223,4 @@ const Publications = ({
   );
 };
 
-export default Publications;
+export default Resources;
