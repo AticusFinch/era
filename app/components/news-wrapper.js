@@ -48,7 +48,7 @@ export default async function NewsWrapper() {
     const { data, error } = await client.query({
       query: GET_POSTS,
       variables: {
-        first: 7, // Limit to 7 news items for the homepage
+        first: 4, // Limit to 4 news items for the homepage
       },
       fetchPolicy: "network-only", // Use network-only to avoid cache issues
     });
