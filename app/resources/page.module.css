@@ -1,0 +1,14 @@
+.resources_container {
+  padding-top: clamp(6rem, 5.143rem + 4.29vw, 12rem);
+  padding-bottom: clamp(3rem, 2.571rem + 2.14vw, 6rem);
+}
+
+.resources_title {
+  margin-bottom: clamp(1rem, 0.857rem + 0.71vw, 2rem);
+}
+
+.resources_filters_list {
+  display: flex;
+  justify-content: space-between;
+  margin-top: clamp(1rem, 0.857rem + 0.71vw, 2rem);
+}

@@ -4,7 +4,7 @@
  */
 
 import { getClient } from "@/lib/apollo-client";
-import { GET_PUBLICATIONS } from "@/lib/graphql/queries";
+import { GET_RESOURCES } from "@/lib/graphql/queries";
 import Resources from "./resources";
 
 // Helper function to make URLs absolute
@@ -34,14 +34,14 @@ function stripHtmlTags(html) {
 }
 
 export default async function ResourcesWrapper() {
-  let publications = [];
+  let resources = [];
   let debugInfo = null;
 
   try {
     const client = getClient();
 
     const { data, error } = await client.query({
-      query: GET_PUBLICATIONS,
+      query: GET_RESOURCES,
       variables: {
         first: 8, // Limit to 8 publications for the homepage
       },
@@ -49,7 +49,7 @@ export default async function ResourcesWrapper() {
     });
 
     if (error) {
-      console.error("Error fetching publications:", error);
+      console.error("Error fetching resources:", error);
       if (error.graphQLErrors) {
         error.graphQLErrors.forEach((err) => {
           console.error("GraphQL Error:", err.message, err);
@@ -62,20 +62,20 @@ export default async function ResourcesWrapper() {
     }
 
     // Check if publications field exists
-    if (data && !data.publications) {
+    if (data && !data.resources) {
       console.warn(
-        "⚠️ 'publications' field not found in GraphQL response. Available fields:",
+        "⚠️ 'resources' field not found in GraphQL response. Available fields:",
         Object.keys(data)
       );
       debugInfo = {
         availableFields: Object.keys(data),
         message:
-          "The 'publications' field doesn't exist. Your custom post type might be named differently in GraphQL.",
+          "The 'resources' field doesn't exist. Your custom post type might be named differently in GraphQL.",
       };
     }
 
-    if (data?.publications?.edges) {
-      publications = data.publications.edges.map((edge) => {
+    if (data?.resources?.edges) {
+      resources = data.resources.edges.map((edge) => {
         const node = edge.node;
 
         // Get ACF fields
@@ -159,5 +159,5 @@ export default async function ResourcesWrapper() {
     };
   }
 
-  return <Resources resources={publications} debugInfo={debugInfo} />;
+  return <Resources resources={resources} debugInfo={debugInfo} />;
 }

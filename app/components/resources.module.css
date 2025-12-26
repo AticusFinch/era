@@ -1,6 +1,18 @@
 .resources {
   padding-bottom: clamp(2rem, 1.286rem + 3.57vw, 7rem);
+  padding-top: clamp(2rem, 1.286rem + 3.57vw, 7rem);
   overflow: hidden;
+}
+
+.resources_content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: clamp(1rem, 0.857rem + 0.71vw, 2rem);
+}
+
+.resources_text {
+  width: 33.333%;
 }
 
 .resources_title {
@@ -15,6 +27,11 @@
 
 .resources_carousel_wrapper {
   position: relative;
+  margin-top: clamp(2rem, 1.714rem + 1.43vw, 4rem);
+}
+
+.resources_carousel {
+  width: 100%;
 }
 
 .resources_slider {
@@ -108,7 +125,8 @@
 }
 
 .resources_item_text {
-  padding: clamp(1rem, 0.857rem + 0.71vw, 1.75rem);
+  padding: clamp(0.7rem, 0.6rem + 0.5vw, 1.4rem)
+    clamp(1rem, 0.857rem + 0.71vw, 1.75rem);
   display: flex;
   flex-direction: column;
   gap: 0;
@@ -126,15 +144,14 @@
   background-color: rgba(237, 18, 111, 0.1);
   display: inline-block;
   width: fit-content;
-  font-size: clamp(0.5rem, 0.457rem + 0.21vw, 0.8rem);
-  font-weight: 600;
+  font-size: clamp(0.4rem, 0.371rem + 0.14vw, 0.6rem);
+  font-weight: 500;
   line-height: 1.2;
   margin-bottom: clamp(0.75rem, 0.643rem + 0.54vw, 1.25rem);
 }
 
 .resources_item_title {
   font-weight: 700;
-  font-size: clamp(1rem, 0.857rem + 0.71vw, 1.75rem);
   line-height: 1.3;
   color: var(--color-font-primary);
   display: -webkit-box;
@@ -149,8 +166,6 @@
 }
 
 .resources_item_excerpt {
-  font-size: clamp(0.75rem, 0.643rem + 0.54vw, 1.125rem);
-  line-height: 1.6;
   color: var(--color-font-secondary);
   opacity: 0.85;
   margin: 0;
@@ -166,9 +181,6 @@
 }
 
 .resources_button_container {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
 }
 
 @media (max-width: 1024px) {
@@ -199,26 +211,6 @@
   .resources_item_title {
     gap: 0.5rem;
   }
-
-  .resources_item_download {
-    height: 2em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1rem;
-  }
-}
-
-@media (min-width: 412px) {
-  .resources_item_title {
-    gap: 0.5rem;
-  }
-}
-
-@media (min-width: 430px) {
-  .resources_item_title {
-    gap: 0.5rem;
-  }
 }
 
 @media (min-width: 540px) {
@@ -235,9 +227,6 @@
 }
 
 @media (min-width: 1024px) {
-  .resources_carousel_wrapper {
-  }
-
   .resources_slide {
     flex: 0 0 calc(33.333% - 0.53rem);
     padding-right: 1.5rem;
@@ -301,23 +290,11 @@
   .resources_button_container {
     margin-top: 2.5rem;
   }
-
-  .resources_item_download {
-    height: 2em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1rem;
-  }
 }
 
 @media (min-width: 1440px) {
-  .resources_item_download {
-    height: 2.5em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1.1rem;
+  .resources_slide {
+    flex: 0 0 calc(25% - 0.56rem);
   }
 }
 
@@ -325,46 +302,16 @@
   .resources_button {
     border-radius: 0.8rem !important;
   }
-
-  .resources_item_download {
-    height: 2.8em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1.2rem;
-  }
 }
 
 @media (min-width: 1920px) {
-  .resources_title {
-  }
-
   .resources_button {
     margin-top: 2.5rem;
-  }
-
-  .resources_item_download {
-    height: 3em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1.3rem;
   }
 }
 
 @media (min-width: 2560px) {
-  .resources_title {
-  }
-
   .resources_button {
     margin-top: 3rem;
-  }
-
-  .resources_item_download {
-    height: 3.5em;
-  }
-
-  .resources_item_download svg {
-    font-size: 1.5rem;
   }
 }

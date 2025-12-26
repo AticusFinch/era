@@ -6,7 +6,7 @@
 
 .work_carousel_wrapper {
   position: relative;
-  margin-top: 2rem;
+  margin-top: clamp(2rem, 1.714rem + 1.43vw, 4rem);
 }
 
 .work_links {
@@ -187,7 +187,8 @@
 }
 
 @media (min-width: 1024px) {
-  .work_links {
+  .work_subtitle {
+    width: 33.333%;
   }
 
   .work_slide {

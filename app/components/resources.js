@@ -52,9 +52,7 @@ const Resources = ({
 
   const onSelect = useCallback(() => {
     if (!emblaApi) return;
-    // Get the selected scroll snap index (first visible slide index)
-    const snapIndex = emblaApi.selectedScrollSnap();
-    setSelectedIndex(snapIndex);
+    setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
   useEffect(() => {
@@ -75,149 +73,160 @@ const Resources = ({
       className={`${styles.resources} ${showAll ? styles.resources_all : ""}`}
     >
       <Container>
-        <motion.h2
-          className={`${styles.resources_title} title`}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <span className="title-accent">Resources</span>
-        </motion.h2>
-
-        <motion.div
-          className={styles.resources_items_wrapper}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {resourcesItems.length > 0 ? (
-            <div className={styles.resources_carousel_wrapper}>
-              <div className={styles.resources_carousel} ref={emblaRef}>
-                <div className={styles.resources_slider}>
-                  {resourcesItems.map((item, index) => (
-                    <div
-                      key={item.id || index}
-                      className={styles.resources_slide}
-                    >
-                      <Link
-                        href={`/publications/${item.slug}`}
-                        className={styles.resources_item}
-                      >
-                        <div className={styles.resources_item_image}>
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            style={{ objectFit: "cover" }}
-                          />
-                        </div>
-                        <div className={styles.resources_item_text}>
-                          <p className={styles.resources_item_type}>
-                            {item.type}
-                          </p>
-                          <h6 className={styles.resources_item_title}>
-                            {item.title}
-                          </h6>
-                          <p className={styles.resources_item_excerpt}>
-                            {item.excerpt}
-                          </p>
-                        </div>
-                      </Link>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              {resourcesItems.length > 1 && (
-                <div className={styles.resources_carousel_pagination}>
-                  {resourcesItems.map((_, index) => (
-                    <button
-                      key={index}
-                      className={`${styles.resources_carousel_dot} ${
-                        index === selectedIndex
-                          ? styles.resources_carousel_dot_active
-                          : ""
-                      }`}
-                      onClick={() => scrollTo(index)}
-                      aria-label={`Go to slide ${index + 1}`}
-                      aria-current={index === selectedIndex ? "true" : "false"}
-                    />
-                  ))}
-                </div>
-              )}
+        <div className={styles.resources_container}>
+          <div className={styles.resources_content}>
+            <div className={styles.resources_text}>
+              <motion.h2
+                className={`${styles.resources_title} title`}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <span className="title-accent">Resources</span>
+              </motion.h2>
+              <p className={styles.resources_description}>
+                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
+                faucibus ex sapien vitae pellentesque sem placerat. In id cursus
+                mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
+                urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
+                egestas.
+              </p>
             </div>
-          ) : (
-            <div>
-              <p>No resources available at the moment.</p>
-              {debugInfo && (
-                <div
-                  style={{
-                    marginTop: "1rem",
-                    padding: "1rem",
-                    background: "#fff3cd",
-                    border: "1px solid #ffc107",
-                    borderRadius: "4px",
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  <strong>Debug Info:</strong>
-                  {debugInfo.error && (
-                    <p style={{ marginTop: "0.5rem" }}>
-                      <strong>Error:</strong> {debugInfo.error}
-                    </p>
-                  )}
-                  {debugInfo.graphQLErrors && (
-                    <div style={{ marginTop: "0.5rem" }}>
-                      <strong>GraphQL Errors:</strong>
-                      <ul>
-                        {debugInfo.graphQLErrors.map((err, idx) => (
-                          <li key={idx}>{err}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {debugInfo.availableFields && (
-                    <div style={{ marginTop: "0.5rem" }}>
-                      <strong>Available fields in GraphQL response:</strong>
-                      <ul>
-                        {debugInfo.availableFields.map((field, idx) => (
-                          <li key={idx}>{field}</li>
-                        ))}
-                      </ul>
-                      <p style={{ marginTop: "0.5rem" }}>
-                        💡 <strong>Tip:</strong> Your custom post type might be
-                        named differently. Common names: "publication",
-                        "publicationPosts", or check your WordPress GraphQL
-                        schema.
-                      </p>
-                    </div>
-                  )}
-                  <p style={{ marginTop: "1rem", fontSize: "0.85rem" }}>
-                    Check the browser console (F12) for more details.
-                  </p>
-                </div>
-              )}
-            </div>
-          )}
-        </motion.div>
-        {showButton && (
+            {showButton && (
+              <motion.div
+                className={styles.resources_button_container}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <Button href="/resources" className={styles.resources_button}>
+                  Discover More{" "}
+                  <IoIosArrowForward className={styles.resources_button_icon} />
+                </Button>
+              </motion.div>
+            )}
+          </div>
           <motion.div
-            className={styles.resources_button_container}
+            className={styles.resources_items_wrapper}
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <Button
-              href="/our-work/publications"
-              className={styles.resources_button}
-            >
-              Discover More{" "}
-              <IoIosArrowForward className={styles.resources_button_icon} />
-            </Button>
+            {resourcesItems.length > 0 ? (
+              <div className={styles.resources_carousel_wrapper}>
+                <div className={styles.resources_carousel} ref={emblaRef}>
+                  <div className={styles.resources_slider}>
+                    {resourcesItems.map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className={styles.resources_slide}
+                      >
+                        <Link
+                          href={`/resources/${item.slug}`}
+                          className={styles.resources_item}
+                        >
+                          <div className={styles.resources_item_image}>
+                            <Image
+                              src={item.image}
+                              alt={item.title}
+                              fill
+                              style={{ objectFit: "cover" }}
+                            />
+                          </div>
+                          <div className={styles.resources_item_text}>
+                            <p className={styles.resources_item_type}>
+                              {item.type}
+                            </p>
+                            <h6 className={styles.resources_item_title}>
+                              {item.title}
+                            </h6>
+                            <p className={styles.resources_item_excerpt}>
+                              {item.excerpt}
+                            </p>
+                          </div>
+                        </Link>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {scrollSnaps.length > 1 && (
+                  <div className={styles.resources_carousel_pagination}>
+                    {scrollSnaps.map((_, index) => (
+                      <button
+                        key={index}
+                        className={`${styles.resources_carousel_dot} ${
+                          index === selectedIndex
+                            ? styles.resources_carousel_dot_active
+                            : ""
+                        }`}
+                        onClick={() => scrollTo(index)}
+                        aria-label={`Go to slide ${index + 1}`}
+                        aria-current={
+                          index === selectedIndex ? "true" : "false"
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div>
+                <p>No resources available at the moment.</p>
+                {debugInfo && (
+                  <div
+                    style={{
+                      marginTop: "1rem",
+                      padding: "1rem",
+                      background: "#fff3cd",
+                      border: "1px solid #ffc107",
+                      borderRadius: "4px",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    <strong>Debug Info:</strong>
+                    {debugInfo.error && (
+                      <p style={{ marginTop: "0.5rem" }}>
+                        <strong>Error:</strong> {debugInfo.error}
+                      </p>
+                    )}
+                    {debugInfo.graphQLErrors && (
+                      <div style={{ marginTop: "0.5rem" }}>
+                        <strong>GraphQL Errors:</strong>
+                        <ul>
+                          {debugInfo.graphQLErrors.map((err, idx) => (
+                            <li key={idx}>{err}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {debugInfo.availableFields && (
+                      <div style={{ marginTop: "0.5rem" }}>
+                        <strong>Available fields in GraphQL response:</strong>
+                        <ul>
+                          {debugInfo.availableFields.map((field, idx) => (
+                            <li key={idx}>{field}</li>
+                          ))}
+                        </ul>
+                        <p style={{ marginTop: "0.5rem" }}>
+                          💡 <strong>Tip:</strong> Your custom post type might
+                          be named differently. Common names: "publication",
+                          "publicationPosts", or check your WordPress GraphQL
+                          schema.
+                        </p>
+                      </div>
+                    )}
+                    <p style={{ marginTop: "1rem", fontSize: "0.85rem" }}>
+                      Check the browser console (F12) for more details.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
           </motion.div>
-        )}
+        </div>
       </Container>
     </div>
   );
