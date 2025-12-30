@@ -1,5 +1,5 @@
 .navbar {
-  min-height: clamp(5rem, 4.286rem + 3.57vw, 10rem);
+  min-height: clamp(5rem, 4.429rem + 2.86vw, 9rem);
   height: fit-content;
   position: fixed;
   top: 0;
