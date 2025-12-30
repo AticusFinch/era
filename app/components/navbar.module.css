@@ -1,5 +1,5 @@
 .navbar {
-  min-height: clamp(4rem, 2.182rem + 9.09vw, 8rem);
+  min-height: clamp(5rem, 4.286rem + 3.57vw, 10rem);
   height: fit-content;
   position: fixed;
   top: 0;
@@ -198,9 +198,10 @@
 .navbar_mobile_dropdown {
   margin-top: 1rem;
   display: flex;
+  gap: clamp(0.8rem, 0.436rem + 1.82vw, 1.6rem);
   flex-direction: column;
-  gap: 1rem;
-  padding-left: 1rem;
+  font-weight: 300;
+  padding-left: clamp(1rem, 0.545rem + 2.27vw, 2rem);
 }
 
 .navbar_mobile_dropdown a {
@@ -211,7 +212,6 @@
 
 @media (min-width: 375px) {
   .navbar_mobile_dropdown {
-    gap: 1.5rem;
     margin-top: 1.5rem;
   }
 }
@@ -222,7 +222,6 @@
   }
 
   .navbar_mobile_dropdown {
-    gap: 1.5rem;
     margin-top: 1.5rem;
   }
 }
@@ -240,7 +239,6 @@
   }
 
   .navbar_mobile_dropdown {
-    gap: 2rem;
     margin-top: 2rem;
   }
 }
@@ -249,7 +247,7 @@
   .navbar_links {
     display: flex;
     gap: 1.5rem;
-    font-size: 1rem;
+    font-size: clamp(0.8rem, 0.366rem + 0.77vw, 1.6rem);
   }
 
   .navbar_links a {
@@ -298,7 +296,7 @@
     min-width: 150px;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: clamp(0.5rem, 0.229rem + 0.48vw, 1rem);
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
@@ -320,7 +318,7 @@
     text-decoration: none;
     transition: color 0.2s ease;
     white-space: nowrap;
-    font-size: 0.9rem;
+    font-size: clamp(0.7rem, 0.32rem + 0.67vw, 1.4rem);
   }
 
   .navbar_dropdown a::after {
@@ -334,24 +332,13 @@
   .navbar_buttons {
     display: flex;
     gap: 1rem;
-    font-size: 1rem;
-  }
-
-  .navbar_button_member {
-  }
-
-  .navbar_button_member:hover {
+    font-size: clamp(0.8rem, 0.366rem + 0.77vw, 1.6rem);
   }
 
   .navbar_button_donate {
     background-color: var(--color-primary) !important;
     color: var(--color-background) !important;
     border: 1px solid var(--color-primary) !important;
-  }
-
-  .navbar_button_donate:hover {
-    background-color: #c10e5c !important;
-    border-color: #c10e5c !important;
   }
 
   .navbar_hamburger {
@@ -364,6 +351,9 @@
 }
 
 @media (min-width: 1024px) {
+  .navbar_logo {
+    width: clamp(6rem, 2rem + 6.25vw, 12rem);
+  }
 }
 
 @media (min-width: 1440px) {
@@ -372,12 +362,10 @@
 @media (min-width: 1600px) {
   .navbar_links {
     gap: 2rem;
-    font-size: 1.1rem;
   }
 
   .navbar_buttons {
     gap: 1.1rem;
-    font-size: 1.1rem;
   }
 
   .navbar_button_member,
@@ -394,45 +382,21 @@
 }
 
 @media (min-width: 1920px) {
-  .navbar {
-    padding: 2rem 0;
-  }
-
-  .navbar_logo {
-    width: 140px;
-  }
-
   .navbar_links {
     gap: 2.5rem;
-    font-size: 1.3rem;
   }
 
   .navbar_buttons {
     gap: 1rem;
-    font-size: 1.3rem;
   }
 }
 
 @media (min-width: 2560px) {
-  .navbar {
-    padding: 2.5rem 0;
-  }
-
-  .navbar_logo {
-    width: 170px;
-  }
-
   .navbar_links {
     gap: 3rem;
-    font-size: 1.5rem;
   }
 
   .navbar_buttons {
     gap: 1.2rem;
-    font-size: 1.5rem;
-  }
-
-  .navbar_dropdown a {
-    font-size: 1.1rem;
   }
 }

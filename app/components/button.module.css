@@ -1,6 +1,7 @@
 .button {
   padding: 0.5rem 1rem;
   border-radius: clamp(0.5rem, 0.273rem + 1.14vw, 1rem);
+  border: 1px solid var(--color-primary);
   background-color: rgba(237, 18, 111, 0.1);
   color: var(--color-primary);
   cursor: pointer;
@@ -14,16 +15,18 @@
   display: inline-block;
   vertical-align: middle;
   font-size: clamp(0.7rem, 0.614rem + 0.43vw, 1.3rem);
-}
-
-.button:hover {
-  box-shadow: 0 4px 12px rgba(63, 63, 63, 0.3);
+  will-change: box-shadow, transform;
 }
 
 @media (min-width: 1024px) {
   .button {
     padding: 0.6rem 0.8rem;
     border-radius: 0.8rem;
+  }
+
+  .button:hover {
+    box-shadow: 0px 4px 12px rgba(237, 18, 109, 0.35);
+    transform: translateY(-2px);
   }
 }
 
