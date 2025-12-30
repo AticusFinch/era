@@ -10,7 +10,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6.5rem 0 3.5rem 0;
+  height: clamp(37.5rem, 34.659rem + 14.2vw, 43.75rem);
+  padding-top: clamp(3.5rem, 2.102rem + 6.98vw, 8rem);
 }
 
 .hero::before {
@@ -95,16 +96,9 @@
 }
 
 @media (min-width: 375px) {
-  .hero {
-    padding: 8rem 0 5rem 0;
-  }
 }
 
 @media (min-width: 393px) {
-  .hero {
-    padding: 8.5rem 0 5.5rem 0;
-  }
-
   .hero_buttons {
     margin-top: 1.5rem;
   }
@@ -121,10 +115,6 @@
 }
 
 @media (min-width: 412px) {
-  .hero {
-    padding: 10rem 0 7rem 0;
-  }
-
   .hero_buttons {
     gap: 0.6rem;
     margin-top: 1.5rem;
@@ -132,9 +122,6 @@
 }
 
 @media (min-width: 430px) {
-  .hero {
-    padding: 10rem 0 8rem 0;
-  }
 }
 
 @media (min-width: 768px) {
@@ -145,7 +132,7 @@
 
 @media (min-width: 1024px) {
   .hero {
-    padding: 9rem 0 5rem 0;
+    height: clamp(50rem, 33.333rem + 26.04vw, 75rem);
   }
 
   .hero_title {
@@ -158,11 +145,6 @@
 }
 
 @media (min-width: 1280px) {
-  .hero {
-    padding: 12rem 0 6rem 0;
-    background: none;
-  }
-
   .hero_container {
     display: grid;
     grid-template-columns: 2.5fr 2fr;
@@ -270,10 +252,6 @@
 }
 
 @media (min-width: 1920px) {
-  .hero {
-    padding: 14rem 0 8rem 0;
-  }
-
   .hero_content {
     gap: 1.5rem;
   }
@@ -284,10 +262,6 @@
 }
 
 @media (min-width: 2560px) {
-  .hero {
-    padding: 18rem 0 12rem 0;
-  }
-
   .hero_content {
     gap: 2rem;
   }
