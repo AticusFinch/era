@@ -109,7 +109,7 @@
 }
 
 .navbar_mobile_links div svg {
-  font-size: clamp(0.9rem, 0.491rem + 2.05vw, 1.8rem);
+  font-size: clamp(1.3rem, 0.709rem + 2.95vw, 2.6rem);
 }
 
 .navbar_mobile_links a {
@@ -161,7 +161,7 @@
 }
 
 .navbar_logo {
-  width: clamp(4rem, 2.182rem + 9.09vw, 8rem);
+  width: clamp(5rem, 2.727rem + 11.36vw, 10rem);
 }
 
 .navbar_logo img {
@@ -177,7 +177,7 @@
 .navbar_hamburger {
   display: block;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: clamp(1.3rem, 0.709rem + 2.95vw, 2.6rem);
   position: relative;
   z-index: 1002;
   overflow: hidden;
@@ -210,14 +210,6 @@
 }
 
 @media (min-width: 375px) {
-  .navbar_hamburger {
-    font-size: 1.3rem;
-  }
-
-  .navbar_mobile_content {
-    gap: 4rem;
-  }
-
   .navbar_mobile_dropdown {
     gap: 1.5rem;
     margin-top: 1.5rem;
@@ -225,14 +217,6 @@
 }
 
 @media (min-width: 412px) {
-  .navbar_hamburger {
-    font-size: 1.5rem;
-  }
-
-  .navbar_mobile_content {
-    gap: 5rem;
-  }
-
   .navbar_mobile_topfade {
     height: 2rem;
   }
@@ -247,10 +231,6 @@
 }
 
 @media (min-width: 768px) {
-  .navbar_hamburger {
-    font-size: 1.7rem;
-  }
-
   .navbar_mobile_content {
     gap: 6rem;
   }
