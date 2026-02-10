@@ -17,6 +17,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState, useCallback } from "react";
+import Button from "@/app/components/button";
 
 const workItems = [
   {

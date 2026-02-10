@@ -63,24 +63,16 @@ const Hero = () => {
             </motion.div>
           </div>
           <div className={styles.hero_image_container}>
-            <div className={styles.hero_image}>
-              <Image
-                src="/img/hero/lgbt.jpg"
-                alt="LGBTQIA+ Equality"
-                width={6000}
-                height={4000}
-                priority
-                fetchPriority="high"
-                loading="eager"
-                sizes="(max-width: 1279px) 0vw, 40vw"
-                quality={90}
-                style={{
-                  objectFit: "cover",
-                  width: "100%",
-                  height: "100%",
-                }}
-              />
-            </div>
+            <Image
+              src="/img/hero/hero.png"
+              alt="LGBTQIA+ Equality"
+              width={2400}
+              height={2400}
+              priority
+              fetchPriority="high"
+              loading="eager"
+              quality={100}
+            />
           </div>
         </div>
       </Container>

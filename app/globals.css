@@ -2,11 +2,11 @@
 
 :root {
   /* Custom brand colors */
-  --color-background: #fdfdfd;
+  --color-background: #fff9f5;
   --color-primary: #ed126f;
-  --color-accent: #ffb020;
+  --color-accent: #ffc4b4;
   --color-font-primary: #0b0b0b;
-  --color-font-secondary: #262626;
+  --color-surface: #ffffff;
   /* Navbar height - will be updated by JavaScript */
   --nav-h: 80px;
 }
@@ -126,7 +126,7 @@ a {
   left: 0;
   right: 0;
   height: 0.3em;
-  background-color: var(--color-accent);
+  background-color: transparent;
   border-radius: 0.1em;
   z-index: -1;
 }

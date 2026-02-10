@@ -1,7 +1,8 @@
 .button {
-  padding: 0.5rem 1rem;
-  border-radius: clamp(0.5rem, 0.273rem + 1.14vw, 1rem);
-  background-color: rgba(237, 18, 111, 0.1);
+  padding: clamp(0.4rem, 0.273rem + 0.9vw, 0.8rem)
+    clamp(1rem, 0.545rem + 2.27vw, 2rem);
+  border-radius: clamp(1rem, 0.714rem + 1.43vw, 3rem);
+  border: solid 1px var(--color-primary);
   color: var(--color-primary);
   cursor: pointer;
   transition: all 0.4s ease-in-out;
@@ -14,17 +15,22 @@
   display: inline-block;
   vertical-align: middle;
   font-size: clamp(0.7rem, 0.614rem + 0.43vw, 1.3rem);
-  will-change: box-shadow, transform;
+  will-change: transform;
+}
+
+.button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
 }
 
 @media (min-width: 1024px) {
   .button {
-    padding: 0.6rem 0.8rem;
-    border-radius: 0.8rem;
+    padding: clamp(0.5rem, 0.167rem + 0.52vw, 1rem)
+      clamp(1rem, 0.333rem + 1.04vw, 2rem);
+    font-size: clamp(0.7rem, 0.233rem + 0.73vw, 1.4rem);
   }
 
   .button:hover {
-    box-shadow: 0px 4px 12px rgba(237, 18, 109, 0.35);
     transform: translateY(-2px);
   }
 }
@@ -33,18 +39,10 @@
 }
 
 @media (min-width: 1600px) {
-  .button {
-  }
 }
 
 @media (min-width: 1920px) {
-  .button {
-    padding: 0.6rem 1.4rem;
-  }
 }
 
 @media (min-width: 2560px) {
-  .button {
-    padding: 0.6rem 1.6rem;
-  }
 }

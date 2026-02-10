@@ -1,16 +1,21 @@
 .navbar {
-  min-height: clamp(5rem, 4.429rem + 2.86vw, 9rem);
+  min-height: clamp(4.5rem, 1.833rem + 4.17vw, 8.5rem);
   height: fit-content;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   width: 100%;
-  background-color: var(--color-background);
   z-index: 1001;
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
+  background-color: var(--color-accent);
+  transition: background-color 0.5s ease;
+}
+
+.navbar_scrolled {
+  background-color: var(--color-background);
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .navbar_container {
@@ -247,7 +252,7 @@
   .navbar_links {
     display: flex;
     gap: 1.5rem;
-    font-size: clamp(0.8rem, 0.366rem + 0.77vw, 1.6rem);
+    font-size: clamp(0.7rem, 0.233rem + 0.73vw, 1.4rem);
   }
 
   .navbar_links a {
@@ -300,8 +305,21 @@
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
     z-index: 1003;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
+    -ms-backdrop-filter: blur(10px);
+    -o-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
+    -ms-backdrop-filter: blur(10px);
+    -o-backdrop-filter: blur(10px);
   }
 
   /* Keep dropdown visible when hovering over container, bridge, or dropdown */
@@ -318,7 +336,7 @@
     text-decoration: none;
     transition: color 0.2s ease;
     white-space: nowrap;
-    font-size: clamp(0.7rem, 0.32rem + 0.67vw, 1.4rem);
+    font-size: clamp(0.6rem, 0.2rem + 0.63vw, 1.2rem);
   }
 
   .navbar_dropdown a::after {
@@ -352,7 +370,7 @@
 
 @media (min-width: 1024px) {
   .navbar_logo {
-    width: clamp(6rem, 2rem + 6.25vw, 12rem);
+    width: clamp(5rem, 1.667rem + 5.21vw, 10rem);
   }
 }
 

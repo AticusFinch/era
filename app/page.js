@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      <Work />
+      {/* <Work /> */}
       <NewsWrapper />
       <ResourcesWrapper />
       <Counter />

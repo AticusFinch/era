@@ -184,10 +184,6 @@
 }
 
 @media (max-width: 1024px) {
-  .resources_button_container {
-    margin-top: 2rem;
-  }
-
   .resources_button {
     color: var(--color-font-primary);
     background-color: transparent;
@@ -227,6 +223,13 @@
 }
 
 @media (min-width: 1024px) {
+  .resources_button_container {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
   .resources_slide {
     flex: 0 0 calc(33.333% - 0.53rem);
     padding-right: 1.5rem;
@@ -241,18 +244,22 @@
     transform: scale(1.2);
   }
 
+  .resources_text {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .resources_description {
+    width: 50%;
+  }
+
   .resources_button {
-    border: 2px solid var(--color-font-primary);
-    background-color: transparent;
-    color: var(--color-font-primary);
-    border: 1px solid var(--color-font-primary);
   }
 
   .resources_button:hover {
-    background-color: var(--color-font-primary);
-    color: var(--color-accent);
-    border: 1px solid var(--color-font-primary);
-    box-shadow: 0 4px 12px rgba(63, 63, 63, 0.3);
+    background-color: var(--color-primary);
+    color: var(--color-background);
   }
 
   .resources_button_icon {
@@ -273,17 +280,6 @@
 
 /* Animation only on viewports 1200px and above */
 @media (min-width: 1200px) {
-  .resources_item_download {
-    transition: transform 0.3s ease, background-color 0.3s ease,
-      opacity 0.3s ease;
-    transform: translateY(100%);
-    opacity: 0;
-  }
-
-  .resources_item:hover .resources_item_download {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 @media (min-width: 1280px) {
@@ -299,19 +295,10 @@
 }
 
 @media (min-width: 1600px) {
-  .resources_button {
-    border-radius: 0.8rem !important;
-  }
 }
 
 @media (min-width: 1920px) {
-  .resources_button {
-    margin-top: 2.5rem;
-  }
 }
 
 @media (min-width: 2560px) {
-  .resources_button {
-    margin-top: 3rem;
-  }
 }

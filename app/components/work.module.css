@@ -188,7 +188,7 @@
 
 @media (min-width: 1024px) {
   .work_subtitle {
-    width: 33.333%;
+    width: 50%;
   }
 
   .work_slide {
@@ -216,6 +216,11 @@
   .work_carousel_dot:hover {
     opacity: 0.7;
     transform: scale(1.2);
+  }
+
+  .work_text {
+    display: flex;
+    justify-content: space-between;
   }
 }
 

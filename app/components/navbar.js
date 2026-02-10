@@ -12,8 +12,11 @@ import { RxChevronRight } from "react-icons/rx";
 
 import { motion, AnimatePresence } from "framer-motion";
 
+const SCROLL_THRESHOLD = 20;
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const [isOurWorkDropdownOpen, setIsOurWorkDropdownOpen] = useState(false);
@@ -54,6 +57,16 @@ const Navbar = () => {
       setIsGetInvolvedDropdownOpen(false);
     }
   }, [isOpen, isGetInvolvedDropdownOpen]);
+
+  // Change background on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+    };
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -110,7 +123,10 @@ const Navbar = () => {
   }, []);
 
   return (
-    <div className={styles.navbar} ref={navRef}>
+    <div
+      className={`${styles.navbar} ${isScrolled ? styles.navbar_scrolled : ""}`}
+      ref={navRef}
+    >
       <Container>
         <div className={styles.navbar_container}>
           <Link href="/" className={styles.navbar_logo}>

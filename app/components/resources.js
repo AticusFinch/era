@@ -93,20 +93,6 @@ const Resources = ({
                 egestas.
               </p>
             </div>
-            {showButton && (
-              <motion.div
-                className={styles.resources_button_container}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.6 }}
-              >
-                <Button href="/resources" className={styles.resources_button}>
-                  Discover More{" "}
-                  <IoIosArrowForward className={styles.resources_button_icon} />
-                </Button>
-              </motion.div>
-            )}
           </div>
           <motion.div
             className={styles.resources_items_wrapper}
@@ -227,6 +213,20 @@ const Resources = ({
             )}
           </motion.div>
         </div>
+        {showButton && (
+          <motion.div
+            className={styles.resources_button_container}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
+            <Button href="/resources" className={styles.resources_button}>
+              Discover More{" "}
+              <IoIosArrowForward className={styles.resources_button_icon} />
+            </Button>
+          </motion.div>
+        )}
       </Container>
     </div>
   );

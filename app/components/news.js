@@ -6,29 +6,22 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/components/button";
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 
+const MAX_LIST_ITEMS = 4;
+
 const News = ({ newsItems = [], debugInfo = null }) => {
   const newsItemsList = newsItems.length > 0 ? newsItems : [];
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDesktop(window.innerWidth >= 1024);
-    };
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+  const featuredItem = newsItemsList[0] ?? null;
+  const listItems = newsItemsList.slice(1, 1 + MAX_LIST_ITEMS);
 
   return (
     <div className={styles.news}>
       <Container>
         <div className={styles.news_container}>
-          <div className={styles.news_left}>
+          <div className={styles.news_header}>
             <motion.h2
               className={`${styles.news_title} title`}
               initial={{ opacity: 0, y: 10 }}
@@ -46,104 +39,120 @@ const News = ({ newsItems = [], debugInfo = null }) => {
               egestas.
             </p>
           </div>
-          <motion.div
-            className={styles.news_items_wrapper}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            {newsItemsList.length > 0 ? (
-              <div className={styles.news_list}>
-                {newsItemsList.map((item, index) => (
-                  <motion.div
-                    key={item.id || index}
-                    className={styles.news_item_wrapper}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                    {...(isDesktop && {
-                      whileHover: {
-                        y: -5,
-                        scale: 1.02,
-                        boxShadow: "0 8px 24px 0 rgba(0, 0, 0, 0.12)",
-                        transition: {
-                          type: "spring",
-                          stiffness: 600,
-                          damping: 35,
-                          mass: 0.5,
-                        },
-                      },
-                      transition: {
-                        type: "spring",
-                        stiffness: 600,
-                        damping: 35,
-                        mass: 0.5,
-                      },
-                    })}
-                  >
+
+          {newsItemsList.length > 0 ? (
+            <div className={styles.news_carousel}>
+              <div className={styles.news_carousel_left}>
+                <Link
+                  href={featuredItem ? `/news/${featuredItem.slug}` : "/news"}
+                  className={styles.news_featured}
+                  aria-label={featuredItem?.title}
+                >
+                  <div className={styles.news_featured_image}>
+                    <Image
+                      src={featuredItem?.image ?? "/img/hero/hero.png"}
+                      alt={featuredItem?.title ?? ""}
+                      fill
+                      sizes="(min-width: 1024px) 60vw, 100vw"
+                      style={{ objectFit: "cover" }}
+                      priority
+                    />
+                    <div className={styles.news_featured_overlay} />
+                  </div>
+                  <div className={styles.news_featured_text}>
+                    <span className={styles.news_featured_category}>
+                      {featuredItem?.category}
+                    </span>
+                    <h3 className={styles.news_featured_title}>
+                      {featuredItem?.title}
+                    </h3>
+                    <div className={styles.news_featured_info}>
+                      <span className={styles.news_featured_date}>
+                        <CiCalendarDate />
+                        {featuredItem?.date}
+                      </span>
+                      <span className={styles.news_featured_readingTime}>
+                        <IoReaderOutline />
+                        {featuredItem?.readingTime}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </div>
+
+              {listItems.length > 0 && (
+                <div className={styles.news_carousel_right}>
+                  {listItems.map((item, index) => (
                     <Link
+                      key={item.id || index}
                       href={`/news/${item.slug}`}
-                      className={styles.news_item}
+                      className={styles.news_list_item_wrapper}
+                      aria-label={`Read ${item.title}`}
                     >
-                      <div className={styles.news_item_image}>
-                        <Image
-                          src={item.image}
-                          alt={item.title}
-                          fill
-                          style={{ objectFit: "cover" }}
-                        />
-                      </div>
-                      <div className={`${styles.news_item_text} text`}>
-                        <span className={styles.news_item_category}>
-                          {item.category}
-                        </span>
-                        <h6 className={styles.news_item_title}>{item.title}</h6>
-                        <div className={styles.news_item_info}>
-                          <span className={styles.news_item_date}>
-                            <CiCalendarDate />
-                            {item.date}
+                      <div className={styles.news_list_item}>
+                        <div className={styles.news_list_item_image}>
+                          <Image
+                            src={item.image}
+                            alt={item.title}
+                            fill
+                            sizes="120px"
+                            style={{ objectFit: "cover" }}
+                          />
+                        </div>
+                        <div className={styles.news_list_item_text}>
+                          <span className={styles.news_list_item_category}>
+                            {item.category}
                           </span>
-                          <span className={styles.news_item_readingTime}>
-                            <IoReaderOutline />
-                            {item.readingTime}
-                          </span>
+                          <h6 className={styles.news_list_item_title}>
+                            {item.title}
+                          </h6>
+                          <div className={styles.news_list_item_info}>
+                            <span>
+                              <CiCalendarDate />
+                              {item.date}
+                            </span>
+                            <span>
+                              <IoReaderOutline />
+                              {item.readingTime}
+                            </span>
+                          </div>
                         </div>
                       </div>
                     </Link>
-                  </motion.div>
-                ))}
-              </div>
-            ) : (
-              <div className={styles.news_empty}>
-                <p>No news available at the moment.</p>
-                {debugInfo && (
-                  <div
-                    style={{
-                      marginTop: "1rem",
-                      fontSize: "0.875rem",
-                      color: "#666",
-                    }}
-                  >
-                    <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
-                  </div>
-                )}
-              </div>
-            )}
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className={styles.news_empty}>
+              <p>No news available at the moment.</p>
+              {debugInfo && (
+                <div
+                  style={{
+                    marginTop: "1rem",
+                    fontSize: "0.875rem",
+                    color: "#666",
+                  }}
+                >
+                  <pre>{JSON.stringify(debugInfo, null, 2)}</pre>
+                </div>
+              )}
+            </div>
+          )}
+
+          <motion.div
+            className={styles.news_button_container}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <Button href="/news" className={styles.news_button}>
+              Read More{" "}
+              <IoIosArrowForward className={styles.news_button_icon} />
+            </Button>
           </motion.div>
         </div>
-        <motion.div
-          className={styles.news_button_container}
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <Button href="/news" className={styles.news_button}>
-            Read More <IoIosArrowForward className={styles.news_button_icon} />
-          </Button>
-        </motion.div>
       </Container>
     </div>
   );
