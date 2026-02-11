@@ -10,7 +10,7 @@ import { IoIosArrowForward } from "react-icons/io";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 
-const MAX_LIST_ITEMS = 4;
+const MAX_LIST_ITEMS = 3;
 
 const News = ({ newsItems = [], debugInfo = null }) => {
   const newsItemsList = newsItems.length > 0 ? newsItems : [];
@@ -66,6 +66,9 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                     <h3 className={styles.news_featured_title}>
                       {featuredItem?.title}
                     </h3>
+                    <p className={styles.news_featured_excerpt}>
+                      {featuredItem?.excerpt}
+                    </p>
                     <div className={styles.news_featured_info}>
                       <span className={styles.news_featured_date}>
                         <CiCalendarDate />
@@ -106,6 +109,9 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                           <h6 className={styles.news_list_item_title}>
                             {item.title}
                           </h6>
+                          <p className={styles.news_list_item_excerpt}>
+                            {item.excerpt}
+                          </p>
                           <div className={styles.news_list_item_info}>
                             <span>
                               <CiCalendarDate />
@@ -148,8 +154,7 @@ const News = ({ newsItems = [], debugInfo = null }) => {
             transition={{ duration: 0.5, delay: 0.5 }}
           >
             <Button href="/news" className={styles.news_button}>
-              Read More{" "}
-              <IoIosArrowForward className={styles.news_button_icon} />
+              Read More
             </Button>
           </motion.div>
         </div>

@@ -38,6 +38,18 @@ function stripHtmlTags(html) {
     .trim(); // Remove leading/trailing whitespace
 }
 
+// Remove WordPress excerpt truncation markers ([&hellip;], [...], etc.)
+function removeExcerptTruncation(text) {
+  if (!text) return "";
+  return text
+    .replace(/\s*\[\s*&hellip;\s*\]\s*$/i, "")
+    .replace(/\s*\[\s*\.\.\.\s*\]\s*$/i, "")
+    .replace(/\s*&hellip;\s*$/i, "")
+    .replace(/\s*…\s*$/, "")
+    .replace(/\s*\.\.\.\s*$/, "")
+    .trim();
+}
+
 export default async function NewsWrapper() {
   let newsItems = [];
   let debugInfo = null;
@@ -95,8 +107,10 @@ export default async function NewsWrapper() {
         // Calculate reading time from content
         const readingTime = calculateReadingTime(node.content);
 
-        // Get excerpt and strip HTML tags
-        const excerpt = stripHtmlTags(node.excerpt || "");
+        // Get excerpt, strip HTML tags, and remove WordPress truncation markers
+        const excerpt = removeExcerptTruncation(
+          stripHtmlTags(node.excerpt || "")
+        );
 
         return {
           id: node.id,
