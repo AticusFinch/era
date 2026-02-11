@@ -7,7 +7,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: clamp(30rem, 16.667rem + 66.67vw, 50rem);
+  overflow: hidden;
+  padding-top: clamp(6rem, 3.273rem + 13.64vw, 12rem);
+  padding-bottom: clamp(12rem, 8.364rem + 18.18vw, 20rem);
 }
 
 .hero_content {
@@ -19,6 +21,7 @@
   position: relative;
   z-index: 2;
   will-change: opacity, transform;
+  overflow: hidden;
 }
 
 .hero_buttons {
@@ -58,8 +61,16 @@
   font-size: clamp(0.8rem, 0.629rem + 0.86vw, 2rem);
 }
 
+.hero_image_container {
+  position: absolute;
+  bottom: -130%;
+  left: -10%;
+  width: 180%;
+  height: 180%;
+  z-index: 1;
+}
+
 .hero_image_container img {
-  display: none;
 }
 
 .hero_button_member,
@@ -101,6 +112,14 @@
   .hero_subtitle {
     width: 70%;
   }
+  .hero_image_container {
+    position: absolute;
+    bottom: -80%;
+    left: 0;
+    width: 140%;
+    height: 140%;
+    z-index: 1;
+  }
 }
 
 @media (min-width: 1024px) {
@@ -123,8 +142,7 @@
   .hero {
     padding-top: 8rem;
     padding-bottom: 6rem;
-    overflow-x: visible;
-    overflow-y: hidden;
+    overflow: hidden;
   }
 
   .hero_container {
