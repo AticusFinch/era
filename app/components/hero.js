@@ -76,6 +76,18 @@ const Hero = () => {
           </div>
         </div>
       </Container>
+      <div className={styles.hero_wave} aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 120"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,120 L0,120 Z"
+            fill="var(--color-background)"
+          />
+        </svg>
+      </div>
     </div>
   );
 };

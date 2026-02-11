@@ -26,7 +26,7 @@ const Resources = ({
       stopOnInteraction: false,
       stopOnMouseEnter: true,
       stopOnFocusIn: false,
-    })
+    }),
   );
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -37,7 +37,7 @@ const Resources = ({
       dragFree: false,
       loop: false,
     },
-    [autoplayPlugin]
+    [autoplayPlugin],
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -47,7 +47,7 @@ const Resources = ({
     (index) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -223,7 +223,6 @@ const Resources = ({
           >
             <Button href="/resources" className={styles.resources_button}>
               Discover More{" "}
-              <IoIosArrowForward className={styles.resources_button_icon} />
             </Button>
           </motion.div>
         )}
