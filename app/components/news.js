@@ -32,11 +32,11 @@ const News = ({ newsItems = [], debugInfo = null }) => {
               <span className="title-accent">Latest News</span>
             </motion.h2>
             <p className={styles.news_description}>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-              faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-              mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-              urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-              egestas.
+              Discover ERA’s latest actions and developments advancing and
+              strengthening LGBTI rights and equality across the region. Stay
+              informed about our programmes, regional advocacy, initiatives,
+              policy engagement, and cross-border civil society cooperation in
+              the Western Balkans, Türkiye, Europe, and beyond.
             </p>
           </div>
 

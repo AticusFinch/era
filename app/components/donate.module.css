@@ -1,0 +1,67 @@
+.section {
+  width: 100%;
+  background: linear-gradient(
+    to bottom,
+    var(--color-background) 50%,
+    var(--color-accent) 50%
+  );
+  min-height: 12rem;
+}
+
+.inner {
+  background-color: var(--color-font-primary);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: clamp(3rem, 2.143rem + 4.29vw, 9rem);
+  overflow: hidden;
+}
+
+.half {
+  flex: 1;
+  min-height: 4rem;
+}
+
+.half_member {
+  color: var(--color-background);
+  padding: clamp(3rem, 2.143rem + 4.29vw, 9rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 0.714rem + 1.43vw, 3rem);
+  justify-content: center;
+}
+
+.half_donate {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 0.714rem + 1.43vw, 3rem);
+  color: var(--color-background);
+  padding: clamp(3rem, 2.143rem + 4.29vw, 9rem);
+  overflow: hidden;
+  background-color: var(--color-font-secondary);
+  justify-content: center;
+}
+
+.title {
+  font-size: clamp(1.6rem, 1.086rem + 2.57vw, 5.2rem);
+}
+
+.description {
+  font-size: clamp(0.8rem, 0.686rem + 0.57vw, 1.6rem);
+}
+
+.button_donate,
+.button_member {
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .inner {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .half {
+    flex: 0 0 50%;
+  }
+}

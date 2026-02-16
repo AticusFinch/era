@@ -7,24 +7,24 @@ import { motion } from "framer-motion";
 
 const counterItems = [
   {
-    end: 100,
+    end: 80,
     suffix: "+",
-    label: "People Helped",
+    label: "Member Organizations",
+  },
+  {
+    end: 9,
+    suffix: "",
+    label: "Operating Countries",
+  },
+  {
+    end: 10,
+    suffix: "+",
+    label: "Years of Experience",
   },
   {
     end: 50,
     suffix: "+",
     label: "Projects Completed",
-  },
-  {
-    end: 20,
-    suffix: "+",
-    label: "Years of Experience",
-  },
-  {
-    end: 100,
-    suffix: "%",
-    label: "Client Satisfaction",
   },
 ];
 
@@ -78,6 +78,18 @@ export default function Counter() {
           ))}
         </motion.div>
       </Container>
+      <div className={styles.counter_wave} aria-hidden="true">
+        <svg
+          viewBox="0 0 1440 120"
+          xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="none"
+        >
+          <path
+            d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,120 L0,120 Z"
+            fill="var(--color-font-primary)"
+          />
+        </svg>
+      </div>
     </div>
   );
 }

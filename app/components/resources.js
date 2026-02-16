@@ -86,11 +86,12 @@ const Resources = ({
                 <span className="title-accent">Resources</span>
               </motion.h2>
               <p className={styles.resources_description}>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-                faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-                mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-                urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-                egestas.
+                Access ERA’s publications, research, policy papers, and
+                practical tools advancing LGBTI rights in the Western Balkans
+                and Türkiye. Explore evidence-based analysis, reports,
+                guidelines, and advocacy materials supporting equality,
+                socio-economic inclusion, and democratic development across the
+                region.
               </p>
             </div>
           </div>

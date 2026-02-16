@@ -7,6 +7,7 @@ import NewsWrapper from "./components/news-wrapper";
 import ResourcesWrapper from "./components/resources-wrapper";
 import Counter from "./components/counter";
 import Footer from "./components/footer";
+import Donate from "./components/donate";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       {/* <Work /> */}
       <NewsWrapper />
       <ResourcesWrapper />
+      <Donate />
       <Counter />
       <Footer />
     </>

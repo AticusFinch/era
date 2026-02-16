@@ -1,26 +1,9 @@
 .counter {
-  padding: clamp(2rem, 1.429rem + 2.86vw, 6rem)
-    clamp(1rem, 0.714rem + 1.43vw, 3rem);
-  background-image: url("/img/hero/lgbt.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  padding-top: clamp(3rem, 2rem + 4vw, 6rem);
+  padding-bottom: clamp(4rem, 3rem + 5vw, 8rem);
   position: relative;
   z-index: 1;
-}
-
-/* Gradient overlay */
-.counter::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: var(--color-background);
-  opacity: 1;
-  z-index: 1;
-  pointer-events: none;
+  background-color: var(--color-accent);
 }
 
 .counter > * {
@@ -29,46 +12,112 @@
 }
 
 .counter_title {
-  width: 70%;
+  width: 100%;
+  max-width: 20ch;
   isolation: isolate;
   line-height: 1.2;
+  margin-bottom: clamp(2rem, 1.5rem + 2.5vw, 4rem);
+  color: var(--color-font-primary);
 }
 
 .counter_title :global(.title-accent)::before {
   bottom: 15% !important;
+  background-color: var(--color-primary);
 }
 
 .counter_items {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: clamp(0.5rem, 0.286rem + 1.07vw, 2rem);
-  padding: clamp(1rem, 0.571rem + 2.14vw, 4rem);
+  gap: 0;
+  border-radius: clamp(1.25rem, 1rem + 1.25vw, 2.5rem);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   background-color: var(--color-background);
-  border-radius: clamp(0.5rem, 0.357rem + 0.71vw, 1.5rem);
-  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .counter_item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   text-align: center;
-  gap: clamp(0.3rem, 0.2rem + 0.5vw, 1rem);
+  gap: clamp(0.4rem, 0.25rem + 0.5vw, 0.75rem);
+  padding: clamp(1.5rem, 1.25rem + 1.25vw, 3rem);
+  position: relative;
+  transition: background-color 0.25s ease;
+}
+
+.counter_item:nth-child(odd) {
+  background: var(--color-background);
+}
+
+.counter_item:nth-child(even) {
+  background: var(--color-background);
+}
+
+.counter_item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 15%;
+  bottom: 15%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(11, 11, 11, 0.12),
+    transparent
+  );
+}
+
+.counter_item:nth-child(2)::after {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .counter_item:nth-child(2)::after {
+    display: block;
+  }
+
+  .counter_item:nth-child(4)::after {
+    display: none;
+  }
 }
 
 .counter_number {
-  font-weight: 700;
+  font-weight: 800;
   margin: 0;
   line-height: 1;
-  font-size: clamp(2rem, 1.429rem + 2.86vw, 6rem);
+  font-size: clamp(2.25rem, 1.6rem + 3.25vw, 6rem);
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
 }
 
 .counter_label {
-  font-weight: 400;
+  font-weight: 600;
   margin: 0;
-  line-height: 1.3;
-  font-size: clamp(0.7rem, 0.5rem + 1vw, 2.1rem);
+  line-height: 1.25;
+  font-size: clamp(0.65rem, 0.45rem + 0.9vw, 1.35rem);
+  color: var(--color-font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.counter_wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 4rem;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.counter_wave svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: var(--color-font-primary);
 }
 
 @media (min-width: 375px) {

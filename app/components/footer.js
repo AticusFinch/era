@@ -67,7 +67,7 @@ const Footer = () => {
           <div className={styles.footer_top}>
             <div className={styles.footer_logo}>
               <Image
-                src="/logo/era@3x.png"
+                src="/logo/era-white.png"
                 alt="Logo"
                 width={302}
                 height={97}

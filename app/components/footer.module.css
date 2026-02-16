@@ -1,6 +1,11 @@
 .footer {
+  position: relative;
+  z-index: 1;
+  margin-top: -1px;
   padding: 2.5rem 0 1.8rem 0;
-  background-color: var(--color-font-secondary);
+  background-color: var(--color-font-primary);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .footer_container {
@@ -15,7 +20,7 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 1.5rem;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_logo {
@@ -38,7 +43,7 @@
 
 .footer_link {
   text-decoration: none;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_contact_text_value {
@@ -46,12 +51,12 @@
   align-items: center;
   gap: 0.4rem;
   line-height: 1;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_contact_text_value svg {
   font-size: 1.1rem;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_social {
@@ -64,19 +69,19 @@
 }
 
 .footer_social a {
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_bottom {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 .footer_bottom_text {
   text-align: left;
-  color: var(--color-font-primary);
+  color: var(--color-background);
 }
 
 @media (min-width: 375px) {
