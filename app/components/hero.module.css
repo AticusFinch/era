@@ -9,7 +9,7 @@
   justify-content: center;
   overflow: hidden;
   padding-top: clamp(6rem, 3.273rem + 13.64vw, 12rem);
-  padding-bottom: clamp(12rem, 8.364rem + 18.18vw, 20rem);
+  padding-bottom: clamp(6rem, 3.273rem + 13.64vw, 12rem);
 }
 
 .hero_content {
@@ -68,6 +68,7 @@
   width: 180%;
   height: 180%;
   z-index: 1;
+  display: none;
 }
 
 .hero_image_container img {
