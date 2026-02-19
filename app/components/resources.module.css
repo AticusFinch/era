@@ -1,5 +1,4 @@
 .resources {
-  padding-bottom: clamp(2rem, 1.286rem + 3.57vw, 7rem);
   overflow: hidden;
   isolation: isolate;
   transform: translateZ(0);
@@ -32,7 +31,6 @@
   position: relative;
   margin-top: clamp(2rem, 1.714rem + 1.43vw, 4rem);
   contain: layout style;
-  min-height: clamp(16rem, 45vw, 26rem);
 }
 
 .resources_carousel {
@@ -188,11 +186,11 @@
   max-height: 4.5em;
 }
 
-.resources_button {
+.resources_button_container {
+  width: 100%;
   display: flex;
-  align-items: center;
   justify-content: flex-end;
-  width: fit-content;
+  margin-top: clamp(1.5rem, 1.286rem + 1.07vw, 3rem);
 }
 
 @media (max-width: 1024px) {
@@ -211,13 +209,6 @@
 }
 
 @media (min-width: 1024px) {
-  .resources_button_container {
-    margin-top: 2rem;
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-  }
-
   .resources_slide {
     flex: 0 0 calc((100% - 2.25rem) / 4);
   }
@@ -251,10 +242,6 @@
 @media (min-width: 1280px) {
   .resources_slide {
     flex: 0 0 calc((100% - 3rem) / 5);
-  }
-
-  .resources_button_container {
-    margin-top: 2.5rem;
   }
 }
 

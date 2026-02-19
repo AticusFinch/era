@@ -6,6 +6,8 @@
     var(--color-accent) 50%
   );
   min-height: 12rem;
+  padding-top: clamp(3rem, 2rem + 4vw, 6rem);
+  padding-bottom: clamp(3rem, 2rem + 4vw, 6rem);
 }
 
 .inner {

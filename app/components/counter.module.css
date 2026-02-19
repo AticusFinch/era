@@ -1,6 +1,6 @@
 .counter {
-  padding-top: clamp(3rem, 2rem + 4vw, 6rem);
-  padding-bottom: clamp(4rem, 3rem + 5vw, 8rem);
+  padding-top: 0;
+  padding-bottom: clamp(6rem, 5.143rem + 4.29vw, 12rem);
   position: relative;
   z-index: 1;
   background-color: var(--color-accent);
