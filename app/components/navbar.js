@@ -3,6 +3,7 @@
 import styles from "./navbar.module.css";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Button from "@/app/components/button";
 import { RxCross1 } from "react-icons/rx";
@@ -15,6 +16,8 @@ import { motion, AnimatePresence } from "framer-motion";
 const SCROLL_THRESHOLD = 20;
 
 const Navbar = () => {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const navRef = useRef(null);
@@ -122,11 +125,17 @@ const Navbar = () => {
     };
   }, []);
 
+  const navbarClassName = [
+    styles.navbar,
+    !isHomePage && styles.navbar_solid,
+    isHomePage && isScrolled && styles.navbar_scrolled,
+    isHomePage && !isScrolled && styles.navbar_home_top,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <div
-      className={`${styles.navbar} ${isScrolled ? styles.navbar_scrolled : ""}`}
-      ref={navRef}
-    >
+    <div className={navbarClassName} ref={navRef}>
       <Container>
         <div className={styles.navbar_container}>
           <Link href="/" className={styles.navbar_logo}>

@@ -1,3 +1,16 @@
+/* Strip behind navbar on home so transparent navbar shows body color (not hero accent) */
+.navbar_backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: var(--nav-h, clamp(4.5rem, 1.833rem + 4.17vw, 8.5rem));
+  background-color: var(--color-background);
+  z-index: 1000;
+  pointer-events: none;
+}
+
 .navbar {
   min-height: clamp(4.5rem, 1.833rem + 4.17vw, 8.5rem);
   height: fit-content;
@@ -9,13 +22,37 @@
   z-index: 1001;
   display: flex;
   align-items: center;
-  background-color: var(--color-accent);
+  background-color: transparent;
+  background-image: none;
   transition: background-color 0.5s ease;
 }
 
+/* Non-home pages: always solid */
+.navbar_solid {
+  background-color: var(--color-background) !important;
+}
+
+/* Home page, scrolled: solid */
 .navbar_scrolled {
-  background-color: var(--color-background);
+  background-color: var(--color-background) !important;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+/* Home page, at top: accent on 1024px+, solid background below */
+.navbar_home_top {
+  background-color: var(--color-background);
+}
+
+@media (min-width: 1024px) {
+  .navbar_home_top {
+    background-color: var(--color-accent) !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .navbar_home_top {
+    background-color: var(--color-background) !important;
+  }
 }
 
 .navbar_container {
@@ -31,7 +68,7 @@
   left: 0;
   right: 0;
   bottom: 0; /* fill remaining viewport height */
-  background-color: var(--color-accent);
+  background-color: transparent;
   z-index: 1000;
   pointer-events: none;
   overflow-y: auto;
@@ -59,7 +96,7 @@
   height: 1.5rem;
   background: linear-gradient(
     to bottom,
-    var(--color-accent) 0%,
+    var(--color-background) 0%,
     rgba(0, 0, 0, 0) 100%
   );
   pointer-events: none;
@@ -68,6 +105,7 @@
 
 .navbar_mobile_menu_open {
   pointer-events: auto;
+  background-color: var(--color-background) !important;
 }
 
 /* Make Container inside mobile menu take full height */
