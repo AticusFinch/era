@@ -78,32 +78,38 @@ const Resources = ({
             <div className={styles.resources_text}>
               <motion.h2
                 className={`${styles.resources_title} title`}
-                initial={{ opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
                 <span className="title-accent">Resources</span>
               </motion.h2>
-              <p className={styles.resources_description}>
+              <motion.p
+                className={styles.resources_description}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
                 Access ERA’s publications, research, policy papers, and
                 practical tools advancing LGBTI rights in the Western Balkans
                 and Türkiye. Explore evidence-based analysis, reports,
                 guidelines, and advocacy materials supporting equality,
                 socio-economic inclusion, and democratic development across the
                 region.
-              </p>
+              </motion.p>
             </div>
           </div>
-          <motion.div
-            className={styles.resources_items_wrapper}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
+          <div className={styles.resources_items_wrapper}>
             {resourcesItems.length > 0 ? (
-              <div className={styles.resources_carousel_wrapper}>
+              <motion.div
+                className={styles.resources_carousel_wrapper}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+              >
                 <div className={styles.resources_carousel} ref={emblaRef}>
                   <div className={styles.resources_slider}>
                     {resourcesItems.map((item, index) => (
@@ -158,7 +164,7 @@ const Resources = ({
                     ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             ) : (
               <div>
                 <p>No resources available at the moment.</p>
@@ -212,7 +218,7 @@ const Resources = ({
                 )}
               </div>
             )}
-          </motion.div>
+          </div>
         </div>
         {showButton && (
           <motion.div

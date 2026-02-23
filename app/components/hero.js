@@ -28,8 +28,9 @@ const Hero = () => {
           <div className={styles.hero_content}>
             <motion.h1
               className={styles.hero_title}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               Advancing{" "}
@@ -38,8 +39,9 @@ const Hero = () => {
             </motion.h1>
             <motion.h5
               className={styles.hero_subtitle}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               We connect, empower, and advocate for LGBTIQA+ organizations to
@@ -47,8 +49,9 @@ const Hero = () => {
             </motion.h5>
             <motion.div
               className={styles.hero_buttons}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.6 }}
             >
               <Button

@@ -12,6 +12,19 @@ import { CiCalendarDate } from "react-icons/ci";
 
 const MAX_LIST_ITEMS = 3;
 
+const listContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+  },
+};
+
+const listItemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  visible: { opacity: 1, y: 0 },
+};
+
 const News = ({ newsItems = [], debugInfo = null }) => {
   const newsItemsList = newsItems.length > 0 ? newsItems : [];
   const featuredItem = newsItemsList[0] ?? null;
@@ -24,24 +37,36 @@ const News = ({ newsItems = [], debugInfo = null }) => {
           <div className={styles.news_header}>
             <motion.h2
               className={`${styles.news_title} title`}
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <span className="title-accent">Latest News</span>
             </motion.h2>
-            <p className={styles.news_description}>
+            <motion.p
+              className={styles.news_description}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
               Discover ERA’s latest actions and developments advancing and
               strengthening LGBTI rights and equality across the region. Stay
               informed about our programmes, regional advocacy, initiatives,
               policy engagement, and cross-border civil society cooperation in
               the Western Balkans, Türkiye, Europe, and beyond.
-            </p>
+            </motion.p>
           </div>
 
           {newsItemsList.length > 0 ? (
-            <div className={styles.news_carousel}>
+            <motion.div
+              className={styles.news_carousel}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.6 }}
+            >
               <div className={styles.news_carousel_left}>
                 <Link
                   href={featuredItem ? `/news/${featuredItem.slug}` : "/news"}
@@ -84,15 +109,26 @@ const News = ({ newsItems = [], debugInfo = null }) => {
               </div>
 
               {listItems.length > 0 && (
-                <div className={styles.news_carousel_right}>
+                <motion.div
+                  className={styles.news_carousel_right}
+                  variants={listContainerVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true, margin: "-20px" }}
+                >
                   {listItems.map((item, index) => (
-                    <Link
+                    <motion.div
                       key={item.id || index}
-                      href={`/news/${item.slug}`}
-                      className={styles.news_list_item_wrapper}
-                      aria-label={`Read ${item.title}`}
+                      className={styles.news_list_item_outer}
+                      variants={listItemVariants}
+                      transition={{ duration: 0.4, ease: "easeOut" }}
                     >
-                      <div className={styles.news_list_item}>
+                      <Link
+                        href={`/news/${item.slug}`}
+                        className={styles.news_list_item_wrapper}
+                        aria-label={`Read ${item.title}`}
+                      >
+                        <div className={styles.news_list_item}>
                         <div className={styles.news_list_item_image}>
                           <Image
                             src={item.image}
@@ -122,13 +158,14 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                               {item.readingTime}
                             </span>
                           </div>
+                          </div>
                         </div>
-                      </div>
-                    </Link>
+                      </Link>
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               )}
-            </div>
+            </motion.div>
           ) : (
             <div className={styles.news_empty}>
               <p>No news available at the moment.</p>
@@ -148,8 +185,8 @@ const News = ({ newsItems = [], debugInfo = null }) => {
 
           <motion.div
             className={styles.news_button_container}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.5 }}
           >

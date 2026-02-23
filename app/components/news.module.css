@@ -158,6 +158,11 @@
   gap: clamp(0.6rem, 0.507rem + 0.46vw, 1.25rem);
 }
 
+.news_list_item_outer {
+  display: flex;
+  min-height: 0;
+}
+
 .news_list_item_wrapper {
   display: flex;
   align-items: stretch;
@@ -360,6 +365,11 @@
     flex-direction: column;
     gap: 0.5rem;
     min-height: 100%;
+  }
+
+  .news_list_item_outer {
+    flex: 1;
+    min-height: 0;
   }
 
   .news_list_item_wrapper {
