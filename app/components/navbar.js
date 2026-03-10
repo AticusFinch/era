@@ -175,11 +175,14 @@ const Navbar = () => {
             >
               <Link href="/about-us">About Us</Link>
               <div className={styles.navbar_dropdown}>
-                <Link href="/mission">Who We Are</Link>
-                <Link href="/team">Our Team</Link>
-                <Link href="/history">Member Organizations</Link>
-                <Link href="/history">Partners & Donors</Link>
-                <Link href="/history">Transparency & Policies</Link>
+                <Link href="/about-us/who-we-are">Who We Are</Link>
+                <Link href="/about-us/our-team">Our Team</Link>
+                <Link href="/about-us/member-organizations">
+                  Member Organizations
+                </Link>
+                <Link href="/about-us/partners-and-donors">
+                  Partners & Donors
+                </Link>
               </div>
             </motion.div>
             <motion.div

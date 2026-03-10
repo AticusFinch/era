@@ -7,8 +7,198 @@
   margin-bottom: clamp(1rem, 0.857rem + 0.71vw, 2rem);
 }
 
+.resources_description {
+  color: var(--color-font-secondary);
+  max-width: 40rem;
+}
+
+.resources_search {
+  margin-top: clamp(2rem, 1.714rem + 1.43vw, 3rem);
+  position: relative;
+  max-width: 24rem;
+}
+
+.resources_search_input {
+  width: 100%;
+  padding: 0.55rem 0.9rem 0.55rem 2.3rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  font-size: 0.9rem;
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.9);
+  color: var(--color-font-primary);
+}
+
+.resources_search_icon {
+  position: absolute;
+  left: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: var(--color-font-secondary);
+  pointer-events: none;
+}
+
+.resources_search_input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.resources_filters {
+  margin-top: clamp(2rem, 1.714rem + 1.43vw, 4rem);
+}
+
 .resources_filters_list {
   display: flex;
-  justify-content: space-between;
-  margin-top: clamp(1rem, 0.857rem + 0.71vw, 2rem);
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
+
+.resources_filters_item {
+  margin: 0;
+}
+
+.resources_filters_button {
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--color-font-primary);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.resources_filters_button:hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.resources_filters_button_active {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+}
+
+.resources_list {
+  margin-top: clamp(2rem, 1.714rem + 1.43vw, 4rem);
+}
+
+.resources_grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.25rem;
+}
+
+.resources_grid_item {
+  height: 100%;
+}
+
+.resources_empty {
+  color: var(--color-font-secondary);
+}
+
+.resources_debug {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.resources_pagination {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.resources_pagination_button {
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-font-primary);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.resources_pagination_button:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.resources_pagination_button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.resources_pagination_pages {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.resources_pagination_ellipsis {
+  min-width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-font-secondary);
+  font-size: 0.9rem;
+}
+
+.resources_pagination_page {
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-font-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.resources_pagination_page:hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.resources_pagination_page_active {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+}
+

@@ -1,0 +1,133 @@
+.our_work_page {
+  /* Match vertical spacing of other main content pages */
+  padding-top: clamp(6rem, 5.143rem + 4.29vw, 12rem);
+  padding-bottom: clamp(3rem, 2.571rem + 2.14vw, 6rem);
+}
+
+.our_work_container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 1.714rem + 1.43vw, 4rem);
+}
+
+.our_work_header {
+  max-width: 60rem;
+}
+
+.our_work_title {
+  isolation: isolate;
+  color: var(--color-font-primary);
+}
+
+.our_work_intro {
+  margin-top: 0.75rem;
+  color: var(--color-font-secondary);
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .our_work_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+    max-width: 100%;
+  }
+
+  .our_work_intro {
+    margin-top: 0;
+    max-width: 50%;
+  }
+}
+
+.our_work_sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 1.286rem + 1.07vw, 3rem);
+}
+
+.our_work_card {
+  position: relative;
+  display: flex;
+  gap: 1.25rem;
+  padding: 1.5rem 1.5rem 1.75rem;
+  border-radius: 0.9rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+
+  overflow: hidden;
+}
+
+.our_work_card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.our_work_card_icon {
+  position: relative;
+  flex-shrink: 0;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-background);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  font-size: 0.8rem;
+  box-shadow: 0 5px 10px rgba(237, 18, 109, 0.35);
+}
+
+.our_work_card_icon span {
+  position: relative;
+  z-index: 1;
+}
+
+.our_work_card_content {
+  position: relative;
+  z-index: 1;
+}
+
+.our_work_text_columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem 2rem;
+}
+
+.our_work_section {
+  padding-top: 0.25rem;
+}
+
+.our_work_section_title {
+  margin: 0 0 0.75rem 0;
+  font-weight: 600;
+  color: var(--color-font-primary);
+}
+
+.our_work_section_body {
+  margin: 0 0 0.75rem 0;
+  color: var(--color-font-secondary);
+  line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+  .our_work_header {
+    max-width: 100%;
+  }
+
+  .our_work_sections {
+    max-width: 100%;
+  }
+
+  .our_work_card {
+    padding: 1.75rem 1.75rem 2rem;
+  }
+
+  .our_work_text_columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
