@@ -1,12 +1,12 @@
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-import PageUnderConstruction from "../../components/pageUnderConstruction";
+import MemberOrganizationsView from "./member-organizations-view";
 
 const MemberOrganizationsPage = () => {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
+      <MemberOrganizationsView />
       <Footer />
     </>
   );

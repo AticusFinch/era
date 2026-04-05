@@ -2,14 +2,42 @@
 
 import styles from "./resources.module.css";
 import Container from "@/app/components/container";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import Button from "@/app/components/button";
 import Link from "next/link";
-import { IoIosArrowForward } from "react-icons/io";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState, useCallback } from "react";
+
+function getFadeUpVariants(y) {
+  return {
+    hidden: { opacity: 0, y },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+}
+
+const carouselStaggerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.06 },
+  },
+};
+
+function getSlideVariants(y) {
+  return {
+    hidden: { opacity: 0, y },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.45, ease: "easeInOut" },
+    },
+  };
+}
 
 const Resources = ({
   resources = [],
@@ -17,6 +45,11 @@ const Resources = ({
   showButton = true,
   showAll = false,
 }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const y = prefersReducedMotion ? 0 : 24;
+  const fadeUp = getFadeUpVariants(y);
+  const slideVariants = getSlideVariants(prefersReducedMotion ? 0 : 20);
+
   // Fallback to empty array if no resources
   const resourcesItems = resources.length > 0 ? resources : [];
 
@@ -78,19 +111,20 @@ const Resources = ({
             <div className={styles.resources_text}>
               <motion.h2
                 className={`${styles.resources_title} title`}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.2 }}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "0px 0px -12% 0px" }}
               >
                 <span className="title-accent">Resources</span>
               </motion.h2>
               <motion.p
                 className={styles.resources_description}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
+                variants={fadeUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                transition={{ delay: 0.08 }}
               >
                 Access ERA’s publications, research, policy papers, and
                 practical tools advancing LGBTI rights in the Western Balkans
@@ -103,19 +137,20 @@ const Resources = ({
           </div>
           <div className={styles.resources_items_wrapper}>
             {resourcesItems.length > 0 ? (
-              <motion.div
-                className={styles.resources_carousel_wrapper}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: 0.4 }}
-              >
+              <div className={styles.resources_carousel_wrapper}>
                 <div className={styles.resources_carousel} ref={emblaRef}>
-                  <div className={styles.resources_slider}>
+                  <motion.div
+                    className={styles.resources_slider}
+                    variants={carouselStaggerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "0px 0px -8% 0px" }}
+                  >
                     {resourcesItems.map((item, index) => (
-                      <div
+                      <motion.div
                         key={item.id || index}
                         className={styles.resources_slide}
+                        variants={slideVariants}
                       >
                         <Link
                           href={`/resources/${item.slug}`}
@@ -141,9 +176,9 @@ const Resources = ({
                             </p>
                           </div>
                         </Link>
-                      </div>
+                      </motion.div>
                     ))}
-                  </div>
+                  </motion.div>
                 </div>
                 {scrollSnaps.length > 1 && (
                   <div className={styles.resources_carousel_pagination}>
@@ -164,7 +199,7 @@ const Resources = ({
                     ))}
                   </div>
                 )}
-              </motion.div>
+              </div>
             ) : (
               <div>
                 <p>No resources available at the moment.</p>
@@ -223,10 +258,11 @@ const Resources = ({
         {showButton && (
           <motion.div
             className={styles.resources_button_container}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+            transition={{ delay: 0.12 }}
           >
             <Button href="/resources" className={styles.resources_button}>
               Discover More{" "}

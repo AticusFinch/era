@@ -5,27 +5,62 @@ import Container from "@/app/components/container";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/components/button";
-import { motion } from "framer-motion";
-import { IoIosArrowForward } from "react-icons/io";
+import { motion, useReducedMotion } from "framer-motion";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 
 const MAX_LIST_ITEMS = 3;
 
+function getFadeUpVariants(y) {
+  return {
+    hidden: { opacity: 0, y },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeInOut" },
+    },
+  };
+}
+
 const listContainerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.1 },
+    transition: { staggerChildren: 0.12, delayChildren: 0.08 },
   },
 };
 
 const listItemVariants = {
-  hidden: { opacity: 0, y: 14 },
-  visible: { opacity: 1, y: 0 },
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeInOut" },
+  },
+};
+
+const carouselVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.16, delayChildren: 0.06 },
+  },
 };
 
 const News = ({ newsItems = [], debugInfo = null }) => {
+  const prefersReducedMotion = useReducedMotion();
+  const y = prefersReducedMotion ? 0 : 24;
+  const fadeUp = getFadeUpVariants(y);
+  const featuredVariants = prefersReducedMotion
+    ? fadeUp
+    : {
+        hidden: { opacity: 0, y: 32 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          transition: { duration: 0.55, ease: "easeInOut" },
+        },
+      };
+
   const newsItemsList = newsItems.length > 0 ? newsItems : [];
   const featuredItem = newsItemsList[0] ?? null;
   const listItems = newsItemsList.slice(1, 1 + MAX_LIST_ITEMS);
@@ -37,19 +72,20 @@ const News = ({ newsItems = [], debugInfo = null }) => {
           <div className={styles.news_header}>
             <motion.h2
               className={`${styles.news_title} title`}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "0px 0px -12% 0px" }}
             >
               <span className="title-accent">Latest News</span>
             </motion.h2>
             <motion.p
               className={styles.news_description}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              variants={fadeUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+              transition={{ delay: 0.08 }}
             >
               Discover ERA’s latest actions and developments advancing and
               strengthening LGBTI rights and equality across the region. Stay
@@ -62,12 +98,15 @@ const News = ({ newsItems = [], debugInfo = null }) => {
           {newsItemsList.length > 0 ? (
             <motion.div
               className={styles.news_carousel}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              variants={carouselVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "0px 0px -8% 0px" }}
             >
-              <div className={styles.news_carousel_left}>
+              <motion.div
+                className={styles.news_carousel_left}
+                variants={featuredVariants}
+              >
                 <Link
                   href={featuredItem ? `/news/${featuredItem.slug}` : "/news"}
                   className={styles.news_featured}
@@ -106,22 +145,18 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                     </div>
                   </div>
                 </Link>
-              </div>
+              </motion.div>
 
               {listItems.length > 0 && (
                 <motion.div
                   className={styles.news_carousel_right}
                   variants={listContainerVariants}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-20px" }}
                 >
                   {listItems.map((item, index) => (
                     <motion.div
                       key={item.id || index}
                       className={styles.news_list_item_outer}
                       variants={listItemVariants}
-                      transition={{ duration: 0.4, ease: "easeOut" }}
                     >
                       <Link
                         href={`/news/${item.slug}`}
@@ -129,35 +164,35 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                         aria-label={`Read ${item.title}`}
                       >
                         <div className={styles.news_list_item}>
-                        <div className={styles.news_list_item_image}>
-                          <Image
-                            src={item.image}
-                            alt={item.title}
-                            fill
-                            sizes="120px"
-                            style={{ objectFit: "cover" }}
-                          />
-                        </div>
-                        <div className={styles.news_list_item_text}>
-                          <span className={styles.news_list_item_category}>
-                            {item.category}
-                          </span>
-                          <h6 className={styles.news_list_item_title}>
-                            {item.title}
-                          </h6>
-                          <p className={styles.news_list_item_excerpt}>
-                            {item.excerpt}
-                          </p>
-                          <div className={styles.news_list_item_info}>
-                            <span>
-                              <CiCalendarDate />
-                              {item.date}
-                            </span>
-                            <span>
-                              <IoReaderOutline />
-                              {item.readingTime}
-                            </span>
+                          <div className={styles.news_list_item_image}>
+                            <Image
+                              src={item.image}
+                              alt={item.title}
+                              fill
+                              sizes="120px"
+                              style={{ objectFit: "cover" }}
+                            />
                           </div>
+                          <div className={styles.news_list_item_text}>
+                            <span className={styles.news_list_item_category}>
+                              {item.category}
+                            </span>
+                            <h6 className={styles.news_list_item_title}>
+                              {item.title}
+                            </h6>
+                            <p className={styles.news_list_item_excerpt}>
+                              {item.excerpt}
+                            </p>
+                            <div className={styles.news_list_item_info}>
+                              <span>
+                                <CiCalendarDate />
+                                {item.date}
+                              </span>
+                              <span>
+                                <IoReaderOutline />
+                                {item.readingTime}
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </Link>
@@ -185,10 +220,11 @@ const News = ({ newsItems = [], debugInfo = null }) => {
 
           <motion.div
             className={styles.news_button_container}
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+            transition={{ delay: 0.12 }}
           >
             <Button href="/news" className={styles.news_button}>
               Read More

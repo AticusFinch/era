@@ -37,7 +37,7 @@ export default function Counter() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
         >
           Let's talk in <span className="title-accent">numbers</span>
         </motion.h2>
@@ -46,7 +46,7 @@ export default function Counter() {
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
         >
           {counterItems.map((item, index) => (
             <motion.div
@@ -55,7 +55,11 @@ export default function Counter() {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
+              transition={{
+                duration: 0.5,
+                delay: 0.2 + index * 0.1,
+                ease: "easeInOut",
+              }}
             >
               <CountUp
                 start={0}
@@ -78,18 +82,6 @@ export default function Counter() {
           ))}
         </motion.div>
       </Container>
-      <div className={styles.counter_wave} aria-hidden="true">
-        <svg
-          viewBox="0 0 1440 120"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,120 L0,120 Z"
-            fill="var(--color-font-primary)"
-          />
-        </svg>
-      </div>
     </div>
   );
 }

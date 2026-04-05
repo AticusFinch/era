@@ -15,7 +15,7 @@ const Donate = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
           >
             <h2 className={styles.title}>Become a member</h2>
             <p className={styles.description}>
@@ -30,7 +30,7 @@ const Donate = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
+            transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
           >
             <h2 className={styles.title}>Donate to ERA</h2>
             <p className={styles.description}>

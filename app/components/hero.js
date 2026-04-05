@@ -31,7 +31,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
             >
               Advancing{" "}
               <span className={styles.hero_title_accent}>LGBTIQA+</span>{" "}
@@ -42,7 +42,7 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
+              transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
             >
               We connect, empower, and advocate for LGBTIQA+ organizations to
               create a region where every person is free, safe, and equal.
@@ -52,10 +52,10 @@ const Hero = () => {
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.6 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: "easeInOut" }}
             >
               <Button
-                href="/become-a-member"
+                href="/about-us/member-organizations"
                 className={styles.hero_button_member}
               >
                 Member Organizations
@@ -79,18 +79,6 @@ const Hero = () => {
           </div>
         </div>
       </Container>
-      <div className={styles.hero_wave} aria-hidden="true">
-        <svg
-          viewBox="0 0 1440 120"
-          xmlns="http://www.w3.org/2000/svg"
-          preserveAspectRatio="none"
-        >
-          <path
-            d="M0,40 C240,80 480,0 720,40 C960,80 1200,0 1440,40 L1440,120 L0,120 Z"
-            fill="var(--color-background)"
-          />
-        </svg>
-      </div>
     </div>
   );
 };
