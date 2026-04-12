@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/app/components/container";
@@ -15,6 +15,7 @@ import {
   FaYoutube,
   FaTiktok,
   FaGlobe,
+  FaChevronDown,
 } from "react-icons/fa6";
 
 import { IoMdArrowDropright } from "react-icons/io";
@@ -92,6 +93,107 @@ function MemberCard({ member, showCountry }) {
       </div>
       <MemberCardSocial social={member.social} orgName={member.name} />
     </>
+  );
+}
+
+function MobileCountryFilter({ activeCode, setActiveCode }) {
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef(null);
+
+  const displayLabel = useMemo(() => {
+    if (activeCode === ALL_CODE) return "All organizations";
+    return (
+      membersByCountry.find((c) => c.countryCode === activeCode)
+        ?.countryName ?? "Country"
+    );
+  }, [activeCode]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDocMouseDown = (e) => {
+      if (rootRef.current && !rootRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDocMouseDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onDocMouseDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
+  const choose = (code) => {
+    setActiveCode(code);
+    setOpen(false);
+  };
+
+  return (
+    <div className={styles.mop_country_mobile_wrap} ref={rootRef}>
+      <span id="mop-country-filter-label" className={styles.mop_country_select_label}>
+        Country
+      </span>
+      <button
+        type="button"
+        className={styles.mop_country_dropdown_trigger}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls="mop-country-dropdown-list"
+        aria-labelledby="mop-country-filter-label mop-country-trigger-text"
+        onClick={() => setOpen((v) => !v)}
+      >
+        <span
+          id="mop-country-trigger-text"
+          className={styles.mop_country_dropdown_trigger_text}
+        >
+          {displayLabel}
+        </span>
+        <FaChevronDown
+          className={`${styles.mop_country_dropdown_chevron} ${open ? styles.mop_country_dropdown_chevron_open : ""}`}
+          aria-hidden
+        />
+      </button>
+      {open ? (
+        <ul
+          id="mop-country-dropdown-list"
+          role="listbox"
+          aria-labelledby="mop-country-filter-label"
+          className={styles.mop_country_dropdown_list}
+        >
+          <li role="none" className={styles.mop_country_dropdown_item}>
+            <button
+              type="button"
+              role="option"
+              aria-selected={activeCode === ALL_CODE}
+              className={`${styles.mop_country_dropdown_option} ${activeCode === ALL_CODE ? styles.mop_country_dropdown_option_active : ""}`}
+              onClick={() => choose(ALL_CODE)}
+            >
+              All organizations
+            </button>
+          </li>
+          {membersByCountry.map((country) => (
+            <li
+              key={country.countryCode}
+              role="none"
+              className={styles.mop_country_dropdown_item}
+            >
+              <button
+                type="button"
+                role="option"
+                aria-selected={activeCode === country.countryCode}
+                className={`${styles.mop_country_dropdown_option} ${activeCode === country.countryCode ? styles.mop_country_dropdown_option_active : ""}`}
+                onClick={() => choose(country.countryCode)}
+              >
+                {country.countryName}
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : null}
+    </div>
   );
 }
 
@@ -216,28 +318,10 @@ export default function MemberOrganizationsView() {
         </header>
 
         <div className={styles.mop_country_filter}>
-          <div className={styles.mop_country_select_wrap}>
-            <label
-              htmlFor="mop-country-filter"
-              className={styles.mop_country_select_label}
-            >
-              Country
-            </label>
-            <select
-              id="mop-country-filter"
-              className={styles.mop_country_select}
-              value={activeCode}
-              onChange={(e) => setActiveCode(e.target.value)}
-              aria-label="Filter by country"
-            >
-              <option value={ALL_CODE}>All organizations</option>
-              {membersByCountry.map((country) => (
-                <option key={country.countryCode} value={country.countryCode}>
-                  {country.countryName}
-                </option>
-              ))}
-            </select>
-          </div>
+          <MobileCountryFilter
+            activeCode={activeCode}
+            setActiveCode={setActiveCode}
+          />
 
           <div
             className={styles.mop_country_buttons}
