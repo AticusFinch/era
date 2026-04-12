@@ -1,0 +1,102 @@
+.mop_detail_page {
+  padding-top: clamp(6rem, 5.143rem + 4.29vw, 12rem);
+  padding-bottom: clamp(3rem, 2.571rem + 2.14vw, 6rem);
+}
+
+.mop_detail_back {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.mop_detail_back:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.mop_detail_card {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(1.25rem, 1rem + 1.25vw, 2rem);
+  border-radius: 0.75rem;
+  background: var(--color-surface, #fff);
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.mop_detail_logo {
+  position: relative;
+  width: 100%;
+  height: clamp(8rem, 6rem + 8vw, 11rem);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 0.5rem;
+}
+
+.mop_detail_img {
+  object-fit: contain;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.mop_detail_country {
+  margin: 0 0 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.mop_detail_title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.35rem, 1.15rem + 1vw, 1.85rem);
+  font-weight: 600;
+  color: var(--color-font-primary);
+  line-height: 1.25;
+}
+
+.mop_detail_desc {
+  margin: 0 0 1.25rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--color-font-secondary);
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.mop_detail_meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+  color: var(--color-font-primary);
+}
+
+.mop_detail_meta_row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.mop_detail_meta_row a {
+  color: var(--color-primary);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.mop_detail_meta_row a:hover {
+  text-decoration: underline;
+}
+
+.mop_detail_meta_icon {
+  flex-shrink: 0;
+  margin-top: 0.1em;
+}

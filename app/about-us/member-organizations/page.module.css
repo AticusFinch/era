@@ -17,17 +17,15 @@
   color: var(--color-font-primary);
 }
 
-.mop_title_inner {
-  display: inline-block;
-  width: max-content;
-  max-width: 100%;
-  vertical-align: top;
-}
-
 .mop_title_inner :global(.title-accent) {
   display: inline;
   width: auto;
   max-width: none;
+}
+
+:global(.title-accent:before) {
+  background-color: var(--color-primary);
+  bottom: 10%;
 }
 
 .mop_intro {
@@ -36,17 +34,73 @@
   line-height: 1.6;
 }
 
-.mop_country_buttons {
+.mop_country_filter {
+  margin-bottom: clamp(2rem, 1.714rem + 1.43vw, 3rem);
+}
+
+/* Mobile: native dropdown */
+.mop_country_select_wrap {
   display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 100%;
+}
+
+.mop_country_select_label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mop_country_select {
+  width: 100%;
+  max-width: 28rem;
+  padding: 0.65rem 2.25rem 0.65rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  background-color: var(--color-surface, #fff);
+  color: var(--color-font-primary);
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1rem;
+}
+
+.mop_country_select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(237, 18, 109, 0.2);
+}
+
+/* Desktop: pill buttons (hidden on small screens) */
+.mop_country_buttons {
+  display: none;
   flex-wrap: wrap;
   gap: 0.5rem 0.75rem;
-  margin-bottom: clamp(2rem, 1.714rem + 1.43vw, 3rem);
+}
+
+@media (min-width: 1024px) {
+  .mop_country_select_wrap {
+    display: none;
+  }
+
+  .mop_country_buttons {
+    display: flex;
+  }
 }
 
 .mop_country_btn {
   padding: 0.5rem 1rem;
   border-radius: 999px;
-  border: 1px solid rgba(11, 11, 11, 0.15);
+  border: 1px solid rgba(11, 11, 11, 0.033);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
   background: var(--color-surface, #fff);
   color: var(--color-font-primary);
   font-size: clamp(0.75rem, 0.7rem + 0.25vw, 0.95rem);
@@ -78,6 +132,7 @@
 .mop_all_wrap {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: clamp(2.5rem, 2rem + 2.5vw, 4rem);
 }
 
@@ -109,40 +164,37 @@
   }
 }
 
-/* Single list (All + per-country): center incomplete last rows instead of grid “holes”. */
-.mop_grid.mop_grid_all {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: stretch;
-  gap: clamp(1.25rem, 1rem + 1.25vw, 2rem);
-}
-
-.mop_grid.mop_grid_all > .mop_card {
-  flex: 1 1 280px;
-  max-width: 400px;
+@media (min-width: 1700px) {
+  .mop_grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
 .mop_card {
   display: flex;
   flex-direction: column;
+  min-width: 0;
+  height: 100%;
   padding: 1.25rem;
   border-radius: 0.75rem;
-  background: var(--color-surface, #fff);
-  border: 1px solid rgba(11, 11, 11, 0.08);
+  background: var(--color-card);
+  border: 1px solid rgba(11, 11, 11, 0.033);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
 .mop_card_logo {
   position: relative;
   width: 100%;
-  height: 7rem;
+  height: 9rem;
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.03);
   border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(11, 11, 11, 0.08);
+  background: #fff;
 }
 
 .mop_card_img {
@@ -166,19 +218,90 @@
   font-size: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
   font-weight: 600;
   color: var(--color-font-primary);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(11, 11, 11, 0.08);
+}
+
+.mop_card_intro {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin-bottom: 0.75rem;
 }
 
 .mop_card_desc {
-  margin: 0 0 0.75rem;
-  flex: 1;
+  margin: 0;
+  min-width: 0;
   font-size: 0.9rem;
   line-height: 1.5;
   color: var(--color-font-secondary);
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+/* Up to 3 lines of intro; “Read more…” sits below in its own row */
+.mop_card_desc_clamped {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+.mop_card_read_more {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.4rem;
+  min-height: 1.5em;
+  line-height: 1.5;
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: var(--color-primary);
+}
+
+.mop_card_read_more svg {
+  transition: transform 0.2s ease-in-out;
+}
+
+.mop_card_read_more:hover svg {
+  transform: translateX(0.25rem);
+}
+
+.mop_card_social {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: var(--color-primary);
+  border-radius: 0.5rem;
+}
+
+.mop_card_social_link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: var(--color-background);
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: transform 0.2s ease;
+}
+
+.mop_card_social_link:hover {
+  transform: translateY(-2px);
 }
 
 .mop_card_email {
   margin: 0 0 0.35rem;
   font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
 }
 
 .mop_card_email a {
@@ -205,4 +328,90 @@
 .mop_card_web a:hover {
   color: var(--color-primary);
   text-decoration: underline;
+}
+
+/* Match resources list pagination */
+.mop_pagination {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.mop_pagination_button {
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-font-primary);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mop_pagination_button:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.mop_pagination_button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.mop_pagination_pages {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.mop_pagination_ellipsis {
+  min-width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-font-secondary);
+  font-size: 0.9rem;
+}
+
+.mop_pagination_page {
+  min-width: 2rem;
+  height: 2rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.12));
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--color-font-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.mop_pagination_page:hover {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.mop_pagination_page_active {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
 }

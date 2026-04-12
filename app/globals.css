@@ -2,9 +2,10 @@
 
 :root {
   /* Custom brand colors */
-  --color-background: #fff9f5;
+  --color-background: #f7f7f7;
   --color-primary: #ed126f;
   --color-accent: #ffc4b4;
+  --color-card: #fcfcfc;
   --color-font-primary: #0b0b0b;
   --color-surface: #ffffff;
   /* Navbar height - will be updated by JavaScript */

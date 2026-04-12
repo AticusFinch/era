@@ -1,29 +1,63 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/app/components/container";
-import { membersByCountry } from "@/lib/data/members";
+import { encodePublicImagePath, membersByCountry } from "@/lib/data/members";
 import styles from "./page.module.css";
+import {
+  FaBluesky,
+  FaFacebook,
+  FaInstagram,
+  FaLinkedin,
+  FaSquareXTwitter,
+  FaYoutube,
+  FaTiktok,
+  FaGlobe,
+} from "react-icons/fa6";
+
+import { IoMdArrowDropright } from "react-icons/io";
 
 const ALL_CODE = "ALL";
 
-/**
- * Encode each path segment so filenames with spaces, Unicode (e.g. İ, đ, ş),
- * and combining characters work in the browser and with next/image.
- */
-function publicImageSrc(path) {
-  if (!path || typeof path !== "string") return path;
-  return `/${path
-    .split("/")
-    .filter(Boolean)
-    .map((segment) => encodeURIComponent(segment))
-    .join("/")}`;
+const SOCIAL_LINKS = [
+  { key: "facebook", Icon: FaFacebook, label: "Facebook" },
+  { key: "instagram", Icon: FaInstagram, label: "Instagram" },
+  { key: "twitter", Icon: FaSquareXTwitter, label: "X" },
+  { key: "linkedin", Icon: FaLinkedin, label: "LinkedIn" },
+  { key: "bluesky", Icon: FaBluesky, label: "Bluesky" },
+  { key: "youtube", Icon: FaYoutube, label: "YouTube" },
+  { key: "tiktok", Icon: FaTiktok, label: "TikTok" },
+  { key: "website", Icon: FaGlobe, label: "Website" },
+];
+
+function MemberCardSocial({ social, orgName }) {
+  if (!social || typeof social !== "object") return null;
+  const items = SOCIAL_LINKS.filter(
+    (c) => typeof social[c.key] === "string" && social[c.key].trim() !== "",
+  );
+  if (items.length === 0) return null;
+  return (
+    <div className={styles.mop_card_social}>
+      {items.map(({ key, Icon, label }) => (
+        <a
+          key={key}
+          href={social[key]}
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.mop_card_social_link}
+          aria-label={`${orgName} on ${label}`}
+        >
+          <Icon aria-hidden />
+        </a>
+      ))}
+    </div>
+  );
 }
 
 function MemberCard({ member, showCountry }) {
-  const src = publicImageSrc(member.logo);
+  const src = encodePublicImagePath(member.logo);
 
   return (
     <>
@@ -42,25 +76,29 @@ function MemberCard({ member, showCountry }) {
         <p className={styles.mop_card_country}>{member.countryName}</p>
       ) : null}
       <h3 className={styles.mop_card_name}>{member.name}</h3>
-      <p className={styles.mop_card_desc}>{member.description}</p>
-      <p className={styles.mop_card_email}>
-        <a href={`mailto:${member.email}`}>{member.email}</a>
-      </p>
-      <p className={styles.mop_card_web}>
-        <Link
-          href={member.website}
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className={styles.mop_card_intro}>
+        <p
+          className={`${styles.mop_card_desc} ${styles.mop_card_desc_clamped}`}
         >
-          Website
+          {member.description}
+        </p>
+        <Link
+          href={`/about-us/member-organizations/${member.id}`}
+          className={styles.mop_card_read_more}
+        >
+          Read more
+          <IoMdArrowDropright />
         </Link>
-      </p>
+      </div>
+      <MemberCardSocial social={member.social} orgName={member.name} />
     </>
   );
 }
 
 export default function MemberOrganizationsView() {
   const [activeCode, setActiveCode] = useState(ALL_CODE);
+  const [pageSize, setPageSize] = useState(10);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const activeCountry = useMemo(() => {
     if (activeCode === ALL_CODE) return null;
@@ -93,6 +131,74 @@ export default function MemberOrganizationsView() {
     );
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const updatePageSize = () => {
+      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      setPageSize(isDesktop ? 12 : 8);
+      setCurrentPage(1);
+    };
+
+    updatePageSize();
+    const mediaQuery = window.matchMedia("(min-width: 1024px)");
+    mediaQuery.addEventListener("change", updatePageSize);
+    return () => mediaQuery.removeEventListener("change", updatePageSize);
+  }, []);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeCode]);
+
+  const membersForGrid = useMemo(
+    () => (activeCode === ALL_CODE ? allMembersSorted : membersSorted),
+    [activeCode, allMembersSorted, membersSorted],
+  );
+
+  const totalPages = useMemo(
+    () =>
+      pageSize > 0
+        ? Math.max(1, Math.ceil(membersForGrid.length / pageSize))
+        : 1,
+    [membersForGrid.length, pageSize],
+  );
+
+  const paginatedMembers = useMemo(() => {
+    if (pageSize <= 0) return membersForGrid;
+    const start = (currentPage - 1) * pageSize;
+    return membersForGrid.slice(start, start + pageSize);
+  }, [membersForGrid, currentPage, pageSize]);
+
+  const handlePageChange = (page) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+
+  const getPaginationPages = () => {
+    if (totalPages <= 5) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1);
+    }
+    const pages = [];
+    const addPage = (p) => {
+      if (!pages.includes(p)) pages.push(p);
+    };
+    addPage(1);
+    addPage(totalPages);
+    addPage(currentPage);
+    addPage(currentPage - 1);
+    addPage(currentPage + 1);
+    return pages.filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
+  };
+
+  const isAll = activeCode === ALL_CODE;
+  const sectionHeadingId = isAll ? "mop-all-heading" : "mop-country-heading";
+  const sectionTitle = isAll
+    ? "All organizations (A–Z)"
+    : (activeCountry?.countryName ?? "");
+
   return (
     <main className={styles.mop_page}>
       <Container>
@@ -109,75 +215,153 @@ export default function MemberOrganizationsView() {
           </p>
         </header>
 
-        <div
-          className={styles.mop_country_buttons}
-          role="tablist"
-          aria-label="Filter by country"
-        >
-          <button
-            type="button"
-            role="tab"
-            aria-selected={activeCode === ALL_CODE}
-            className={
-              activeCode === ALL_CODE
-                ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
-                : styles.mop_country_btn
-            }
-            onClick={() => setActiveCode(ALL_CODE)}
+        <div className={styles.mop_country_filter}>
+          <div className={styles.mop_country_select_wrap}>
+            <label
+              htmlFor="mop-country-filter"
+              className={styles.mop_country_select_label}
+            >
+              Country
+            </label>
+            <select
+              id="mop-country-filter"
+              className={styles.mop_country_select}
+              value={activeCode}
+              onChange={(e) => setActiveCode(e.target.value)}
+              aria-label="Filter by country"
+            >
+              <option value={ALL_CODE}>All organizations</option>
+              {membersByCountry.map((country) => (
+                <option key={country.countryCode} value={country.countryCode}>
+                  {country.countryName}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div
+            className={styles.mop_country_buttons}
+            role="tablist"
+            aria-label="Filter by country"
           >
-            All organizations
-          </button>
-          {membersByCountry.map((country) => (
             <button
-              key={country.countryCode}
               type="button"
               role="tab"
-              aria-selected={activeCode === country.countryCode}
+              aria-selected={activeCode === ALL_CODE}
               className={
-                activeCode === country.countryCode
+                activeCode === ALL_CODE
                   ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
                   : styles.mop_country_btn
               }
-              onClick={() => setActiveCode(country.countryCode)}
+              onClick={() => setActiveCode(ALL_CODE)}
             >
-              {country.countryName}
+              All organizations
             </button>
-          ))}
+            {membersByCountry.map((country) => (
+              <button
+                key={country.countryCode}
+                type="button"
+                role="tab"
+                aria-selected={activeCode === country.countryCode}
+                className={
+                  activeCode === country.countryCode
+                    ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
+                    : styles.mop_country_btn
+                }
+                onClick={() => setActiveCode(country.countryCode)}
+              >
+                {country.countryName}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {activeCode === ALL_CODE ? (
-          <section
-            className={styles.mop_section}
-            aria-labelledby="mop-all-heading"
-          >
-            <h2 id="mop-all-heading" className={styles.mop_section_title}>
-              All organizations (A–Z)
-            </h2>
-            <ul className={`${styles.mop_grid} ${styles.mop_grid_all}`}>
-              {allMembersSorted.map((member) => (
-                <li key={member.id} className={styles.mop_card}>
-                  <MemberCard member={member} showCountry />
-                </li>
-              ))}
-            </ul>
-          </section>
-        ) : (
-          <section
-            className={styles.mop_section}
-            aria-labelledby="mop-country-heading"
-          >
-            <h2 id="mop-country-heading" className={styles.mop_section_title}>
-              {activeCountry?.countryName}
-            </h2>
-            <ul className={`${styles.mop_grid} ${styles.mop_grid_all}`}>
-              {membersSorted.map((member) => (
-                <li key={member.id} className={styles.mop_card}>
-                  <MemberCard member={member} showCountry={false} />
-                </li>
-              ))}
-            </ul>
-          </section>
-        )}
+        <section
+          className={styles.mop_section}
+          aria-labelledby={sectionHeadingId}
+        >
+          <h2 id={sectionHeadingId} className={styles.mop_section_title}>
+            {sectionTitle}
+          </h2>
+          <ul className={styles.mop_grid}>
+            {paginatedMembers.map((member) => (
+              <li key={member.id} className={styles.mop_card}>
+                <MemberCard member={member} showCountry={isAll} />
+              </li>
+            ))}
+          </ul>
+
+          {membersForGrid.length > 0 && totalPages > 1 && (
+            <div
+              className={styles.mop_pagination}
+              role="navigation"
+              aria-label="Member list pages"
+            >
+              <button
+                type="button"
+                className={styles.mop_pagination_button}
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+
+              <div className={styles.mop_pagination_pages}>
+                {(() => {
+                  const sequence = [];
+                  const pages = getPaginationPages();
+                  for (let i = 0; i < pages.length; i++) {
+                    const page = pages[i];
+                    const prev = pages[i - 1];
+                    if (i > 0 && page - prev > 1) {
+                      sequence.push(`ellipsis-${page}-${prev}`);
+                    }
+                    sequence.push(page);
+                  }
+                  return sequence.map((item) => {
+                    if (
+                      typeof item === "string" &&
+                      item.startsWith("ellipsis-")
+                    ) {
+                      return (
+                        <span
+                          key={item}
+                          className={styles.mop_pagination_ellipsis}
+                        >
+                          …
+                        </span>
+                      );
+                    }
+                    const page = item;
+                    return (
+                      <button
+                        key={page}
+                        type="button"
+                        className={`${styles.mop_pagination_page} ${
+                          page === currentPage
+                            ? styles.mop_pagination_page_active
+                            : ""
+                        }`}
+                        onClick={() => handlePageChange(page)}
+                      >
+                        {page}
+                      </button>
+                    );
+                  });
+                })()}
+              </div>
+
+              <button
+                type="button"
+                className={styles.mop_pagination_button}
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </section>
       </Container>
     </main>
   );
