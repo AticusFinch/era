@@ -10,6 +10,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import Container from "@/app/components/container";
+import { ourWorkSubnavLinks } from "@/lib/data/our-work-nav";
 import { RxChevronRight } from "react-icons/rx";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -297,47 +298,13 @@ const Navbar = () => {
                         }}
                         className={styles.navbar_mobile_dropdown}
                       >
-                        <div>
-                          <Link href="/our-work/projects" onClick={toggleMenu}>
-                            Projects
-                          </Link>
-                        </div>
-                        <div>
-                          <Link
-                            href="/our-work/training-hub"
-                            onClick={toggleMenu}
-                          >
-                            Training Hub
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/our-work/caucuses" onClick={toggleMenu}>
-                            WLW & TNBI Caucuses
-                          </Link>
-                        </div>
-                        <div>
-                          <Link
-                            href="/our-work/community-support"
-                            onClick={toggleMenu}
-                          >
-                            Community Support
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/our-work/advocacy" onClick={toggleMenu}>
-                            Advocacy
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/our-work/research" onClick={toggleMenu}>
-                            Research
-                          </Link>
-                        </div>
-                        <div>
-                          <Link href="/our-work/events" onClick={toggleMenu}>
-                            Events
-                          </Link>
-                        </div>
+                        {ourWorkSubnavLinks.map(({ href, label }) => (
+                          <div key={href}>
+                            <Link href={href} onClick={toggleMenu}>
+                              {label}
+                            </Link>
+                          </div>
+                        ))}
                       </motion.div>
                     )}
                   </motion.div>
@@ -532,13 +499,11 @@ const Navbar = () => {
             >
               <Link href="/our-work">Our Work</Link>
               <div className={styles.navbar_dropdown}>
-                <Link href="/our-work/projects">Projects</Link>
-                <Link href="/our-work/donations">Training Hub</Link>
-                <Link href="/our-work/publications">WLW & TNBI Caucuses</Link>
-                <Link href="/our-work/publications">Community Support</Link>
-                <Link href="/our-work/publications">Advocacy</Link>
-                <Link href="/our-work/publications">Research</Link>
-                <Link href="/our-work/publications">Events</Link>
+                {ourWorkSubnavLinks.map(({ href, label }) => (
+                  <Link key={href} href={href}>
+                    {label}
+                  </Link>
+                ))}
               </div>
             </motion.div>
             <motion.div

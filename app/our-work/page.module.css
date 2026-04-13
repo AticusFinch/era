@@ -17,10 +17,6 @@
   margin-bottom: clamp(2rem, 1.714rem + 1.43vw, 4rem);
 }
 
-.our_work_header {
-  max-width: 72rem;
-}
-
 .our_work_kicker {
   margin: 0 0 0.75rem;
   font-size: clamp(0.65rem, 0.6rem + 0.25vw, 0.8rem);
@@ -39,6 +35,7 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 100%;
 }
 
 .our_work_intro {
@@ -54,6 +51,7 @@
     justify-content: space-between;
     align-items: flex-start;
     gap: 3rem;
+    width: 100%;
   }
 
   .our_work_title {
@@ -62,34 +60,271 @@
   }
 
   .our_work_intro {
+    max-width: 50%;
     flex: 1;
-    max-width: 36rem;
     padding-top: 0.15rem;
   }
 }
 
-/* Bento-style grid: first pillar featured full width */
-.our_work_sections {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: clamp(1.25rem, 1rem + 1.25vw, 2rem);
-  max-width: 100%;
+/* Roadmap — vertical journey (aligned with pillar index / accent language) */
+.our_work_roadmap_nav {
+  margin-top: clamp(1.75rem, 1.5rem + 1.25vw, 2.75rem);
+  padding-top: clamp(1.5rem, 1.286rem + 1.07vw, 2.25rem);
+  border-top: 1px solid rgba(11, 11, 11, 0.06);
+  max-width: 72rem;
 }
 
+.our_work_roadmap_heading {
+  margin: 0 0 1.25rem;
+  font-size: clamp(0.65rem, 0.6rem + 0.25vw, 0.75rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.our_work_roadmap {
+  --our-work-rail-x: 0.85rem;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 clamp(2.85rem, 2.4rem + 2vw, 3.6rem);
+  position: relative;
+  max-width: 38rem;
+}
+
+.our_work_roadmap::before {
+  content: "";
+  position: absolute;
+  left: var(--our-work-rail-x);
+  top: 0.4rem;
+  bottom: 0.4rem;
+  width: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    180deg,
+    var(--color-primary) 0%,
+    rgba(237, 18, 109, 0.25) 50%,
+    rgba(237, 18, 109, 0.07) 100%
+  );
+}
+
+.our_work_roadmap_step {
+  position: relative;
+  margin: 0;
+  padding: 0.55rem 0;
+}
+
+.our_work_roadmap_step:last-child {
+  padding-bottom: 0;
+}
+
+.our_work_roadmap_step::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--our-work-rail-x) - clamp(2.85rem, 2.4rem + 2vw, 3.6rem));
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--color-background);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-background);
+  z-index: 1;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.our_work_roadmap_step:has(.our_work_roadmap_link:hover)::before {
+  transform: translate(-50%, -50%) scale(1.1);
+  background-color: rgba(237, 18, 109, 0.1);
+}
+
+.our_work_roadmap_link {
+  display: flex;
+  align-items: baseline;
+  gap: clamp(0.85rem, 0.7rem + 0.75vw, 1.35rem);
+  text-decoration: none;
+  color: inherit;
+  padding: 0.3rem 0;
+  border-radius: 0.35rem;
+}
+
+.our_work_roadmap_link:hover .our_work_roadmap_index {
+  color: rgba(237, 18, 109, 0.28);
+}
+
+.our_work_roadmap_link:hover .our_work_roadmap_label {
+  color: var(--color-primary);
+}
+
+.our_work_roadmap_link:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+
+.our_work_roadmap_index {
+  flex-shrink: 0;
+  font-size: clamp(1.75rem, 1.4rem + 1.75vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(237, 18, 109, 0.14);
+  user-select: none;
+  min-width: 2.5ch;
+  transition: color 0.2s ease;
+}
+
+.our_work_roadmap_label {
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.05rem);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--color-font-primary);
+  transition: color 0.2s ease;
+}
+
+/* Desktop: rail lives on non-scrolling wrapper so the line stays stable */
 @media (min-width: 900px) {
-  .our_work_sections {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1.25rem 1.5rem;
+  .our_work_roadmap_nav {
+    max-width: none;
   }
 
-  /* First pillar spans full width — editorial “hero” card */
-  .our_work_card:first-child {
-    grid-column: 1 / -1;
-    padding: 0.25rem 0 0;
+  .our_work_roadmap_track {
+    /* Dot + line: middle of link spacer (0.12 + 1.75 + 0.55 ≈ 2.42) */
+    --our-work-rail-y: 2.42rem;
+    position: relative;
+    width: 100%;
+    z-index: 0;
   }
 
-  .our_work_card:first-child .our_work_card_body {
-    padding-bottom: 1.75rem;
+  .our_work_roadmap_track::before {
+    content: "";
+    position: absolute;
+    left: 1.5%;
+    right: 1.5%;
+    top: var(--our-work-rail-y);
+    height: 2px;
+    margin-top: -1px;
+    border-radius: 1px;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      90deg,
+      var(--color-primary) 0%,
+      rgba(237, 18, 109, 0.38) 42%,
+      rgba(237, 18, 109, 0.14) 100%
+    );
+  }
+
+  .our_work_roadmap {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    column-gap: 0.4rem;
+    row-gap: 0;
+    padding: 0;
+    max-width: none;
+    width: 100%;
+    overflow: visible;
+  }
+
+  /* Vertical mobile rail must not paint on desktop */
+  .our_work_roadmap::before {
+    display: none;
+  }
+
+  .our_work_roadmap_step {
+    min-width: 0;
+    padding: 0 0.1rem;
+  }
+
+  .our_work_roadmap_step::before {
+    left: 50%;
+    top: var(--our-work-rail-y);
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .our_work_roadmap_step:has(.our_work_roadmap_link:hover)::before {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+
+  .our_work_roadmap_link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    gap: 0;
+    padding: 0.12rem 0 0;
+  }
+
+  /* Flex order: index → spacer (dot + rail align here) → label */
+  .our_work_roadmap_link::before {
+    content: "";
+    order: 2;
+    flex: 0 0 1.1rem;
+    width: 100%;
+    max-width: 3rem;
+    pointer-events: none;
+  }
+
+  .our_work_roadmap_index {
+    order: 1;
+    font-size: clamp(1.25rem, 1rem + 0.75vw, 1.65rem);
+    min-width: unset;
+    margin: 0;
+    line-height: 1;
+    min-height: 1.75rem;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .our_work_roadmap_label {
+    order: 3;
+    font-size: clamp(0.78rem, 0.72rem + 0.16vw, 0.88rem);
+    font-weight: 600;
+    line-height: 1.28;
+    margin: 0.35rem 0 0;
+    hyphens: auto;
+    overflow-wrap: break-word;
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 900px) and (max-width: 1100px) {
+  .our_work_roadmap_label {
+    font-size: 0.74rem;
+    line-height: 1.25;
+  }
+}
+
+/* Pillars: Embla carousel shell uses resources.module.css (same as Resources block) */
+.our_work_sections {
+  position: relative;
+  width: 100%;
+}
+
+/* Same as .resources_carousel_wrapper but without top margin (hero already provides spacing) */
+.our_work_carousel_shell {
+  position: relative;
+  width: 100%;
+  contain: layout style;
+}
+
+.our_work_carousel_slide {
+  height: 100%;
+  min-height: 0;
+}
+
+/* One pillar per view on small phones (overrides resources.module slide widths) */
+@media (max-width: 700px) {
+  .our_work_carousel_shell .our_work_pillars_slide {
+    flex: 0 0 100%;
+    max-width: 100%;
   }
 }
 
@@ -97,6 +332,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  min-width: 0;
   padding: 0;
   border-radius: 1rem;
   overflow: hidden;
@@ -147,27 +383,27 @@
 
 .our_work_card_icon {
   flex-shrink: 0;
-  width: 3.25rem;
-  height: 3.25rem;
+  width: 3.35rem;
+  height: 3.35rem;
   border-radius: 0.65rem;
   background: linear-gradient(145deg, var(--color-primary), #c40e5a);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--color-background);
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  font-size: 0.75rem;
   box-shadow: 0 6px 16px rgba(237, 18, 109, 0.35);
 }
 
-.our_work_card_icon span {
-  position: relative;
-  z-index: 1;
+.our_work_card_icon svg {
+  width: 1.45rem;
+  height: 1.45rem;
 }
 
 .our_work_card_body {
-  padding: 0.75rem 1.35rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0.75rem 1.35rem 1.35rem;
 }
 
 .our_work_section_title {
@@ -179,10 +415,33 @@
   letter-spacing: -0.02em;
 }
 
-.our_work_text_columns {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem 1.75rem;
+/* Animated clip — height set inline by Framer Motion */
+.our_work_card_intro_motion {
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.our_work_card_intro {
+  min-width: 0;
+}
+
+/* Collapsed sneak peek: first paragraph clamped, rest hidden (for measurement + final state) */
+.our_work_body_inner_collapsed p:not(:first-of-type) {
+  display: none;
+}
+
+.our_work_body_inner_collapsed p:first-of-type {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  overflow: hidden;
+}
+
+.our_work_text_stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .our_work_section_body {
@@ -190,10 +449,53 @@
   color: var(--color-font-secondary);
   line-height: 1.6;
   font-size: clamp(0.88rem, 0.82rem + 0.2vw, 1rem);
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
-@media (min-width: 1024px) {
-  .our_work_text_columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+.our_work_read_more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-size: clamp(0.88rem, 0.82rem + 0.2vw, 0.95rem);
+  font-weight: 600;
+  color: var(--color-primary);
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: 0.35rem;
+  transition: color 0.2s ease;
+}
+
+.our_work_read_more:hover {
+  color: var(--color-font-primary);
+}
+
+.our_work_read_more:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+.our_work_read_more svg {
+  flex-shrink: 0;
+  font-size: 1.15rem;
+  transition: transform 0.2s ease;
+}
+
+.our_work_read_more:hover svg {
+  transform: translateX(0.2rem);
+}
+
+.our_work_read_more_chevron_open {
+  transform: rotate(90deg);
+}
+
+.our_work_read_more:hover .our_work_read_more_chevron_open {
+  transform: rotate(90deg) translateX(0.2rem);
 }
