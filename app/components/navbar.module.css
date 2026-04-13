@@ -27,6 +27,66 @@
   transition: background-color 0.5s ease;
 }
 
+@media (max-width: 1023px) {
+  .navbar_mobile_slide {
+    transition:
+      transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.5s ease,
+      box-shadow 0.35s ease;
+    will-change: transform;
+  }
+
+  .navbar_mobile_bar_hidden {
+    transform: translate3d(0, -100%, 0);
+    pointer-events: none;
+    box-shadow: none;
+  }
+}
+
+/* When main bar is off-screen at top of page, floating menu control */
+.navbar_float_menu {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .navbar_float_menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: clamp(0.85rem, 0.5rem + 1.5vw, 1.25rem);
+    right: clamp(0.75rem, 0.4rem + 1.5vw, 1.25rem);
+    z-index: 1002;
+    width: clamp(2.75rem, 2.4rem + 1.5vw, 3.25rem);
+    height: clamp(2.75rem, 2.4rem + 1.5vw, 3.25rem);
+    padding: 0;
+    margin: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-background);
+    color: var(--color-font-primary);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+    font-size: clamp(1.2rem, 1rem + 1vw, 1.5rem);
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .navbar_float_menu:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.16);
+  }
+
+  .navbar_float_menu:active {
+    transform: scale(0.96);
+  }
+
+  .navbar_float_menu:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
 /* Non-home pages: always solid */
 .navbar_solid {
   background-color: var(--color-background) !important;

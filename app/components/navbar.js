@@ -14,12 +14,16 @@ import { RxChevronRight } from "react-icons/rx";
 import { motion, AnimatePresence } from "framer-motion";
 
 const SCROLL_THRESHOLD = 20;
+const MOBILE_MAX_PX = 1023;
+const MOBILE_NAV_REVEAL_SCROLL = 56;
 
 const Navbar = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(null);
+  const [scrollY, setScrollY] = useState(0);
   const navRef = useRef(null);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const [isOurWorkDropdownOpen, setIsOurWorkDropdownOpen] = useState(false);
@@ -61,15 +65,33 @@ const Navbar = () => {
     }
   }, [isOpen, isGetInvolvedDropdownOpen]);
 
-  // Change background on scroll
+  // Change background on scroll + track position for mobile bar reveal
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > SCROLL_THRESHOLD);
+      const y = window.scrollY;
+      setScrollY(y);
+      setIsScrolled(y > SCROLL_THRESHOLD);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${MOBILE_MAX_PX}px)`);
+    setIsMobileViewport(mq.matches);
+    setScrollY(window.scrollY);
+    const sync = () => setIsMobileViewport(mq.matches);
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  const mobileNavBarVisible =
+    isMobileViewport !== true ||
+    scrollY >= MOBILE_NAV_REVEAL_SCROLL ||
+    isOpen;
+
+  const isMobileNav = isMobileViewport === true;
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -130,11 +152,17 @@ const Navbar = () => {
     !isHomePage && styles.navbar_solid,
     isHomePage && isScrolled && styles.navbar_scrolled,
     isHomePage && !isScrolled && styles.navbar_home_top,
+    isMobileNav && styles.navbar_mobile_slide,
+    isMobileNav && !mobileNavBarVisible && styles.navbar_mobile_bar_hidden,
   ]
     .filter(Boolean)
     .join(" ");
 
+  const showFloatingMenuTrigger =
+    isMobileNav && !mobileNavBarVisible && !isOpen;
+
   return (
+    <>
     <div className={navbarClassName} ref={navRef}>
       <Container>
         <div className={styles.navbar_container}>
@@ -252,12 +280,12 @@ const Navbar = () => {
             className={`${styles.navbar_mobile_menu} ${
               isOpen ? styles.navbar_mobile_menu_open : ""
             }`}
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
             transition={{
-              ease: "easeInOut",
-              duration: 0.3,
+              ease: [0.22, 1, 0.36, 1],
+              duration: 0.38,
             }}
           >
             <div className={styles.navbar_mobile_topfade} aria-hidden="true" />
@@ -522,6 +550,17 @@ const Navbar = () => {
         )}
       </AnimatePresence>
     </div>
+    {showFloatingMenuTrigger ? (
+      <button
+        type="button"
+        className={styles.navbar_float_menu}
+        onClick={toggleMenu}
+        aria-label="Open menu"
+      >
+        <RxHamburgerMenu aria-hidden />
+      </button>
+    ) : null}
+    </>
   );
 };
 

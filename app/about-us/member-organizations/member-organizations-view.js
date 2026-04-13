@@ -19,10 +19,12 @@ import {
 } from "react-icons/fa6";
 
 import { IoMdArrowDropright } from "react-icons/io";
+import { FiSearch } from "react-icons/fi";
 
 const ALL_CODE = "ALL";
 
 const SOCIAL_LINKS = [
+  { key: "website", Icon: FaGlobe, label: "Website" },
   { key: "facebook", Icon: FaFacebook, label: "Facebook" },
   { key: "instagram", Icon: FaInstagram, label: "Instagram" },
   { key: "twitter", Icon: FaSquareXTwitter, label: "X" },
@@ -30,7 +32,6 @@ const SOCIAL_LINKS = [
   { key: "bluesky", Icon: FaBluesky, label: "Bluesky" },
   { key: "youtube", Icon: FaYoutube, label: "YouTube" },
   { key: "tiktok", Icon: FaTiktok, label: "TikTok" },
-  { key: "website", Icon: FaGlobe, label: "Website" },
 ];
 
 function MemberCardSocial({ social, orgName }) {
@@ -103,8 +104,8 @@ function MobileCountryFilter({ activeCode, setActiveCode }) {
   const displayLabel = useMemo(() => {
     if (activeCode === ALL_CODE) return "All organizations";
     return (
-      membersByCountry.find((c) => c.countryCode === activeCode)
-        ?.countryName ?? "Country"
+      membersByCountry.find((c) => c.countryCode === activeCode)?.countryName ??
+      "Country"
     );
   }, [activeCode]);
 
@@ -133,7 +134,10 @@ function MobileCountryFilter({ activeCode, setActiveCode }) {
 
   return (
     <div className={styles.mop_country_mobile_wrap} ref={rootRef}>
-      <span id="mop-country-filter-label" className={styles.mop_country_select_label}>
+      <span
+        id="mop-country-filter-label"
+        className={styles.mop_country_select_label}
+      >
         Country
       </span>
       <button
@@ -199,6 +203,7 @@ function MobileCountryFilter({ activeCode, setActiveCode }) {
 
 export default function MemberOrganizationsView() {
   const [activeCode, setActiveCode] = useState(ALL_CODE);
+  const [searchTerm, setSearchTerm] = useState("");
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -250,26 +255,39 @@ export default function MemberOrganizationsView() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [activeCode]);
+  }, [activeCode, searchTerm]);
 
   const membersForGrid = useMemo(
     () => (activeCode === ALL_CODE ? allMembersSorted : membersSorted),
     [activeCode, allMembersSorted, membersSorted],
   );
 
+  const membersMatched = useMemo(() => {
+    const q = searchTerm.trim().toLowerCase();
+    if (!q) return membersForGrid;
+    const fallbackCountry =
+      activeCode !== ALL_CODE ? (activeCountry?.countryName ?? "") : "";
+    return membersForGrid.filter((m) => {
+      const name = (m.name ?? "").toLowerCase();
+      const desc = (m.description ?? "").toLowerCase();
+      const country = (m.countryName ?? fallbackCountry).toLowerCase();
+      return name.includes(q) || desc.includes(q) || country.includes(q);
+    });
+  }, [membersForGrid, searchTerm, activeCode, activeCountry?.countryName]);
+
   const totalPages = useMemo(
     () =>
       pageSize > 0
-        ? Math.max(1, Math.ceil(membersForGrid.length / pageSize))
+        ? Math.max(1, Math.ceil(membersMatched.length / pageSize))
         : 1,
-    [membersForGrid.length, pageSize],
+    [membersMatched.length, pageSize],
   );
 
   const paginatedMembers = useMemo(() => {
-    if (pageSize <= 0) return membersForGrid;
+    if (pageSize <= 0) return membersMatched;
     const start = (currentPage - 1) * pageSize;
-    return membersForGrid.slice(start, start + pageSize);
-  }, [membersForGrid, currentPage, pageSize]);
+    return membersMatched.slice(start, start + pageSize);
+  }, [membersMatched, currentPage, pageSize]);
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
@@ -358,6 +376,19 @@ export default function MemberOrganizationsView() {
               </button>
             ))}
           </div>
+
+          <div className={styles.mop_search}>
+            <FiSearch className={styles.mop_search_icon} aria-hidden />
+            <input
+              type="search"
+              className={styles.mop_search_input}
+              placeholder="Search by organization name, description, or country…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search member organizations"
+              autoComplete="off"
+            />
+          </div>
         </div>
 
         <section
@@ -367,15 +398,23 @@ export default function MemberOrganizationsView() {
           <h2 id={sectionHeadingId} className={styles.mop_section_title}>
             {sectionTitle}
           </h2>
-          <ul className={styles.mop_grid}>
-            {paginatedMembers.map((member) => (
-              <li key={member.id} className={styles.mop_card}>
-                <MemberCard member={member} showCountry={isAll} />
-              </li>
-            ))}
-          </ul>
+          {membersMatched.length === 0 ? (
+            <p className={styles.mop_empty} role="status">
+              {membersForGrid.length === 0
+                ? "No organizations to show."
+                : "No organizations match your search. Try different words or clear the search."}
+            </p>
+          ) : (
+            <ul className={styles.mop_grid}>
+              {paginatedMembers.map((member) => (
+                <li key={member.id} className={styles.mop_card}>
+                  <MemberCard member={member} showCountry={isAll} />
+                </li>
+              ))}
+            </ul>
+          )}
 
-          {membersForGrid.length > 0 && totalPages > 1 && (
+          {membersMatched.length > 0 && totalPages > 1 && (
             <div
               className={styles.mop_pagination}
               role="navigation"
