@@ -41,8 +41,6 @@
 .our_work_intro {
   margin: 0;
   color: var(--color-font-secondary);
-  line-height: 1.65;
-  font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.1rem);
 }
 
 @media (min-width: 900px) {
@@ -69,9 +67,14 @@
 /* Roadmap — vertical journey (aligned with pillar index / accent language) */
 .our_work_roadmap_nav {
   margin-top: clamp(1.75rem, 1.5rem + 1.25vw, 2.75rem);
-  padding-top: clamp(1.5rem, 1.286rem + 1.07vw, 2.25rem);
+  padding: clamp(1.5rem, 1.286rem + 1.07vw, 2.25rem);
   border-top: 1px solid rgba(11, 11, 11, 0.06);
   max-width: 72rem;
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  border-radius: 2rem;
+  background-color: var(--color-surface);
 }
 
 .our_work_roadmap_heading {
@@ -103,8 +106,8 @@
   background: linear-gradient(
     180deg,
     var(--color-primary) 0%,
-    rgba(237, 18, 109, 0.25) 50%,
-    rgba(237, 18, 109, 0.07) 100%
+    var(--color-background) 50%,
+    var(--color-background) 100%
   );
 }
 
@@ -138,7 +141,7 @@
 
 .our_work_roadmap_step:has(.our_work_roadmap_link:hover)::before {
   transform: translate(-50%, -50%) scale(1.1);
-  background-color: rgba(237, 18, 109, 0.1);
+  background-color: var(--color-primary);
 }
 
 .our_work_roadmap_link {
@@ -182,6 +185,9 @@
   line-height: 1.35;
   color: var(--color-font-primary);
   transition: color 0.2s ease;
+}
+
+.our_work_roadmap_icon {
 }
 
 /* Desktop: rail lives on non-scrolling wrapper so the line stays stable */
@@ -325,6 +331,28 @@
   .our_work_carousel_shell .our_work_pillars_slide {
     flex: 0 0 100%;
     max-width: 100%;
+  }
+}
+
+/* Two pillars per view from >700px until desktop carousel density (1024px = 4 across in resources) */
+@media (min-width: 701px) and (max-width: 1023px) {
+  .our_work_carousel_shell .our_work_pillars_slide {
+    flex: 0 0 calc((100% - 0.75rem) / 2);
+    max-width: none;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1600px) {
+  .our_work_carousel_shell .our_work_pillars_slide {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+    max-width: none;
+  }
+}
+
+@media (min-width: 1601) {
+  .our_work_carousel_shell .our_work_pillars_slide {
+    flex: 0 0 calc((100% - 1.5rem) / 2);
+    max-width: none;
   }
 }
 

@@ -29,41 +29,40 @@ export default function OurWork() {
                 </p>
               </div>
             </header>
-            <nav
-              className={styles.our_work_roadmap_nav}
-              aria-label="Our work areas"
-            >
-              <p className={styles.our_work_roadmap_heading}>
-                Our work roadmap
-              </p>
-              <div className={styles.our_work_roadmap_track}>
-                <ol className={styles.our_work_roadmap}>
-                  {ourWorkSubnavLinks.map(({ href, label }, index) => (
-                    <li key={href} className={styles.our_work_roadmap_step}>
-                      <Link
-                        href={href}
-                        className={styles.our_work_roadmap_link}
-                      >
-                        <span
-                          className={styles.our_work_roadmap_index}
-                          aria-hidden
-                        >
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        <span className={styles.our_work_roadmap_label}>
-                          {label}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </nav>
           </Container>
         </div>
 
         <Container>
           <OurWorkPillars />
+        </Container>
+        <Container>
+          <nav
+            className={styles.our_work_roadmap_nav}
+            aria-label="Our work areas"
+          >
+            <p className={styles.our_work_roadmap_heading}>Our work roadmap</p>
+            <div className={styles.our_work_roadmap_track}>
+              <ol className={styles.our_work_roadmap}>
+                {ourWorkSubnavLinks.map(({ href, label, Icon }) => (
+                  <li key={href} className={styles.our_work_roadmap_step}>
+                    <Link href={href} className={styles.our_work_roadmap_link}>
+                      {Icon ? (
+                        <span
+                          className={styles.our_work_roadmap_icon}
+                          aria-hidden
+                        >
+                          <Icon />
+                        </span>
+                      ) : null}
+                      <span className={styles.our_work_roadmap_label}>
+                        {label}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </nav>
         </Container>
       </main>
       <Footer />
