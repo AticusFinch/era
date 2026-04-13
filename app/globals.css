@@ -48,7 +48,7 @@ body {
 /* Base Typography - Fluid Scale with clamp() */
 body,
 p {
-  font-size: clamp(1rem, 0.943rem + 0.29vw, 1.4rem);
+  font-size: clamp(0.8rem, 0.714rem + 0.43vw, 1.4rem);
   line-height: 1.2;
 }
 

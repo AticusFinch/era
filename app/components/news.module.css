@@ -317,7 +317,7 @@
 }
 
 /* Tablet: keep stacked layout */
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .news_header {
     display: flex;
     justify-content: space-between;

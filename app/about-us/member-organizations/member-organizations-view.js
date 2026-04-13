@@ -325,7 +325,11 @@ export default function MemberOrganizationsView() {
         <header className={styles.mop_header}>
           <h1 className={styles.mop_title}>
             <span className={`title ${styles.mop_title_inner}`}>
-              <span className="title-accent">Member Organizations</span>
+              <span className="title-accent">
+                Member
+                <br />
+                Organizations
+              </span>
             </span>
           </h1>
           <p className={styles.mop_intro}>
