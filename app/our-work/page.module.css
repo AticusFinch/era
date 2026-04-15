@@ -187,7 +187,16 @@
   transition: color 0.2s ease;
 }
 
-.our_work_roadmap_icon {
+.our_work_roadmap_icon svg {
+  color: var(--color-primary);
+  background-color: rgba(237, 18, 109, 0.14);
+  border-radius: 0.65rem;
+  padding: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Desktop: rail lives on non-scrolling wrapper so the line stays stable */
@@ -197,8 +206,8 @@
   }
 
   .our_work_roadmap_track {
-    /* Dot + line: middle of link spacer (0.12 + 1.75 + 0.55 ≈ 2.42) */
-    --our-work-rail-y: 2.42rem;
+    /* Push line lower to increase icon-to-line separation */
+    --our-work-rail-y: 3.05rem;
     position: relative;
     width: 100%;
     z-index: 0;
@@ -264,14 +273,14 @@
     justify-content: flex-start;
     text-align: center;
     gap: 0;
-    padding: 0.12rem 0 0;
+    padding: 0.18rem 0 0;
   }
 
   /* Flex order: index → spacer (dot + rail align here) → label */
   .our_work_roadmap_link::before {
     content: "";
     order: 2;
-    flex: 0 0 1.1rem;
+    flex: 0 0 1rem;
     width: 100%;
     max-width: 3rem;
     pointer-events: none;
@@ -294,7 +303,7 @@
     font-size: clamp(0.78rem, 0.72rem + 0.16vw, 0.88rem);
     font-weight: 600;
     line-height: 1.28;
-    margin: 0.35rem 0 0;
+    margin: 0.5rem 0 0;
     hyphens: auto;
     overflow-wrap: break-word;
     max-width: 100%;

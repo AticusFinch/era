@@ -40,7 +40,9 @@ export default function OurWork() {
             className={styles.our_work_roadmap_nav}
             aria-label="Our work areas"
           >
-            <p className={styles.our_work_roadmap_heading}>Our work roadmap</p>
+            <p className={styles.our_work_roadmap_heading}>
+              Our work is focused on the following areas:
+            </p>
             <div className={styles.our_work_roadmap_track}>
               <ol className={styles.our_work_roadmap}>
                 {ourWorkSubnavLinks.map(({ href, label, Icon }) => (

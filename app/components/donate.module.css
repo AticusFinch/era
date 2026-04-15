@@ -50,6 +50,7 @@
 
 .description {
   font-size: clamp(0.8rem, 0.686rem + 0.57vw, 1.6rem);
+  color: var(--color-background);
 }
 
 .button_donate,
