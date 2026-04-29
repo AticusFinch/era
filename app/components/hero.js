@@ -33,9 +33,9 @@ const Hero = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
             >
-              Advancing{" "}
-              <span className={styles.hero_title_accent}>LGBTIQA+</span>{" "}
-              Equality across the Western Balkans & Türkiye since 2015.
+              Building the regional infrastructure for{" "}
+              <span className="title-accent">LGBTIQ+</span> equality across the
+              Western Balkans and Türkiye.
             </motion.h1>
             <motion.h5
               className={styles.hero_subtitle}
@@ -44,8 +44,10 @@ const Hero = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
             >
-              We connect, empower, and advocate for LGBTIQA+ organizations to
-              create a region where every person is free, safe, and equal.
+              ERA connects, strengthens, funds, and represents LGBTIQ+
+              organisations and communities across the region, turning local
+              struggles into regional and international power, evidence,
+              advocacy, and action.
             </motion.h5>
             <motion.div
               className={styles.hero_buttons}
@@ -65,20 +67,21 @@ const Hero = () => {
               </Button>
             </motion.div>
           </div>
-          <div className={styles.hero_image_container}>
-            <Image
-              src="/img/hero/hero.png"
-              alt="LGBTQIA+ Equality"
-              width={2400}
-              height={2400}
-              priority
-              fetchPriority="high"
-              loading="eager"
-              quality={100}
-            />
-          </div>
         </div>
       </Container>
+      <div className={styles.hero_image_container}>
+        <Image
+          src="/img/hero/pridefin.png"
+          alt="LGBTQIA+ Equality"
+          fill
+          className={styles.hero_image}
+          sizes="(min-width: 1280px) 60vw, (min-width: 768px) 55vw, 0vw"
+          priority
+          fetchPriority="high"
+          loading="eager"
+          quality={100}
+        />
+      </div>
     </div>
   );
 };

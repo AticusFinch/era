@@ -35,7 +35,7 @@
 .hero_title {
   font-weight: 800;
   color: var(--color-font-primary);
-  font-size: clamp(1.6rem, 0.971rem + 3.14vw, 6rem);
+  font-size: clamp(1.6rem, 1.114rem + 2.43vw, 5rem);
 }
 
 .hero_title_accent {
@@ -58,16 +58,10 @@
 .hero_subtitle {
   font-weight: 300;
   color: var(--color-font-primary);
-  font-size: clamp(0.8rem, 0.629rem + 0.86vw, 2rem);
+  font-size: clamp(0.8rem, 0.657rem + 0.71vw, 1.8rem);
 }
 
 .hero_image_container {
-  position: absolute;
-  bottom: -130%;
-  left: -10%;
-  width: 180%;
-  height: 180%;
-  z-index: 1;
   display: none;
 }
 
@@ -110,13 +104,10 @@
   .hero_subtitle {
     width: 70%;
   }
-  .hero_image_container {
-    position: absolute;
-    bottom: -80%;
-    left: 0;
-    width: 140%;
-    height: 140%;
-    z-index: 1;
+
+  .hero_image {
+    object-fit: contain;
+    object-position: right center;
   }
 }
 
@@ -128,7 +119,7 @@
   }
 
   .hero_title {
-    width: 75%;
+    width: 70%;
   }
 
   .hero_subtitle {
@@ -142,32 +133,23 @@
     padding-bottom: 6rem;
     overflow: hidden;
   }
+  .hero_image_container {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 40%;
+    max-width: 70rem;
+    aspect-ratio: 1 / 1;
+    pointer-events: none;
+    z-index: 1;
+  }
 
   .hero_container {
     display: grid;
     grid-template-columns: 2.5fr 2fr;
     gap: 3rem;
-  }
-
-  .hero_image_container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%);
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    pointer-events: none;
-  }
-
-  .hero_image_container img {
-    display: block;
-    height: clamp(28rem, 15rem + 18vw, 50rem);
-    width: auto;
-    max-width: none;
-    object-fit: contain;
-    object-position: left center;
   }
 
   .hero_content {
