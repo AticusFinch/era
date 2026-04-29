@@ -128,9 +128,7 @@ const OurTeamPage = () => {
               <div className={styles.team_section_header}>
                 <h2 className={styles.team_section_title}>Team</h2>
                 <p className={styles.team_section_description}>
-                  Placeholder text for describing ERA&apos;s staff team. You can
-                  outline key departments, ways of working, and how the team
-                  supports members across the region.
+                  This is the team that makes ERA possible.
                 </p>
               </div>
               <div className={styles.team_grid}>
