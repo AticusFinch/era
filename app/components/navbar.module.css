@@ -45,7 +45,7 @@
 
 @media (min-width: 1024px) {
   .navbar_home_top {
-    background-color: var(--color-accent) !important;
+    background-color: transparent !important;
   }
 }
 

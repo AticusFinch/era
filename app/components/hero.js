@@ -71,7 +71,7 @@ const Hero = () => {
       </Container>
       <div className={styles.hero_image_container}>
         <Image
-          src="/img/hero/pridefin.png"
+          src="/img/hero/flag.png"
           alt="LGBTQIA+ Equality"
           fill
           className={styles.hero_image}

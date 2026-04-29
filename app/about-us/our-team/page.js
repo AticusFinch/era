@@ -76,7 +76,7 @@ const teamMembers = [
   {
     id: "elena",
     name: "Elena Petrovska",
-    role: "Program Manager",
+    role: "Project and Advocacy Coordinator,",
     organization: "ERA",
     focus: "Key programmes / focus areas",
     image: "/img/our-team/team/elena.png",
@@ -85,7 +85,7 @@ const teamMembers = [
   {
     id: "jelena",
     name: "Jelena Jeremić",
-    role: "Program Manager",
+    role: "PR and Comms Officer",
     organization: "ERA",
     focus: "Key programmes / focus areas",
     image: "/img/our-team/team/jelena.png",
@@ -94,7 +94,7 @@ const teamMembers = [
   {
     id: "sila",
     name: "Bugu Sila",
-    role: "Project Manager",
+    role: "Project Coordinator",
     organization: "ERA",
     image: "/img/our-team/team/sila.png",
     bio: "Bugu Sila is the project manager of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
