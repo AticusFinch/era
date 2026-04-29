@@ -5,6 +5,7 @@ import styles from "./page.module.css";
 import ResourcesList from "./resources-list";
 import { getClient } from "@/lib/apollo-client";
 import { GET_RESOURCES } from "@/lib/graphql/queries";
+import PageUnderConstruction from "@/app/components/pageUnderConstruction";
 
 // Helper function to make URLs absolute
 function makeAbsoluteUrl(url, baseUrl) {
@@ -156,7 +157,8 @@ export default async function ResourcesPage() {
   return (
     <>
       <Navbar />
-      <Container>
+      <PageUnderConstruction />
+      {/* <Container>
         <div className={styles.resources_container}>
           <div className={styles.resources_header}>
             <h1 className={styles.resources_title}>
@@ -204,7 +206,7 @@ export default async function ResourcesPage() {
             </div>
           )}
         </div>
-      </Container>
+      </Container> */}
       <Footer />
     </>
   );

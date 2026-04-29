@@ -3,6 +3,7 @@ import Footer from "../../components/footer";
 import Container from "../../components/container";
 import Image from "next/image";
 import styles from "./page.module.css";
+import PageUnderConstruction from "@/app/components/pageUnderConstruction";
 
 const boardMembers = [
   {
@@ -104,7 +105,8 @@ const OurTeamPage = () => {
   return (
     <>
       <Navbar />
-      <main className={styles.team_page}>
+      <PageUnderConstruction />
+      {/* <main className={styles.team_page}>
         <Container>
           <div className={styles.team_container}>
             <header className={styles.team_header}>
@@ -188,7 +190,7 @@ const OurTeamPage = () => {
             </section>
           </div>
         </Container>
-      </main>
+      </main> */}
       <Footer />
     </>
   );

@@ -66,7 +66,7 @@ const workItems = [
 
 const Work = () => {
   const [autoplayPlugin] = useState(() =>
-    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })
+    Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true }),
   );
 
   const [isDesktop, setIsDesktop] = useState(false);
@@ -90,7 +90,7 @@ const Work = () => {
       slidesToScroll: 1,
       containScroll: "trimSnaps",
     },
-    [autoplayPlugin]
+    [autoplayPlugin],
   );
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
@@ -99,7 +99,7 @@ const Work = () => {
     (index) => {
       if (emblaApi) emblaApi.scrollTo(index);
     },
-    [emblaApi]
+    [emblaApi],
   );
 
   const onSelect = useCallback(() => {
@@ -136,11 +136,19 @@ const Work = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-              faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-              mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-              urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-              egestas.
+              At ERA, we are dedicated to advancing <b>LGBTI+</b> rights,
+              equality, and inclusion across the Western Balkans and Türkiye
+              through a{" "}
+              <b>
+                comprehensive approach that combines advocacy, capacity
+                building, research, public awareness, and international
+                engagement.
+              </b>{" "}
+              Our work is deeply rooted in the belief that a{" "}
+              <b>
+                strong, well-connected, and strategically empowered movement
+              </b>{" "}
+              is essential for achieving meaningful and sustainable change.
             </motion.p>
           </div>
           <div className={styles.work_carousel_wrapper}>

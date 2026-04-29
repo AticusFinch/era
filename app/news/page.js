@@ -7,6 +7,7 @@ import { calculateReadingTime } from "@/lib/utils/reading-time";
 import layoutStyles from "./page.module.css";
 import newsStyles from "@/app/components/news.module.css";
 import NewsList from "./news-list";
+import PageUnderConstruction from "@/app/components/pageUnderConstruction";
 
 export const revalidate = 60;
 
@@ -93,7 +94,8 @@ export default async function NewsPage() {
   return (
     <>
       <Navbar />
-      <main className={layoutStyles.news_page}>
+      <PageUnderConstruction />
+      {/* <main className={layoutStyles.news_page}>
         <section className={newsStyles.news}>
           <Container>
             <div className={newsStyles.news_container}>
@@ -116,7 +118,7 @@ export default async function NewsPage() {
             </div>
           </Container>
         </section>
-      </main>
+      </main> */}
       <Footer />
     </>
   );

@@ -173,24 +173,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.45rem;
+  width: clamp(3.25rem, 2.85rem + 2vw, 3.75rem);
+  height: clamp(3.25rem, 2.85rem + 2vw, 3.75rem);
+  padding: 0;
   margin: 0;
   border: none;
-  background: transparent;
-  color: var(--color-font-primary);
-  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-background);
+  font-size: clamp(1.35rem, 1.1rem + 1.25vw, 1.65rem);
   cursor: pointer;
-  border-radius: 0.35rem;
-  transition: color 0.2s ease;
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.18);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .navbar_mobile_close:hover {
-  color: var(--color-primary);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+}
+
+.navbar_mobile_close:active {
+  transform: scale(0.96);
 }
 
 .navbar_mobile_close:focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-background);
+  outline-offset: 3px;
 }
 
 .navbar_mobile_scroll {

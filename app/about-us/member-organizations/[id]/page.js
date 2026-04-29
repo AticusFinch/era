@@ -12,6 +12,7 @@ import {
 import { IoIosMail } from "react-icons/io";
 import { IoGlobeOutline } from "react-icons/io5";
 import styles from "./page.module.css";
+import PageUnderConstruction from "@/app/components/pageUnderConstruction";
 
 export function generateStaticParams() {
   return getAllMemberIds().map((id) => ({ id }));
@@ -38,7 +39,8 @@ export default async function MemberOrganizationPage({ params }) {
   return (
     <>
       <Navbar />
-      <main className={styles.mop_detail_page}>
+      <PageUnderConstruction />
+      {/* <main className={styles.mop_detail_page}>
         <Container>
           <Link href="/about-us/member-organizations" className={styles.mop_detail_back}>
             ← Member organizations
@@ -82,7 +84,7 @@ export default async function MemberOrganizationPage({ params }) {
             </div>
           </article>
         </Container>
-      </main>
+      </main> */}
       <Footer />
     </>
   );

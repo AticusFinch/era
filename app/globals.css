@@ -132,3 +132,9 @@ a {
   border-radius: 0.1em;
   z-index: -1;
 }
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: clamp(2rem, 3.13vw, 5rem);
+  }
+}

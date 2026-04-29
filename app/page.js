@@ -14,9 +14,9 @@ export default function Home() {
     <>
       <Navbar />
       <Hero />
-      {/* <Work /> */}
-      <NewsWrapper />
-      <ResourcesWrapper />
+      <Work />
+      {/* <NewsWrapper />
+      <ResourcesWrapper /> */}
       <Donate />
       <Counter />
       <Footer />
