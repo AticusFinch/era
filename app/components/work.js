@@ -29,37 +29,37 @@ const workItems = [
   {
     title: "Training Hub",
     description: "Educational resources and capacity building programs",
-    href: "/our-work/publications",
+    href: "/our-work/training-hub",
     icon: FaGraduationCap,
   },
   {
     title: "WLW & TNBI Caucuses",
     description: "Supporting women who love women and trans communities",
-    href: "/our-work/publications",
+    href: "/our-work/caucuses",
     icon: FaUsers,
   },
   {
     title: "Community Support",
     description: "Services and resources for our community members",
-    href: "/our-work/publications",
+    href: "/our-work/community-support",
     icon: FaHandsHelping,
   },
   {
     title: "Advocacy",
     description: "Policy work and rights-based initiatives",
-    href: "/our-work/publications",
+    href: "/our-work/advocacy",
     icon: FaGavel,
   },
   {
     title: "Research",
     description: "Studies and insights on LGBTQI+ issues",
-    href: "/our-work/publications",
+    href: "/our-work/research",
     icon: FaMicroscope,
   },
   {
     title: "Events",
     description: "Conferences, workshops, and community gatherings",
-    href: "/our-work/publications",
+    href: "/our-work/events",
     icon: FaCalendarAlt,
   },
 ];

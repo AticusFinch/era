@@ -15,15 +15,10 @@
 @theme inline {
   --font-family-poppins: var(--font-poppins);
 
-  --color-background: var(--color-background);
-  --color-primary: var(--color-primary);
-  --color-accent: var(--color-accent);
-  --color-font-primary: var(--color-font-primary);
-  --color-font-secondary: var(--color-font-secondary);
-
-  /* Custom brand colors for Tailwind */
+  /* Tailwind theme tokens (avoid self-referential CSS vars — can break in prod) */
+  --color-background: #f7f7f7;
   --color-primary: #ed126f;
-  --color-accent: #ffb020;
+  --color-accent: #ffc4b4;
   --color-font-primary: #0b0b0b;
   --color-font-secondary: #262626;
 }

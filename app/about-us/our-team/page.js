@@ -62,7 +62,7 @@ const teamMembers = [
     name: "Bojana Simić",
     role: "Finance Manager",
     organization: "ERA",
-    image: "/img/our-team/team/Bojana.png",
+    image: "/img/our-team/team/bojana.png",
     bio: "Bojana Simić is the finance manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -70,7 +70,7 @@ const teamMembers = [
     name: "Danijel Kalezić",
     role: "Executive Director",
     organization: "ERA",
-    image: "/img/our-team/team/Danijel.png",
+    image: "/img/our-team/team/danijel.png",
     bio: "Danijel Kalezić is the executive director of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -79,7 +79,7 @@ const teamMembers = [
     role: "Program Manager",
     organization: "ERA",
     focus: "Key programmes / focus areas",
-    image: "/img/our-team/team/Elena.png",
+    image: "/img/our-team/team/elena.png",
     bio: "Elena Petrovska is the program manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -88,7 +88,7 @@ const teamMembers = [
     role: "Program Manager",
     organization: "ERA",
     focus: "Key programmes / focus areas",
-    image: "/img/our-team/team/Jelena.png",
+    image: "/img/our-team/team/jelena.png",
     bio: "Jelena Jeremić is the program manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -96,7 +96,7 @@ const teamMembers = [
     name: "Bugu Sila",
     role: "Project Manager",
     organization: "ERA",
-    image: "/img/our-team/team/Sila.png",
+    image: "/img/our-team/team/sila.png",
     bio: "Bugu Sila is the project manager of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
 ];
@@ -105,8 +105,8 @@ const OurTeamPage = () => {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
-      {/* <main className={styles.team_page}>
+      {/* <PageUnderConstruction /> */}
+      <main className={styles.team_page}>
         <Container>
           <div className={styles.team_container}>
             <header className={styles.team_header}>
@@ -114,10 +114,13 @@ const OurTeamPage = () => {
                 <span className="title-accent">Our Team</span>
               </h1>
               <p className={styles.team_intro}>
-                This is a placeholder introduction about ERA&apos;s team and
-                governance. You can describe how the Board and staff work
-                together, include a short mission statement, and highlight your
-                regional presence here.
+                We are a{" "}
+                <b>
+                  regional platform advancing LGBTIQ equality through
+                  coordinated action, evidence-based approaches, and policy
+                  engagement
+                </b>
+                .
               </p>
             </header>
 
@@ -190,7 +193,7 @@ const OurTeamPage = () => {
             </section>
           </div>
         </Container>
-      </main> */}
+      </main>
       <Footer />
     </>
   );

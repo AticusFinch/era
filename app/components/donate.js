@@ -17,9 +17,10 @@ const Donate = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2, ease: "easeInOut" }}
           >
-            <h2 className={styles.title}>Become a member</h2>
+            <h2 className={styles.title}>Become a member of ERA</h2>
             <p className={styles.description}>
-              Join ERA and help us promote equality and inclusion for all.
+              Become part of a regional platform shaping policy, strengthening
+              organisations, and advancing LGBTIQ rights.
             </p>
             <div>
               <Button href="/become-a-member">Become a member</Button>
@@ -34,8 +35,8 @@ const Donate = () => {
           >
             <h2 className={styles.title}>Donate to ERA</h2>
             <p className={styles.description}>
-              Your support helps us continue our work in promoting equality and
-              inclusion for all.
+              Support work that connects organisations, moves resources, and
+              drives change where it is most needed.
             </p>
             <div>
               <Button href="/donate" className={styles.button_donate}>
