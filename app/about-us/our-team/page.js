@@ -62,7 +62,7 @@ const teamMembers = [
     name: "Bojana Simić",
     role: "Finance Manager",
     organization: "ERA",
-    image: "/img/our-team/team/bojana.png",
+    image: "/img/our-team/team/Bojana.png",
     bio: "Bojana Simić is the finance manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -70,7 +70,7 @@ const teamMembers = [
     name: "Danijel Kalezić",
     role: "Executive Director",
     organization: "ERA",
-    image: "/img/our-team/team/danijel.png",
+    image: "/img/our-team/team/Danijel.png",
     bio: "Danijel Kalezić is the executive director of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -79,7 +79,7 @@ const teamMembers = [
     role: "Project and Advocacy Coordinator,",
     organization: "ERA",
     focus: "Key programmes / focus areas",
-    image: "/img/our-team/team/elena.png",
+    image: "/img/our-team/team/Elena.png",
     bio: "Elena Petrovska is the program manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -88,7 +88,7 @@ const teamMembers = [
     role: "PR and Comms Officer",
     organization: "ERA",
     focus: "Key programmes / focus areas",
-    image: "/img/our-team/team/jelena.png",
+    image: "/img/our-team/team/Jelena.png",
     bio: "Jelena Jeremić is the program manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
@@ -96,7 +96,7 @@ const teamMembers = [
     name: "Bugu Sila",
     role: "Project Coordinator",
     organization: "ERA",
-    image: "/img/our-team/team/sila.png",
+    image: "/img/our-team/team/Sila.png",
     bio: "Bugu Sila is the project manager of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
 ];
@@ -105,8 +105,8 @@ const OurTeamPage = () => {
   return (
     <>
       <Navbar />
-      {/* <PageUnderConstruction /> */}
-      <main className={styles.team_page}>
+      <PageUnderConstruction />
+      {/* <main className={styles.team_page}>
         <Container>
           <div className={styles.team_container}>
             <header className={styles.team_header}>
@@ -191,7 +191,7 @@ const OurTeamPage = () => {
             </section>
           </div>
         </Container>
-      </main>
+      </main> */}
       <Footer />
     </>
   );
