@@ -45,9 +45,11 @@ const Hero = () => {
               transition={{ duration: 0.5, delay: 0.4, ease: "easeInOut" }}
             >
               ERA connects, strengthens, funds, and represents LGBTIQ+
-              organisations and communities across the region, turning local
-              struggles into regional and international power, evidence,
-              advocacy, and action.
+              organisations and communities across the region,{" "}
+              <b className={styles.hero_subtitle_accent}>
+                turning local struggles into regional and international power
+              </b>
+              , evidence, advocacy, and action.
             </motion.h5>
             <motion.div
               className={styles.hero_buttons}

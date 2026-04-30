@@ -19,15 +19,15 @@ import { TbBrandLinktree } from "react-icons/tb";
 
 const footerLinks = [
   {
-    href: "/privacy-policy",
+    href: "/footer/privacy-policy",
     label: "Privacy Policy",
   },
   {
-    href: "/terms-of-use",
+    href: "/footer/terms-of-use",
     label: "Terms of use",
   },
   {
-    href: "/accessibility-statement",
+    href: "/footer/accessibility-statement",
     label: "Accessibility Statement",
   },
 ];
