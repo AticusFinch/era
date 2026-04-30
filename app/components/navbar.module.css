@@ -306,7 +306,7 @@
 }
 
 .navbar_logo {
-  width: clamp(5rem, 2.727rem + 11.36vw, 10rem);
+  width: clamp(4rem, 1.831rem + 3.86vw, 8rem);
 }
 
 .navbar_logo img {
@@ -384,7 +384,7 @@
   .navbar_links {
     display: flex;
     gap: 1.5rem;
-    font-size: clamp(0.7rem, 0.233rem + 0.73vw, 1.4rem);
+    font-size: clamp(0.7rem, 0.429rem + 0.48vw, 1.2rem);
   }
 
   .navbar_links a {
@@ -500,9 +500,9 @@
   }
 }
 
-@media (min-width: 1024px) {
-  .navbar_logo {
-    width: clamp(5rem, 1.667rem + 5.21vw, 10rem);
+@media (min-width: 900px) {
+  .navbar {
+    min-height: clamp(4rem, 2.645rem + 2.41vw, 6.5rem);
   }
 }
 

@@ -27,7 +27,7 @@
   .button {
     padding: clamp(0.5rem, 0.167rem + 0.52vw, 1rem)
       clamp(1rem, 0.333rem + 1.04vw, 2rem);
-    font-size: clamp(0.7rem, 0.233rem + 0.73vw, 1.4rem);
+    font-size: clamp(0.7rem, 0.429rem + 0.48vw, 1.2rem);
   }
 
   .button:hover {
