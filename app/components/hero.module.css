@@ -67,8 +67,8 @@
 
 .hero_button_member,
 .hero_button_about {
-  background-color: var(--color-primary);
-  color: var(--color-background);
+  background-color: var(--color-primary) !important;
+  color: var(--color-background) !important;
 }
 
 @media (min-width: 375px) {
