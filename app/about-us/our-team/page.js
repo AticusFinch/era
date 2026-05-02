@@ -58,20 +58,20 @@ const boardMembers = [
 
 const teamMembers = [
   {
-    id: "bojana",
-    name: "Bojana Simić",
-    role: "Finance Manager",
-    organization: "ERA",
-    image: "/img/our-team/team/Bojana.png",
-    bio: "Bojana Simić is the finance manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
-  },
-  {
     id: "danijel",
     name: "Danijel Kalezić",
     role: "Executive Director",
     organization: "ERA",
     image: "/img/our-team/team/Danijel.png",
     bio: "Danijel Kalezić is the executive director of ERA. He is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
+  },
+  {
+    id: "bojana",
+    name: "Bojana Simić",
+    role: "Finance Manager",
+    organization: "ERA",
+    image: "/img/our-team/team/Bojana.png",
+    bio: "Bojana Simić is the finance manager of ERA. She is a member of the LGBT+ Centre Zagreb and a member of the European Network of Pride Organizers (ENPO).",
   },
   {
     id: "elena",
