@@ -137,7 +137,9 @@ const OurTeamPage = () => {
 
             <section className={styles.team_section}>
               <div className={styles.team_section_header}>
-                <h2 className={styles.team_section_title}>Team</h2>
+                <h2 className={styles.team_section_title}>
+                  <span className="title-accent">Team</span>
+                </h2>
               </div>
               <div className={styles.team_grid}>
                 {teamMembers.map((member) => (
@@ -166,7 +168,9 @@ const OurTeamPage = () => {
 
             <section className={styles.team_section}>
               <div className={styles.team_section_header}>
-                <h2 className={styles.team_section_title}>Board Members</h2>
+                <h2 className={styles.team_section_title}>
+                  <span className="title-accent">Board Members</span>
+                </h2>
               </div>
               <div className={styles.team_grid}>
                 {boardMembers.map((member) => (
