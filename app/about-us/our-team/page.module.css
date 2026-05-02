@@ -31,15 +31,14 @@
   gap: clamp(1.75rem, 1.464rem + 1.43vw, 3rem);
 }
 
-.team_section_header {
-  max-width: 50rem;
-}
-
 .team_section_title {
   margin: 0;
   font-size: clamp(1.5rem, 1.286rem + 1.07vw, 2.2rem);
-  font-weight: 600;
   color: var(--color-font-primary);
+  width: 100%;
+  border-radius: 1rem;
+  color: var(--color-font-primary);
+  font-weight: 800;
 }
 
 .team_section_description {
@@ -107,6 +106,10 @@
   opacity: 0.9;
 }
 
+.team_intro p {
+  padding-bottom: 1em;
+}
+
 @media (min-width: 768px) {
 }
 
@@ -117,6 +120,9 @@
     align-items: flex-start;
     gap: 2rem;
     max-width: 100%;
+  }
+
+  .team_section_title {
   }
 
   .team_intro {

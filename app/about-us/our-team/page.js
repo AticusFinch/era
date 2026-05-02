@@ -105,31 +105,39 @@ const OurTeamPage = () => {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
-      {/* <main className={styles.team_page}>
+      <main className={styles.team_page}>
         <Container>
           <div className={styles.team_container}>
             <header className={styles.team_header}>
               <h1 className={`${styles.team_title} title`}>
                 <span className="title-accent">Our Team</span>
               </h1>
-              <p className={styles.team_intro}>
-                We are a{" "}
-                <b>
-                  regional platform advancing LGBTIQ equality through
-                  coordinated action, evidence-based approaches, and policy
-                  engagement
-                </b>
-                .
-              </p>
+              <div className={styles.team_intro}>
+                <p>
+                  We are a{" "}
+                  <b>
+                    regional platform advancing LGBTIQ equality through
+                    coordinated action, evidence-based approaches, and policy
+                    engagement
+                  </b>
+                  .
+                </p>
+                <p>
+                  Our governance brings together leaders from across the region
+                  - the Board, ensuring that our strategic priorities and
+                  direction is grounded in lived realities, while reflecting
+                  diverse national contexts and maintaining a coherent regional
+                  approach. The ERA team translates that into action, designing
+                  regional initiatives, programmes, partnerships, supporting
+                  organisations and advocacy processes, and positioning regional
+                  issues within European spaces.
+                </p>
+              </div>
             </header>
 
             <section className={styles.team_section}>
               <div className={styles.team_section_header}>
                 <h2 className={styles.team_section_title}>Team</h2>
-                <p className={styles.team_section_description}>
-                  This is the team that makes ERA possible.
-                </p>
               </div>
               <div className={styles.team_grid}>
                 {teamMembers.map((member) => (
@@ -159,11 +167,6 @@ const OurTeamPage = () => {
             <section className={styles.team_section}>
               <div className={styles.team_section_header}>
                 <h2 className={styles.team_section_title}>Board Members</h2>
-                <p className={styles.team_section_description}>
-                  Placeholder text for explaining the role of the Board. You can
-                  add information about governance structure, terms, and how the
-                  Board represents ERA&apos;s membership.
-                </p>
               </div>
               <div className={styles.team_grid}>
                 {boardMembers.map((member) => (
@@ -191,7 +194,7 @@ const OurTeamPage = () => {
             </section>
           </div>
         </Container>
-      </main> */}
+      </main>
       <Footer />
     </>
   );
