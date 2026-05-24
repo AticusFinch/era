@@ -6,6 +6,11 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import styles from "./page.module.css";
+import Button from "@/app/components/button";
+import {
+  formatResourceAuthors,
+  getResourceDownloadUrl,
+} from "@/lib/utils/resource-taxonomies";
 
 export default async function ResourcePage({ params }) {
   const { slug } = await params;
@@ -37,7 +42,14 @@ export default async function ResourcePage({ params }) {
   }
 
   const featuredImage = resource.featuredImage?.node;
-  const author = resource.author?.node;
+  const authors = formatResourceAuthors(
+    resource.textInputs,
+    resource.author?.node,
+  );
+  const downloadUrl = getResourceDownloadUrl(
+    resource.textInputs,
+    process.env.WORDPRESS_GRAPHQL_URL,
+  );
 
   return (
     <>
@@ -57,10 +69,18 @@ export default async function ResourcePage({ params }) {
               </div>
             )}
             <div className={styles.resource_meta}>
-              <h1 className={styles.resource_title}>{resource.title}</h1>
-              {author && (
-                <p className={styles.resource_author}>By {author.name}</p>
-              )}
+              <div>
+                <h1 className={styles.resource_title}>{resource.title}</h1>
+                {authors && <p className={styles.resource_author}>{authors}</p>}
+                {downloadUrl && (
+                  <Button
+                    href={downloadUrl}
+                    className={styles.resource_download}
+                  >
+                    Download
+                  </Button>
+                )}
+              </div>
               {resource.date && (
                 <time className={styles.resource_date}>
                   {new Date(resource.date).toLocaleDateString("en-US", {

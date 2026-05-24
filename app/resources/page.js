@@ -4,18 +4,11 @@ import Container from "../components/container";
 import styles from "./page.module.css";
 import ResourcesList from "./resources-list";
 import { getClient } from "@/lib/apollo-client";
-import { GET_RESOURCES } from "@/lib/graphql/queries";
-import PageUnderConstruction from "@/app/components/pageUnderConstruction";
-
-// Helper function to make URLs absolute
-function makeAbsoluteUrl(url, baseUrl) {
-  if (!url) return null;
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url;
-  }
-  const base = baseUrl.replace(/\/graphql$/, "");
-  return url.startsWith("/") ? `${base}${url}` : `${base}/${url}`;
-}
+import { GET_RESOURCES, GET_RESOURCE_FILTERS } from "@/lib/graphql/queries";
+import {
+  getResourceDownloadUrl,
+  mapTaxonomyNodes,
+} from "@/lib/utils/resource-taxonomies";
 
 // Helper function to strip HTML tags from text
 function stripHtmlTags(html) {
@@ -45,18 +38,40 @@ function removeExcerptTruncation(text) {
 
 export default async function ResourcesPage() {
   let resources = [];
+  let filterOptions = {
+    formats: [],
+    geographies: [],
+    thematicAreas: [],
+    resourcesTypes: [],
+  };
   let debugInfo = null;
 
   try {
     const client = getClient();
 
-    const { data, error } = await client.query({
-      query: GET_RESOURCES,
-      variables: {
-        first: 100, // Fetch up to 100 resources for the full page
-      },
-      fetchPolicy: "cache-first",
-    });
+    const [{ data, error }, filtersResult] = await Promise.all([
+      client.query({
+        query: GET_RESOURCES,
+        variables: {
+          first: 100,
+        },
+        fetchPolicy: "cache-first",
+      }),
+      client.query({
+        query: GET_RESOURCE_FILTERS,
+        fetchPolicy: "cache-first",
+      }),
+    ]);
+
+    const filtersData = filtersResult?.data;
+    if (filtersData) {
+      filterOptions = {
+        formats: filtersData.formats?.nodes ?? [],
+        geographies: filtersData.geographies?.nodes ?? [],
+        thematicAreas: filtersData.thematicAreas?.nodes ?? [],
+        resourcesTypes: filtersData.resourcesTypes?.nodes ?? [],
+      };
+    }
 
     if (error) {
       console.error("Error fetching resources:", error);
@@ -104,27 +119,10 @@ export default async function ResourcesPage() {
           authors = node.author.node.name;
         }
 
-        let downloadUrl = null;
-        if (textInputs.download) {
-          const download = textInputs.download;
-          if (download.node) {
-            downloadUrl =
-              download.node.sourceUrl ||
-              download.node.mediaItemUrl ||
-              download.node.uri;
-          } else if (typeof download === "string") {
-            downloadUrl = download;
-          } else if (download.sourceUrl) {
-            downloadUrl = download.sourceUrl;
-          } else if (download.url) {
-            downloadUrl = download.url;
-          }
-        }
-
-        const wordpressUrl = process.env.WORDPRESS_GRAPHQL_URL;
-        if (downloadUrl && wordpressUrl) {
-          downloadUrl = makeAbsoluteUrl(downloadUrl, wordpressUrl);
-        }
+        const downloadUrl = getResourceDownloadUrl(
+          textInputs,
+          process.env.WORDPRESS_GRAPHQL_URL,
+        );
 
         const imageUrl =
           node.featuredImage?.node?.sourceUrl || "/img/hero/lgbt.jpg";
@@ -143,6 +141,12 @@ export default async function ResourcesPage() {
           slug: node.slug || "",
           downloadUrl,
           excerpt,
+          taxonomies: {
+            formats: mapTaxonomyNodes(node.formats?.nodes),
+            geographies: mapTaxonomyNodes(node.geographies?.nodes),
+            thematicAreas: mapTaxonomyNodes(node.thematicAreas?.nodes),
+            resourcesTypes: mapTaxonomyNodes(node.resourcesTypes?.nodes),
+          },
         };
       });
     }
@@ -157,23 +161,15 @@ export default async function ResourcesPage() {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
-      {/* <Container>
+      <Container>
         <div className={styles.resources_container}>
           <div className={styles.resources_header}>
             <h1 className={styles.resources_title}>
               <span className="title-accent">Resources</span>
             </h1>
-            <p className={styles.resources_description}>
-              Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque
-              faucibus ex sapien vitae pellentesque sem placerat. In id cursus
-              mi pretium tellus duis convallis. Tempus leo eu aenean sed diam
-              urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum
-              egestas.
-            </p>
           </div>
 
-          <ResourcesList resources={resources} />
+          <ResourcesList resources={resources} filterOptions={filterOptions} />
 
           {debugInfo && resources.length === 0 && (
             <div className={styles.resources_debug}>
@@ -206,7 +202,7 @@ export default async function ResourcesPage() {
             </div>
           )}
         </div>
-      </Container> */}
+      </Container>
       <Footer />
     </>
   );

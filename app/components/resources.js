@@ -9,6 +9,10 @@ import Link from "next/link";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useState, useCallback } from "react";
+import {
+  formatResourceTypeLabel,
+  RESOURCE_TYPE_PLACEHOLDER,
+} from "@/lib/utils/resource-taxonomies";
 
 function getFadeUpVariants(y) {
   return {
@@ -146,38 +150,50 @@ const Resources = ({
                     whileInView="visible"
                     viewport={{ once: true, margin: "0px 0px -8% 0px" }}
                   >
-                    {resourcesItems.map((item, index) => (
-                      <motion.div
-                        key={item.id || index}
-                        className={styles.resources_slide}
-                        variants={slideVariants}
-                      >
-                        <Link
-                          href={`/resources/${item.slug}`}
-                          className={styles.resources_item}
+                    {resourcesItems.map((item, index) => {
+                      const resourceTypeLabel = formatResourceTypeLabel(
+                        item.taxonomies?.resourcesTypes,
+                      );
+                      const isResourceTypePlaceholder =
+                        resourceTypeLabel === RESOURCE_TYPE_PLACEHOLDER;
+
+                      return (
+                        <motion.div
+                          key={item.id || index}
+                          className={styles.resources_slide}
+                          variants={slideVariants}
                         >
-                          <div className={styles.resources_item_image}>
-                            <Image
-                              src={item.image}
-                              alt={item.title}
-                              fill
-                              style={{ objectFit: "cover" }}
-                            />
-                          </div>
-                          <div className={styles.resources_item_text}>
-                            <p className={styles.resources_item_type}>
-                              {item.type}
-                            </p>
-                            <h6 className={styles.resources_item_title}>
-                              {item.title}
-                            </h6>
-                            <p className={styles.resources_item_excerpt}>
-                              {item.excerpt}
-                            </p>
-                          </div>
-                        </Link>
-                      </motion.div>
-                    ))}
+                          <Link
+                            href={`/resources/${item.slug}`}
+                            className={styles.resources_item}
+                          >
+                            <div className={styles.resources_item_image}>
+                              <Image
+                                src={item.image}
+                                alt={item.title}
+                                fill
+                                style={{ objectFit: "cover" }}
+                              />
+                            </div>
+                            <div className={styles.resources_item_text}>
+                              <p
+                                className={`${styles.resources_item_type} ${
+                                  isResourceTypePlaceholder
+                                    ? styles.resources_item_type_placeholder
+                                    : ""
+                                }`}
+                              >
+                                {resourceTypeLabel}
+                              </p>
+                              <h6 className={styles.resources_item_title}>
+                                {item.title}
+                              </h6>
+                              <p>{item.authors}</p>
+                            </div>
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
                   </motion.div>
                 </div>
                 {scrollSnaps.length > 1 && (

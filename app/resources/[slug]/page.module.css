@@ -1,17 +1,20 @@
 .resource {
-  padding: 2rem 0;
-  min-height: 60vh;
+  padding-top: clamp(6rem, 5.143rem + 4.29vw, 12rem);
+  padding-bottom: clamp(3rem, 2.571rem + 2.14vw, 6rem);
 }
 
 .resource_header {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
 }
 
 .resource_image {
-  margin-bottom: 2rem;
   border-radius: 0.5rem;
   overflow: hidden;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.256);
+  height: fit-content;
 }
 
 .resource_meta {
@@ -24,12 +27,18 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 0;
+  margin-bottom: 0.25em;
 }
 
 .resource_author {
-  font-size: 1rem;
+  font-size: clamp(1rem, 0.857rem + 0.71vw, 2rem);
   color: var(--color-text-secondary, #666);
   margin: 0;
+}
+
+.resource_download {
+  align-self: flex-start;
+  margin-top: 0.5rem;
 }
 
 .resource_date {
@@ -74,4 +83,24 @@
 
 .resource_content a:hover {
   text-decoration: none;
+}
+
+@media (min-width: 1024px) {
+  .resource_header {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 2em;
+    margin-bottom: 3em;
+  }
+
+  .resource_meta {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1em;
+  }
+
+  .resource_download {
+    margin: 2em 0;
+  }
 }

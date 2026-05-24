@@ -5,18 +5,11 @@
 
 import { getClient } from "@/lib/apollo-client";
 import { GET_RESOURCES } from "@/lib/graphql/queries";
+import {
+  getResourceDownloadUrl,
+  mapTaxonomyNodes,
+} from "@/lib/utils/resource-taxonomies";
 import Resources from "./resources";
-
-// Helper function to make URLs absolute
-function makeAbsoluteUrl(url, baseUrl) {
-  if (!url) return null;
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url; // Already absolute
-  }
-  // Make relative URL absolute
-  const base = baseUrl.replace(/\/graphql$/, ""); // Remove /graphql from end
-  return url.startsWith("/") ? `${base}${url}` : `${base}/${url}`;
-}
 
 // Helper function to strip HTML tags from text
 function stripHtmlTags(html) {
@@ -55,7 +48,7 @@ export default async function ResourcesWrapper() {
     const { data, error } = await client.query({
       query: GET_RESOURCES,
       variables: {
-        first: 8, // Limit to 8 publications for the homepage
+        first: 10, // Limit to 8 publications for the homepage
       },
       fetchPolicy: "cache-first",
     });
@@ -77,7 +70,7 @@ export default async function ResourcesWrapper() {
     if (data && !data.resources) {
       console.warn(
         "⚠️ 'resources' field not found in GraphQL response. Available fields:",
-        Object.keys(data)
+        Object.keys(data),
       );
       debugInfo = {
         availableFields: Object.keys(data),
@@ -111,37 +104,10 @@ export default async function ResourcesWrapper() {
           authors = node.author.node.name;
         }
 
-        // Get download URL from ACF (download field)
-        // Try different possible structures
-        let downloadUrl = null;
-        if (textInputs.download) {
-          const download = textInputs.download;
-          // Check if it's a file field with node structure
-          if (download.node) {
-            downloadUrl =
-              download.node.sourceUrl ||
-              download.node.mediaItemUrl ||
-              download.node.uri;
-          }
-          // Check if it's a direct URL string
-          else if (typeof download === "string") {
-            downloadUrl = download;
-          }
-          // Check if it's an object with sourceUrl
-          else if (download.sourceUrl) {
-            downloadUrl = download.sourceUrl;
-          }
-          // Check if it's an object with url property
-          else if (download.url) {
-            downloadUrl = download.url;
-          }
-        }
-
-        // Make download URL absolute if it's relative
-        const wordpressUrl = process.env.WORDPRESS_GRAPHQL_URL;
-        if (downloadUrl && wordpressUrl) {
-          downloadUrl = makeAbsoluteUrl(downloadUrl, wordpressUrl);
-        }
+        const downloadUrl = getResourceDownloadUrl(
+          textInputs,
+          process.env.WORDPRESS_GRAPHQL_URL,
+        );
 
         // Get featured image or fallback
         const imageUrl =
@@ -149,7 +115,7 @@ export default async function ResourcesWrapper() {
 
         // Get excerpt, strip HTML tags, and remove WordPress truncation markers
         const excerpt = removeExcerptTruncation(
-          stripHtmlTags(node.excerpt || "")
+          stripHtmlTags(node.excerpt || ""),
         );
 
         return {
@@ -162,6 +128,12 @@ export default async function ResourcesWrapper() {
           slug: node.slug || "",
           downloadUrl: downloadUrl,
           excerpt: excerpt,
+          taxonomies: {
+            formats: mapTaxonomyNodes(node.formats?.nodes),
+            geographies: mapTaxonomyNodes(node.geographies?.nodes),
+            thematicAreas: mapTaxonomyNodes(node.thematicAreas?.nodes),
+            resourcesTypes: mapTaxonomyNodes(node.resourcesTypes?.nodes),
+          },
         };
       });
     }
