@@ -7,6 +7,7 @@ import { FiSearch, FiX } from "react-icons/fi";
 import { FaChevronDown } from "react-icons/fa6";
 import styles from "./page.module.css";
 import cardStyles from "../components/resources.module.css";
+import ListPagination from "@/app/components/list-pagination";
 import {
   formatResourceTypeLabel,
   RESOURCE_TYPE_PLACEHOLDER,
@@ -169,7 +170,7 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
 
     const updatePageSize = () => {
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-      setPageSize(isDesktop ? 10 : 8);
+      setPageSize(isDesktop ? 9 : 6);
       setCurrentPage(1);
     };
 
@@ -266,25 +267,6 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
       thematicAreas: ALL_SLUG,
       resourcesTypes: ALL_SLUG,
     });
-  };
-
-  const getPaginationPages = () => {
-    if (totalPages <= 5) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-
-    const pages = [];
-    const addPage = (p) => {
-      if (!pages.includes(p)) pages.push(p);
-    };
-
-    addPage(1);
-    addPage(totalPages);
-    addPage(currentPage);
-    addPage(currentPage - 1);
-    addPage(currentPage + 1);
-
-    return pages.filter((p) => p >= 1 && p <= totalPages).sort((a, b) => a - b);
   };
 
   const visibleFilters = FILTER_CONFIG.filter(
@@ -398,82 +380,14 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
           </p>
         )}
 
-        {filteredResources.length > 0 && totalPages > 1 && (
-          <div
-            className={styles.resources_pagination}
-            role="navigation"
-            aria-label="Resource list pages"
-          >
-            <button
-              type="button"
-              className={styles.resources_pagination_button}
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              Previous
-            </button>
-
-            <div className={styles.resources_pagination_pages}>
-              {(() => {
-                const sequence = [];
-                const pages = getPaginationPages();
-
-                for (let i = 0; i < pages.length; i++) {
-                  const page = pages[i];
-                  const prev = pages[i - 1];
-
-                  if (i > 0 && page - prev > 1) {
-                    sequence.push("ellipsis-" + page + "-" + prev);
-                  }
-
-                  sequence.push(page);
-                }
-
-                return sequence.map((item) => {
-                  if (
-                    typeof item === "string" &&
-                    item.startsWith("ellipsis-")
-                  ) {
-                    return (
-                      <span
-                        key={item}
-                        className={styles.resources_pagination_ellipsis}
-                      >
-                        …
-                      </span>
-                    );
-                  }
-
-                  const page = item;
-
-                  return (
-                    <button
-                      key={page}
-                      type="button"
-                      className={`${styles.resources_pagination_page} ${
-                        page === currentPage
-                          ? styles.resources_pagination_page_active
-                          : ""
-                      }`}
-                      onClick={() => handlePageChange(page)}
-                    >
-                      {page}
-                    </button>
-                  );
-                });
-              })()}
-            </div>
-
-            <button
-              type="button"
-              className={styles.resources_pagination_button}
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              Next
-            </button>
-          </div>
-        )}
+        {filteredResources.length > 0 && totalPages >= 1 ? (
+          <ListPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+            ariaLabel="Resource list pages"
+          />
+        ) : null}
       </div>
     </>
   );

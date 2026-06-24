@@ -6,7 +6,6 @@
 import { getClient } from "@/lib/apollo-client";
 import { GET_RESOURCES } from "@/lib/graphql/queries";
 import {
-  getResourceDownloadUrl,
   mapTaxonomyNodes,
 } from "@/lib/utils/resource-taxonomies";
 import Resources from "./resources";
@@ -104,11 +103,6 @@ export default async function ResourcesWrapper() {
           authors = node.author.node.name;
         }
 
-        const downloadUrl = getResourceDownloadUrl(
-          textInputs,
-          process.env.WORDPRESS_GRAPHQL_URL,
-        );
-
         // Get featured image or fallback
         const imageUrl =
           node.featuredImage?.node?.sourceUrl || "/img/hero/lgbt.jpg";
@@ -126,7 +120,6 @@ export default async function ResourcesWrapper() {
           authors: authors, // Add plural version for component
           image: imageUrl,
           slug: node.slug || "",
-          downloadUrl: downloadUrl,
           excerpt: excerpt,
           taxonomies: {
             formats: mapTaxonomyNodes(node.formats?.nodes),

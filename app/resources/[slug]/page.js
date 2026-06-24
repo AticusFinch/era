@@ -6,11 +6,11 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import styles from "./page.module.css";
-import Button from "@/app/components/button";
 import {
   formatResourceAuthors,
-  getResourceDownloadUrl,
+  getResourceLanguageDownloads,
 } from "@/lib/utils/resource-taxonomies";
+import ResourceLanguageDownloads from "./resource-language-downloads";
 
 export default async function ResourcePage({ params }) {
   const { slug } = await params;
@@ -46,9 +46,10 @@ export default async function ResourcePage({ params }) {
     resource.textInputs,
     resource.author?.node,
   );
-  const downloadUrl = getResourceDownloadUrl(
-    resource.textInputs,
-    process.env.WORDPRESS_GRAPHQL_URL,
+  const wordpressUrl = process.env.WORDPRESS_GRAPHQL_URL;
+  const languageDownloads = getResourceLanguageDownloads(
+    resource.resources,
+    wordpressUrl,
   );
 
   return (
@@ -72,14 +73,7 @@ export default async function ResourcePage({ params }) {
               <div>
                 <h1 className={styles.resource_title}>{resource.title}</h1>
                 {authors && <p className={styles.resource_author}>{authors}</p>}
-                {downloadUrl && (
-                  <Button
-                    href={downloadUrl}
-                    className={styles.resource_download}
-                  >
-                    Download
-                  </Button>
-                )}
+                {<ResourceLanguageDownloads downloads={languageDownloads} />}
               </div>
               {resource.date && (
                 <time className={styles.resource_date}>

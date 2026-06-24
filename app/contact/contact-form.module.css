@@ -1,0 +1,171 @@
+.form_card {
+  padding: clamp(1.5rem, 1.286rem + 1.07vw, 2.25rem);
+  border-radius: 1.5rem;
+  background-color: var(--color-surface);
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+.form_grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+.form_field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form_field_full {
+  grid-column: 1 / -1;
+}
+
+.form_label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-font-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.form_required {
+  color: var(--color-primary);
+}
+
+.form_input,
+.form_select,
+.form_textarea {
+  width: 100%;
+  padding: 0.65rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(11, 11, 11, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  background-color: var(--color-background);
+  color: var(--color-font-primary);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form_select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23262626' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  padding-right: 2.25rem;
+}
+
+.form_textarea {
+  min-height: 9rem;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.form_input::placeholder,
+.form_textarea::placeholder {
+  color: var(--color-font-secondary);
+  opacity: 0.75;
+}
+
+.form_input:focus,
+.form_select:focus,
+.form_textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(237, 18, 109, 0.2);
+}
+
+.form_input_error,
+.form_select_error,
+.form_textarea_error {
+  border-color: #c62828;
+}
+
+.form_input_error:focus,
+.form_select_error:focus,
+.form_textarea_error:focus {
+  box-shadow: 0 0 0 2px rgba(198, 40, 40, 0.2);
+}
+
+.form_error {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #c62828;
+}
+
+.form_honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form_actions {
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.form_submit {
+  padding: clamp(0.5rem, 0.4rem + 0.5vw, 0.75rem)
+    clamp(1.25rem, 1rem + 1.25vw, 2rem);
+  border-radius: 9999px;
+  border: 1px solid var(--color-primary);
+  background-color: transparent;
+  color: var(--color-primary);
+  font-size: clamp(0.85rem, 0.8rem + 0.25vw, 1rem);
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.form_submit:hover:not(:disabled) {
+  background-color: var(--color-primary);
+  color: var(--color-background);
+}
+
+.form_submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (min-width: 1024px) {
+  .form_submit:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+}
+
+.form_status {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.form_status_success {
+  color: #2e7d32;
+}
+
+.form_status_error {
+  color: #c62828;
+}
+
+@media (min-width: 640px) {
+  .form_grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

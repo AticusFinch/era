@@ -8,6 +8,7 @@ import { CiCalendarDate } from "react-icons/ci";
 import { IoReaderOutline } from "react-icons/io5";
 import layoutStyles from "./page.module.css";
 import newsStyles from "@/app/components/news.module.css";
+import ListPagination from "@/app/components/list-pagination";
 
 const NewsList = ({ items = [] }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,29 +74,6 @@ const NewsList = ({ items = [] }) => {
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  };
-
-  const getPaginationPages = () => {
-    if (totalPages <= 5) {
-      return Array.from({ length: totalPages }, (_, i) => i + 1);
-    }
-
-    const pages = [];
-    const addPage = (p) => {
-      if (!pages.includes(p)) pages.push(p);
-    };
-
-    addPage(1);
-    addPage(totalPages);
-    addPage(currentPage);
-    addPage(currentPage - 1);
-    addPage(currentPage + 1);
-
-    const validPages = pages
-      .filter((p) => p >= 1 && p <= totalPages)
-      .sort((a, b) => a - b);
-
-    return validPages;
   };
 
   return (
@@ -224,75 +202,14 @@ const NewsList = ({ items = [] }) => {
         )}
       </div>
 
-      {filteredItems.length > 0 && totalPages >= 1 && (
-        <div className={layoutStyles.news_pagination}>
-          <button
-            type="button"
-            className={layoutStyles.news_pagination_button}
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-          >
-            Previous
-          </button>
-
-          <div className={layoutStyles.news_pagination_pages}>
-            {(() => {
-              const sequence = [];
-              const pages = getPaginationPages();
-
-              for (let i = 0; i < pages.length; i++) {
-                const page = pages[i];
-                const prev = pages[i - 1];
-
-                if (i > 0 && page - prev > 1) {
-                  sequence.push("ellipsis-" + page + "-" + prev);
-                }
-
-                sequence.push(page);
-              }
-
-              return sequence.map((item) => {
-                if (typeof item === "string" && item.startsWith("ellipsis-")) {
-                  return (
-                    <span
-                      key={item}
-                      className={layoutStyles.news_pagination_ellipsis}
-                    >
-                      …
-                    </span>
-                  );
-                }
-
-                const page = item;
-
-                return (
-                  <button
-                    key={page}
-                    type="button"
-                    className={`${layoutStyles.news_pagination_page} ${
-                      page === currentPage
-                        ? layoutStyles.news_pagination_page_active
-                        : ""
-                    }`}
-                    onClick={() => handlePageChange(page)}
-                  >
-                    {page}
-                  </button>
-                );
-              });
-            })()}
-          </div>
-
-          <button
-            type="button"
-            className={layoutStyles.news_pagination_button}
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-          >
-            Next
-          </button>
-        </div>
-      )}
+      {filteredItems.length > 0 && totalPages >= 1 ? (
+        <ListPagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+          ariaLabel="News list pages"
+        />
+      ) : null}
     </>
   );
 };

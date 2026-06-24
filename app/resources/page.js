@@ -6,7 +6,6 @@ import ResourcesList from "./resources-list";
 import { getClient } from "@/lib/apollo-client";
 import { GET_RESOURCES, GET_RESOURCE_FILTERS } from "@/lib/graphql/queries";
 import {
-  getResourceDownloadUrl,
   mapTaxonomyNodes,
 } from "@/lib/utils/resource-taxonomies";
 
@@ -119,11 +118,6 @@ export default async function ResourcesPage() {
           authors = node.author.node.name;
         }
 
-        const downloadUrl = getResourceDownloadUrl(
-          textInputs,
-          process.env.WORDPRESS_GRAPHQL_URL,
-        );
-
         const imageUrl =
           node.featuredImage?.node?.sourceUrl || "/img/hero/lgbt.jpg";
 
@@ -139,7 +133,6 @@ export default async function ResourcesPage() {
           authors,
           image: imageUrl,
           slug: node.slug || "",
-          downloadUrl,
           excerpt,
           taxonomies: {
             formats: mapTaxonomyNodes(node.formats?.nodes),
