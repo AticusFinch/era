@@ -21,6 +21,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  margin-top: 1.5em;
 }
 
 .resource_title {
@@ -28,6 +29,7 @@
   line-height: 1.2;
   margin: 0;
   margin-bottom: 0.25em;
+  font-size: clamp(1.5rem, 1.273rem + 1.14vw, 2rem);
 }
 
 .resource_author {
@@ -193,15 +195,16 @@
   flex-shrink: 0;
 }
 
+.resource_date {
+  color: var(--color-primary, #666);
+  font-size: clamp(0.9rem, 0.857rem + 0.21vw, 1.2rem);
+  margin-top: 0.5em;
+}
+
 @media (min-width: 1024px) {
   .resource_downloads_action:hover {
     transform: translateY(-2px);
   }
-}
-
-.resource_date {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary, #666);
 }
 
 .resource_excerpt {
@@ -261,5 +264,13 @@
   .resource_download,
   .resource_downloads {
     margin: 2em 0;
+  }
+
+  .resource_title {
+    font-size: clamp(2rem, 0.667rem + 2.08vw, 4rem);
+  }
+
+  .resource_meta {
+    margin-top: 0;
   }
 }

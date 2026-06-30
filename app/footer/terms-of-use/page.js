@@ -89,7 +89,9 @@ export default function TermsOfUsePage() {
                 Website terms
               </p>
               <h1 className={styles.legal_title}>
-                <span className="title-accent">Terms of Use</span>
+                <span className={styles.legal_title_inner}>
+                  <span className="title-accent">Terms of Use</span>
+                </span>
               </h1>
               <p className={styles.legal_lead}>
                 These Terms of Use (&ldquo;Terms&rdquo;) govern access to and use

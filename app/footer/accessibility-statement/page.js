@@ -75,7 +75,9 @@ export default function AccessibilityStatementPage() {
                 Inclusion &amp; access
               </p>
               <h1 className={styles.legal_title}>
-                <span className="title-accent">Accessibility Statement</span>
+                <span className={styles.legal_title_inner}>
+                  <span className="title-accent">Accessibility Statement</span>
+                </span>
               </h1>
               <p className={styles.legal_lead}>
                 ERA-LGBTI Equal Rights Association for the Western Balkans and

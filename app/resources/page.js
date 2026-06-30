@@ -9,6 +9,8 @@ import {
   mapTaxonomyNodes,
 } from "@/lib/utils/resource-taxonomies";
 
+export const revalidate = 60;
+
 // Helper function to strip HTML tags from text
 function stripHtmlTags(html) {
   if (!html) return "";
