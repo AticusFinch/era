@@ -281,7 +281,12 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [isDesktopFilters, setIsDesktopFilters] = useState(false);
+  const [overlayMounted, setOverlayMounted] = useState(false);
   const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    setOverlayMounted(true);
+  }, []);
 
   const closeMobileFilters = useCallback(() => {
     setMobileFiltersOpen(false);
@@ -436,6 +441,50 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     onClearFilters: clearFilters,
   };
 
+  const mobileFiltersOverlay =
+    overlayMounted && mobileFiltersOpen && !isDesktopFilters
+      ? createPortal(
+          <>
+            <button
+              type="button"
+              className={styles.resources_filters_backdrop}
+              onClick={closeMobileFilters}
+              aria-label="Close filters"
+            />
+            <div
+              id="resources-filters-panel"
+              className={styles.resources_filters_popover}
+              role="dialog"
+              aria-modal="true"
+              aria-label="Filter resources"
+            >
+              <button
+                type="button"
+                className={styles.resources_filters_popover_close}
+                onClick={closeMobileFilters}
+                aria-label="Close filters"
+              >
+                <FiX aria-hidden />
+              </button>
+              <div className={styles.resources_filters_popover_inner}>
+                <FiltersContent {...filtersContentProps} />
+              </div>
+              <div className={styles.resources_filters_popover_footer}>
+                <button
+                  type="button"
+                  className={styles.resources_filters_popover_search}
+                  onClick={applyFiltersAndSearch}
+                >
+                  <FiSearch aria-hidden />
+                  <span>Search</span>
+                </button>
+              </div>
+            </div>
+          </>,
+          document.body,
+        )
+      : null;
+
   return (
     <>
       <div className={styles.resources_toolbar}>
@@ -494,45 +543,6 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
                     aria-hidden
                   />
                 </button>
-                {mobileFiltersOpen ? (
-                  <>
-                    <button
-                      type="button"
-                      className={styles.resources_filters_backdrop}
-                      onClick={closeMobileFilters}
-                      aria-label="Close filters"
-                    />
-                    <div
-                      id="resources-filters-panel"
-                      className={styles.resources_filters_popover}
-                      role="dialog"
-                      aria-modal="true"
-                      aria-label="Filter resources"
-                    >
-                      <button
-                        type="button"
-                        className={styles.resources_filters_popover_close}
-                        onClick={closeMobileFilters}
-                        aria-label="Close filters"
-                      >
-                        <FiX aria-hidden />
-                      </button>
-                      <div className={styles.resources_filters_popover_inner}>
-                        <FiltersContent {...filtersContentProps} />
-                      </div>
-                      <div className={styles.resources_filters_popover_footer}>
-                        <button
-                          type="button"
-                          className={styles.resources_filters_popover_search}
-                          onClick={applyFiltersAndSearch}
-                        >
-                          <FiSearch aria-hidden />
-                          <span>Search</span>
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                ) : null}
               </>
             ) : (
               <div className={styles.resources_filters_desktop}>
@@ -609,6 +619,7 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
           />
         ) : null}
       </div>
+      {mobileFiltersOverlay}
     </>
   );
 };
