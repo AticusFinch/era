@@ -24,14 +24,26 @@ function useDesktopGrid() {
   return isDesktopGrid;
 }
 
+function normalizeBioParagraphs(bio) {
+  if (!bio) return [];
+  const items = Array.isArray(bio) ? bio : [bio];
+  return items
+    .map((paragraph) =>
+      String(paragraph)
+        .replace(/\[Text Wrapping Break\]/gi, " ")
+        .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, "")
+        .replace(/\s+/g, " ")
+        .trim(),
+    )
+    .filter(Boolean);
+}
+
 function hasBio(bio) {
-  if (!bio) return false;
-  if (Array.isArray(bio)) return bio.some((paragraph) => paragraph?.trim());
-  return String(bio).trim().length > 0;
+  return normalizeBioParagraphs(bio).length > 0;
 }
 
 function MemberBio({ bio }) {
-  const paragraphs = Array.isArray(bio) ? bio : [bio];
+  const paragraphs = normalizeBioParagraphs(bio);
 
   return (
     <div className={styles.team_card_dialog_bio}>
