@@ -26,6 +26,8 @@ const countries = [
   "Montenegro",
   "North Macedonia",
   "Serbia",
+  "Croatia",
+  "Slovenia",
   "Türkiye",
 ];
 
