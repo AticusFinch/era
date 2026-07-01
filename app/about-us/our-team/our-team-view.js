@@ -13,13 +13,6 @@ import { boardMembers, teamMembers } from "./our-team-data";
 import OurTeamCarousel from "./our-team-carousel";
 import styles from "./page.module.css";
 
-const stats = [
-  { value: String(teamMembers.length), label: "ERA staff members" },
-  { value: String(boardMembers.length), label: "Board members" },
-  { value: "Regional", label: "Leadership network" },
-  { value: "6", label: "Countries represented" },
-];
-
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
@@ -102,15 +95,6 @@ export default function OurTeamView() {
           </Link>
         </motion.div>
       </header>
-
-      <motion.div className={styles.team_stats} {...fadeUp}>
-        {stats.map((stat) => (
-          <div key={stat.label} className={styles.team_stat}>
-            <span className={styles.team_stat_value}>{stat.value}</span>
-            <span className={styles.team_stat_label}>{stat.label}</span>
-          </div>
-        ))}
-      </motion.div>
 
       <motion.blockquote className={styles.team_governance} {...fadeUp}>
         <div className={styles.team_governance_icon} aria-hidden>
