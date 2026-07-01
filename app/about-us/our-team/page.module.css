@@ -451,12 +451,13 @@
 }
 
 .team_card_dialog {
+  --team-dialog-height: min(94dvh, 58rem);
   margin: auto;
   padding: 0;
   border: none;
   border-radius: clamp(0.85rem, 2vw, 1rem);
   max-width: min(52rem, calc(100vw - 1.5rem));
-  max-height: min(90dvh, 44rem);
+  max-height: var(--team-dialog-height);
   width: 100%;
   background: #fff;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.18);
@@ -470,16 +471,16 @@
 
 .team_card_dialog_inner {
   position: relative;
-  max-height: min(90dvh, 44rem);
+  max-height: var(--team-dialog-height);
   overflow: hidden;
 }
 
 .team_card_dialog_layout {
   display: grid;
-  grid-template-columns: clamp(8.5rem, 30%, 13.5rem) minmax(0, 1fr);
+  grid-template-columns: clamp(9.5rem, 32%, 15.5rem) minmax(0, 1fr);
   align-items: stretch;
-  min-height: min(22rem, 72dvh);
-  max-height: min(90dvh, 44rem);
+  min-height: min(34rem, 84dvh);
+  max-height: var(--team-dialog-height);
   overflow: hidden;
 }
 
@@ -487,7 +488,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 12rem;
+  min-height: 18rem;
   background: linear-gradient(
     180deg,
     rgba(255, 196, 180, 0.2) 0%,
@@ -501,7 +502,7 @@
 
 .team_card_dialog_image {
   object-fit: cover;
-  object-position: top center;
+  object-position: center 8%;
 }
 
 .team_card_dialog_content {
@@ -512,7 +513,7 @@
   overflow-y: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  max-height: min(90dvh, 44rem);
+  max-height: var(--team-dialog-height);
 }
 
 .team_card_dialog_close {
@@ -580,18 +581,22 @@
 }
 
 @media (max-width: 559px) {
+  .team_card_dialog {
+    --team-dialog-height: min(94dvh, 62rem);
+  }
+
   .team_card_dialog_layout {
     grid-template-columns: 1fr;
-    min-height: 0;
-    max-height: min(90dvh, 44rem);
+    min-height: min(36rem, 88dvh);
+    max-height: var(--team-dialog-height);
     overflow-y: auto;
   }
 
   .team_card_dialog_media {
-    aspect-ratio: 16 / 10;
-    max-height: 13.5rem;
+    aspect-ratio: 3 / 4;
+    max-height: min(24rem, 62vw);
     height: auto;
-    min-height: auto;
+    min-height: clamp(16rem, 58vw, 24rem);
   }
 
   .team_card_dialog_content {
