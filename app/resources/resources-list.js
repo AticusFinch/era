@@ -1,9 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
 import { FiSearch, FiX } from "react-icons/fi";
+import { TbLayoutGrid } from "react-icons/tb";
 import { FaChevronDown } from "react-icons/fa6";
 import styles from "./page.module.css";
 import cardStyles from "../components/resources.module.css";
@@ -53,7 +62,11 @@ function FilterDropdown({
   onChange,
 }) {
   const [open, setOpen] = useState(false);
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [menuPosition, setMenuPosition] = useState(null);
   const rootRef = useRef(null);
+  const triggerRef = useRef(null);
+  const menuRef = useRef(null);
   const labelId = `resources-filter-${filterKey}-label`;
   const listId = `resources-filter-${filterKey}-list`;
   const triggerTextId = `resources-filter-${filterKey}-trigger`;
@@ -64,11 +77,56 @@ function FilterDropdown({
   }, [value, options, allLabel]);
 
   useEffect(() => {
+    setMenuMounted(true);
+  }, []);
+
+  const updateMenuPosition = useCallback(() => {
+    if (!triggerRef.current) return;
+
+    const rect = triggerRef.current.getBoundingClientRect();
+    const viewportPadding = 12;
+    const gap = 6;
+    const spaceBelow = window.innerHeight - rect.bottom - viewportPadding;
+    const spaceAbove = rect.top - viewportPadding;
+    const openAbove = spaceBelow < 180 && spaceAbove > spaceBelow;
+    const maxHeight = Math.min(
+      280,
+      Math.max(openAbove ? spaceAbove - gap : spaceBelow - gap, 120),
+    );
+
+    setMenuPosition({
+      top: openAbove ? rect.top - gap : rect.bottom + gap,
+      left: Math.max(
+        viewportPadding,
+        Math.min(rect.left, window.innerWidth - rect.width - viewportPadding),
+      ),
+      width: rect.width,
+      maxHeight,
+      openAbove,
+    });
+  }, []);
+
+  useLayoutEffect(() => {
+    if (!open) return;
+    updateMenuPosition();
+    window.addEventListener("resize", updateMenuPosition);
+    window.addEventListener("scroll", updateMenuPosition, true);
+    return () => {
+      window.removeEventListener("resize", updateMenuPosition);
+      window.removeEventListener("scroll", updateMenuPosition, true);
+    };
+  }, [open, updateMenuPosition]);
+
+  useEffect(() => {
     if (!open) return;
     const onDocMouseDown = (e) => {
-      if (rootRef.current && !rootRef.current.contains(e.target)) {
-        setOpen(false);
+      if (
+        rootRef.current?.contains(e.target) ||
+        menuRef.current?.contains(e.target)
+      ) {
+        return;
       }
+      setOpen(false);
     };
     const onKeyDown = (e) => {
       if (e.key === "Escape") setOpen(false);
@@ -88,12 +146,64 @@ function FilterDropdown({
 
   if (!options.length) return null;
 
+  const menu =
+    open && menuPosition && menuMounted
+      ? createPortal(
+          <ul
+            ref={menuRef}
+            id={listId}
+            role="listbox"
+            aria-labelledby={labelId}
+            className={`${styles.resources_filter_list} ${
+              menuPosition.openAbove ? styles.resources_filter_list_above : ""
+            }`}
+            style={{
+              top: menuPosition.top,
+              left: menuPosition.left,
+              width: menuPosition.width,
+              maxHeight: menuPosition.maxHeight,
+            }}
+          >
+            <li role="none" className={styles.resources_filter_item}>
+              <button
+                type="button"
+                role="option"
+                aria-selected={value === ALL_SLUG}
+                className={`${styles.resources_filter_option} ${value === ALL_SLUG ? styles.resources_filter_option_active : ""}`}
+                onClick={() => choose(ALL_SLUG)}
+              >
+                {allLabel}
+              </button>
+            </li>
+            {options.map((option) => (
+              <li
+                key={option.slug}
+                role="none"
+                className={styles.resources_filter_item}
+              >
+                <button
+                  type="button"
+                  role="option"
+                  aria-selected={value === option.slug}
+                  className={`${styles.resources_filter_option} ${value === option.slug ? styles.resources_filter_option_active : ""}`}
+                  onClick={() => choose(option.slug)}
+                >
+                  {option.name}
+                </button>
+              </li>
+            ))}
+          </ul>,
+          document.body,
+        )
+      : null;
+
   return (
     <div className={styles.resources_filter_wrap} ref={rootRef}>
       <span id={labelId} className={styles.resources_filter_label}>
         {label}
       </span>
       <button
+        ref={triggerRef}
         type="button"
         className={styles.resources_filter_trigger}
         aria-haspopup="listbox"
@@ -113,44 +223,49 @@ function FilterDropdown({
           aria-hidden
         />
       </button>
-      {open ? (
-        <ul
-          id={listId}
-          role="listbox"
-          aria-labelledby={labelId}
-          className={styles.resources_filter_list}
-        >
-          <li role="none" className={styles.resources_filter_item}>
-            <button
-              type="button"
-              role="option"
-              aria-selected={value === ALL_SLUG}
-              className={`${styles.resources_filter_option} ${value === ALL_SLUG ? styles.resources_filter_option_active : ""}`}
-              onClick={() => choose(ALL_SLUG)}
-            >
-              {allLabel}
-            </button>
-          </li>
-          {options.map((option) => (
-            <li
-              key={option.slug}
-              role="none"
-              className={styles.resources_filter_item}
-            >
-              <button
-                type="button"
-                role="option"
-                aria-selected={value === option.slug}
-                className={`${styles.resources_filter_option} ${value === option.slug ? styles.resources_filter_option_active : ""}`}
-                onClick={() => choose(option.slug)}
-              >
-                {option.name}
-              </button>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      {menu}
     </div>
+  );
+}
+
+function FiltersContent({
+  visibleFilters,
+  sortedFilterOptions,
+  activeFilters,
+  onFilterChange,
+  hasActiveFilters,
+  onClearFilters,
+}) {
+  return (
+    <>
+      <div
+        className={styles.resources_filters}
+        role="group"
+        aria-label="Filter resources"
+      >
+        {visibleFilters.map(({ key, label, allLabel }) => (
+          <FilterDropdown
+            key={key}
+            filterKey={key}
+            label={label}
+            allLabel={allLabel}
+            options={sortedFilterOptions[key]}
+            value={activeFilters[key]}
+            onChange={(slug) => onFilterChange(key, slug)}
+          />
+        ))}
+      </div>
+      {hasActiveFilters ? (
+        <button
+          type="button"
+          className={styles.resources_clear_filters}
+          onClick={onClearFilters}
+        >
+          <FiX className={styles.resources_clear_filters_icon} aria-hidden />
+          <span>Clear filters</span>
+        </button>
+      ) : null}
+    </>
   );
 }
 
@@ -164,14 +279,30 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [isDesktopFilters, setIsDesktopFilters] = useState(false);
+  const searchInputRef = useRef(null);
+
+  const closeMobileFilters = useCallback(() => {
+    setMobileFiltersOpen(false);
+  }, []);
+
+  const applyFiltersAndSearch = useCallback(() => {
+    setMobileFiltersOpen(false);
+    searchInputRef.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const updatePageSize = () => {
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+      setIsDesktopFilters(isDesktop);
       setPageSize(isDesktop ? 9 : 6);
       setCurrentPage(1);
+      if (isDesktop) {
+        setMobileFiltersOpen(false);
+      }
     };
 
     updatePageSize();
@@ -183,6 +314,23 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
       mediaQuery.removeEventListener("change", updatePageSize);
     };
   }, []);
+
+  useEffect(() => {
+    if (!mobileFiltersOpen || isDesktopFilters) return;
+
+    const onKeyDown = (e) => {
+      if (e.key === "Escape") closeMobileFilters();
+    };
+
+    document.addEventListener("keydown", onKeyDown);
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [mobileFiltersOpen, isDesktopFilters, closeMobileFilters]);
 
   const sortedFilterOptions = useMemo(() => {
     const sortByName = (items) =>
@@ -273,47 +421,28 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     ({ key }) => sortedFilterOptions[key]?.length > 0,
   );
 
+  const activeFilterCount = useMemo(
+    () =>
+      Object.values(activeFilters).filter((slug) => slug !== ALL_SLUG).length,
+    [activeFilters],
+  );
+
+  const filtersContentProps = {
+    visibleFilters,
+    sortedFilterOptions,
+    activeFilters,
+    onFilterChange: handleFilterChange,
+    hasActiveFilters,
+    onClearFilters: clearFilters,
+  };
+
   return (
     <>
       <div className={styles.resources_toolbar}>
-        {visibleFilters.length > 0 && (
-          <div className={styles.resources_filters_row}>
-            <div
-              className={styles.resources_filters}
-              role="group"
-              aria-label="Filter resources"
-            >
-              {visibleFilters.map(({ key, label, allLabel }) => (
-                <FilterDropdown
-                  key={key}
-                  filterKey={key}
-                  label={label}
-                  allLabel={allLabel}
-                  options={sortedFilterOptions[key]}
-                  value={activeFilters[key]}
-                  onChange={(slug) => handleFilterChange(key, slug)}
-                />
-              ))}
-            </div>
-            {hasActiveFilters ? (
-              <button
-                type="button"
-                className={styles.resources_clear_filters}
-                onClick={clearFilters}
-              >
-                <FiX
-                  className={styles.resources_clear_filters_icon}
-                  aria-hidden
-                />
-                <span>Clear filters</span>
-              </button>
-            ) : null}
-          </div>
-        )}
-
         <div className={styles.resources_search}>
           <FiSearch className={styles.resources_search_icon} aria-hidden />
           <input
+            ref={searchInputRef}
             type="search"
             className={styles.resources_search_input}
             placeholder="Search by title, author, or description…"
@@ -323,6 +452,97 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
             autoComplete="off"
           />
         </div>
+
+        {visibleFilters.length > 0 && (
+          <div className={styles.resources_filters_row}>
+            {!isDesktopFilters ? (
+              <>
+                <button
+                  type="button"
+                  className={styles.resources_filters_toggle}
+                  onClick={() => setMobileFiltersOpen((open) => !open)}
+                  aria-expanded={mobileFiltersOpen}
+                  aria-controls="resources-filters-panel"
+                  aria-haspopup="dialog"
+                  aria-label={
+                    activeFilterCount > 0
+                      ? `Filters, ${activeFilterCount} active`
+                      : "Filters"
+                  }
+                >
+                  <TbLayoutGrid
+                    className={styles.resources_filters_toggle_icon}
+                    aria-hidden
+                  />
+                  <span className={styles.resources_filters_toggle_text}>
+                    Filters
+                    {activeFilterCount > 0 ? (
+                      <span
+                        className={styles.resources_filters_toggle_badge}
+                        aria-hidden
+                      >
+                        {activeFilterCount}
+                      </span>
+                    ) : null}
+                  </span>
+                  <FaChevronDown
+                    className={`${styles.resources_filters_toggle_chevron} ${
+                      mobileFiltersOpen
+                        ? styles.resources_filters_toggle_chevron_open
+                        : ""
+                    }`}
+                    aria-hidden
+                  />
+                </button>
+                {mobileFiltersOpen ? (
+                  <>
+                    <button
+                      type="button"
+                      className={styles.resources_filters_backdrop}
+                      onClick={closeMobileFilters}
+                      aria-label="Close filters"
+                    />
+                    <div
+                      id="resources-filters-panel"
+                      className={styles.resources_filters_popover}
+                      role="dialog"
+                      aria-modal="true"
+                      aria-label="Filter resources"
+                    >
+                      <button
+                        type="button"
+                        className={styles.resources_filters_popover_close}
+                        onClick={closeMobileFilters}
+                        aria-label="Close filters"
+                      >
+                        <FiX aria-hidden />
+                      </button>
+                      <div className={styles.resources_filters_popover_inner}>
+                        <FiltersContent {...filtersContentProps} />
+                      </div>
+                      <div className={styles.resources_filters_popover_footer}>
+                        <button
+                          type="button"
+                          className={styles.resources_filters_popover_search}
+                          onClick={applyFiltersAndSearch}
+                        >
+                          <FiSearch aria-hidden />
+                          <span>Search</span>
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                ) : null}
+              </>
+            ) : (
+              <div className={styles.resources_filters_desktop}>
+                <div className={styles.resources_filters_panel_inner}>
+                  <FiltersContent {...filtersContentProps} />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       <div className={styles.resources_list}>
