@@ -113,13 +113,17 @@ function MemberCard({ member, variant = "team" }) {
                 />
               </div>
               <div className={styles.team_card_dialog_content}>
-                <p className={styles.team_card_dialog_role}>{member.role}</p>
-                <h3 className={styles.team_card_dialog_name}>{member.name}</h3>
-                {member.organization && (
-                  <p className={styles.team_card_dialog_org}>
-                    {member.organization}
-                  </p>
-                )}
+                <div className={styles.team_card_dialog_header}>
+                  <p className={styles.team_card_dialog_role}>{member.role}</p>
+                  <h3 className={styles.team_card_dialog_name}>
+                    {member.name}
+                  </h3>
+                  {member.organization?.trim() && (
+                    <p className={styles.team_card_dialog_org}>
+                      {member.organization}
+                    </p>
+                  )}
+                </div>
                 <MemberBio bio={member.bio} />
               </div>
             </div>
