@@ -6,9 +6,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/app/components/button";
 import { motion, useReducedMotion } from "framer-motion";
-import { MdOutlineNewspaper, MdOutlineArrowForward } from "react-icons/md";
+import { MdOutlineArrowForward } from "react-icons/md";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
+import { useCallback, useEffect, useState } from "react";
 
 const MAX_GRID_ITEMS = 4;
 
@@ -39,6 +42,45 @@ const gridItem = {
     transition: { duration: 0.45, ease: "easeOut" },
   },
 };
+
+function CarouselCard({ item }) {
+  return (
+    <article className={styles.news_carousel_card}>
+      <Link
+        href={`/news/${item.slug}`}
+        className={styles.news_carousel_card_link}
+        aria-label={`Read ${item.title}`}
+      >
+        <div className={styles.news_carousel_card_media}>
+          <Image
+            src={item.image}
+            alt={item.title}
+            fill
+            sizes="85vw"
+            style={{ objectFit: "cover" }}
+          />
+        </div>
+        <div className={styles.news_carousel_card_body}>
+          <span className={styles.news_card_category}>{item.category}</span>
+          <h3 className={styles.news_carousel_card_title}>{item.title}</h3>
+          {item.excerpt && (
+            <p className={styles.news_carousel_card_excerpt}>{item.excerpt}</p>
+          )}
+          <div className={styles.news_card_meta}>
+            <span>
+              <CiCalendarDate aria-hidden />
+              {item.date}
+            </span>
+            <span>
+              <IoReaderOutline aria-hidden />
+              {item.readingTime}
+            </span>
+          </div>
+        </div>
+      </Link>
+    </article>
+  );
+}
 
 function FeaturedCard({ item }) {
   return (
@@ -103,7 +145,7 @@ function GridCard({ item }) {
         </div>
         <div className={styles.news_card_body}>
           <span className={styles.news_card_category}>{item.category}</span>
-          <h4 className={styles.news_card_title}>{item.title}</h4>
+          <h3 className={styles.news_card_title}>{item.title}</h3>
           {item.excerpt && (
             <p className={styles.news_card_excerpt}>{item.excerpt}</p>
           )}
@@ -127,6 +169,61 @@ const News = ({ newsItems = [], debugInfo = null }) => {
   const newsItemsList = newsItems.length > 0 ? newsItems : [];
   const featuredItem = newsItemsList[0] ?? null;
   const gridItems = newsItemsList.slice(1, 1 + MAX_GRID_ITEMS);
+
+  const [autoplayPlugin] = useState(() =>
+    Autoplay({
+      delay: 4500,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+      stopOnFocusIn: false,
+    }),
+  );
+
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      align: "start",
+      slidesToScroll: 1,
+      containScroll: "trimSnaps",
+      dragFree: false,
+      loop: false,
+    },
+    [autoplayPlugin],
+  );
+
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState([]);
+
+  const scrollTo = useCallback(
+    (index) => {
+      if (emblaApi) emblaApi.scrollTo(index);
+    },
+    [emblaApi],
+  );
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    setScrollSnaps(emblaApi.scrollSnapList());
+    onSelect();
+    emblaApi.on("select", onSelect);
+    emblaApi.on("reInit", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("reInit", onSelect);
+    };
+  }, [emblaApi, onSelect]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onResize = () => emblaApi.reInit();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [emblaApi]);
 
   return (
     <section className={styles.news} aria-labelledby="latest-news-heading">
@@ -157,31 +254,71 @@ const News = ({ newsItems = [], debugInfo = null }) => {
 
           {newsItemsList.length > 0 ? (
             <div className={styles.news_body}>
-              {featuredItem && (
-                <motion.div
-                  variants={fadeUp}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-6% 0px" }}
-                  transition={{ delay: 0.05 }}
-                >
-                  <FeaturedCard item={featuredItem} />
-                </motion.div>
-              )}
+              <div className={styles.news_carousel_wrapper}>
+                <div className={styles.news_carousel} ref={emblaRef}>
+                  <div className={styles.news_slider}>
+                    {newsItemsList.map((item, index) => (
+                      <div
+                        key={item.id || index}
+                        className={styles.news_slide}
+                      >
+                        <CarouselCard item={item} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                {scrollSnaps.length > 1 && (
+                  <div
+                    className={styles.news_carousel_pagination}
+                    aria-label="News carousel pagination"
+                  >
+                    {scrollSnaps.map((_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className={`${styles.news_carousel_dot} ${
+                          index === selectedIndex
+                            ? styles.news_carousel_dot_active
+                            : ""
+                        }`}
+                        onClick={() => scrollTo(index)}
+                        aria-label={`Go to article ${index + 1}`}
+                        aria-current={
+                          index === selectedIndex ? "true" : "false"
+                        }
+                      />
+                    ))}
+                  </div>
+                )}
+              </div>
 
-              {gridItems.length > 0 && (
-                <motion.div
-                  className={styles.news_grid}
-                  variants={gridStagger}
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: true, margin: "-6% 0px" }}
-                >
-                  {gridItems.map((item, index) => (
-                    <GridCard key={item.id || index} item={item} />
-                  ))}
-                </motion.div>
-              )}
+              <div className={styles.news_desktop}>
+                {featuredItem && (
+                  <motion.div
+                    variants={fadeUp}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-6% 0px" }}
+                    transition={{ delay: 0.05 }}
+                  >
+                    <FeaturedCard item={featuredItem} />
+                  </motion.div>
+                )}
+
+                {gridItems.length > 0 && (
+                  <motion.div
+                    className={styles.news_grid}
+                    variants={gridStagger}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-6% 0px" }}
+                  >
+                    {gridItems.map((item, index) => (
+                      <GridCard key={item.id || index} item={item} />
+                    ))}
+                  </motion.div>
+                )}
+              </div>
             </div>
           ) : (
             <div className={styles.news_empty}>
