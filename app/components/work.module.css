@@ -112,38 +112,6 @@
     transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Carousel Pagination Dots */
-.work_carousel_pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: clamp(1rem, 0.714rem + 1.43vw, 3rem);
-  margin-top: clamp(1rem, 0.714rem + 1.43vw, 3rem);
-  flex-wrap: wrap;
-}
-
-.work_carousel_dot {
-  width: clamp(0.3rem, 0.257rem + 0.21vw, 0.6rem);
-  height: clamp(0.3rem, 0.257rem + 0.21vw, 0.6rem);
-  border-radius: 50%;
-  background-color: var(--color-font-secondary);
-  border: none;
-  cursor: pointer;
-  transition:
-    opacity 0.3s ease,
-    transform 0.3s ease,
-    background-color 0.3s ease;
-  padding: 0;
-  opacity: 0.4;
-  transform: scale(1);
-}
-
-.work_carousel_dot_active {
-  background-color: var(--color-primary);
-  opacity: 1;
-  transform: scale(1.2);
-}
-
 @media (min-width: 375px) {
   .work_link_content {
   }
@@ -220,11 +188,6 @@
 
   .work_link:hover .work_link_description {
     opacity: 1;
-  }
-
-  .work_carousel_dot:hover {
-    opacity: 0.7;
-    transform: scale(1.2);
   }
 
   .work_text {

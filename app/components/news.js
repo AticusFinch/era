@@ -63,9 +63,9 @@ function CarouselCard({ item }) {
         <div className={styles.news_carousel_card_body}>
           <span className={styles.news_card_category}>{item.category}</span>
           <h3 className={styles.news_carousel_card_title}>{item.title}</h3>
-          {item.excerpt && (
-            <p className={styles.news_carousel_card_excerpt}>{item.excerpt}</p>
-          )}
+          <p className={styles.news_carousel_card_excerpt}>
+            {item.excerpt || "\u00A0"}
+          </p>
           <div className={styles.news_card_meta}>
             <span>
               <CiCalendarDate aria-hidden />
@@ -191,7 +191,6 @@ const News = ({ newsItems = [], debugInfo = null }) => {
   );
 
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const [scrollSnaps, setScrollSnaps] = useState([]);
 
   const scrollTo = useCallback(
     (index) => {
@@ -205,25 +204,70 @@ const News = ({ newsItems = [], debugInfo = null }) => {
     setSelectedIndex(emblaApi.selectedScrollSnap());
   }, [emblaApi]);
 
+  const onReInit = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+  }, [emblaApi]);
+
   useEffect(() => {
     if (!emblaApi) return;
-    setScrollSnaps(emblaApi.scrollSnapList());
-    onSelect();
+    onReInit();
     emblaApi.on("select", onSelect);
-    emblaApi.on("reInit", onSelect);
+    emblaApi.on("reInit", onReInit);
 
     return () => {
       emblaApi.off("select", onSelect);
-      emblaApi.off("reInit", onSelect);
+      emblaApi.off("reInit", onReInit);
     };
-  }, [emblaApi, onSelect]);
+  }, [emblaApi, onSelect, onReInit]);
 
   useEffect(() => {
     if (!emblaApi) return;
     const onResize = () => emblaApi.reInit();
     window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const onBreakpointChange = () => {
+      requestAnimationFrame(() => emblaApi.reInit());
+    };
+    mediaQuery.addEventListener("change", onBreakpointChange);
+    requestAnimationFrame(() => emblaApi.reInit());
+
+    return () => {
+      window.removeEventListener("resize", onResize);
+      mediaQuery.removeEventListener("change", onBreakpointChange);
+    };
   }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const lockCarouselHeight = () => {
+      const viewport = emblaApi.rootNode();
+      const slides = emblaApi.slideNodes();
+      if (!viewport || !slides.length) return;
+
+      viewport.style.minHeight = "";
+      const maxHeight = Math.max(
+        ...slides.map((slide) => slide.getBoundingClientRect().height),
+      );
+
+      if (maxHeight > 0) {
+        viewport.style.minHeight = `${Math.ceil(maxHeight)}px`;
+      }
+    };
+
+    lockCarouselHeight();
+    emblaApi.on("reInit", lockCarouselHeight);
+
+    const resizeObserver = new ResizeObserver(lockCarouselHeight);
+    emblaApi.slideNodes().forEach((slide) => resizeObserver.observe(slide));
+
+    return () => {
+      emblaApi.off("reInit", lockCarouselHeight);
+      resizeObserver.disconnect();
+    };
+  }, [emblaApi, newsItemsList.length]);
 
   return (
     <section className={styles.news} aria-labelledby="latest-news-heading">
@@ -267,19 +311,17 @@ const News = ({ newsItems = [], debugInfo = null }) => {
                     ))}
                   </div>
                 </div>
-                {scrollSnaps.length > 1 && (
+                {newsItemsList.length > 1 && (
                   <div
-                    className={styles.news_carousel_pagination}
+                    className="carousel-pagination"
                     aria-label="News carousel pagination"
                   >
-                    {scrollSnaps.map((_, index) => (
+                    {newsItemsList.map((_, index) => (
                       <button
                         key={index}
                         type="button"
-                        className={`${styles.news_carousel_dot} ${
-                          index === selectedIndex
-                            ? styles.news_carousel_dot_active
-                            : ""
+                        className={`carousel-dot ${
+                          index === selectedIndex ? "carousel-dot-active" : ""
                         }`}
                         onClick={() => scrollTo(index)}
                         aria-label={`Go to article ${index + 1}`}

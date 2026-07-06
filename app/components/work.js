@@ -217,14 +217,13 @@ const Work = () => {
               </div>
             </div>
             {scrollSnaps.length > 1 && (
-              <div className={styles.work_carousel_pagination}>
+              <div className="carousel-pagination">
                 {scrollSnaps.map((_, index) => (
                   <button
                     key={index}
-                    className={`${styles.work_carousel_dot} ${
-                      index === selectedIndex
-                        ? styles.work_carousel_dot_active
-                        : ""
+                    type="button"
+                    className={`carousel-dot ${
+                      index === selectedIndex ? "carousel-dot-active" : ""
                     }`}
                     onClick={() => scrollTo(index)}
                     aria-label={`Go to slide ${index + 1}`}

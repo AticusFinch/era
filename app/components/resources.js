@@ -105,6 +105,43 @@ const Resources = ({
     };
   }, [emblaApi, onSelect]);
 
+  useEffect(() => {
+    if (!emblaApi) return;
+    const onResize = () => emblaApi.reInit();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const lockCarouselHeight = () => {
+      const viewport = emblaApi.rootNode();
+      const slides = emblaApi.slideNodes();
+      if (!viewport || !slides.length) return;
+
+      viewport.style.minHeight = "";
+      const maxHeight = Math.max(
+        ...slides.map((slide) => slide.getBoundingClientRect().height),
+      );
+
+      if (maxHeight > 0) {
+        viewport.style.minHeight = `${Math.ceil(maxHeight)}px`;
+      }
+    };
+
+    lockCarouselHeight();
+    emblaApi.on("reInit", lockCarouselHeight);
+
+    const resizeObserver = new ResizeObserver(lockCarouselHeight);
+    emblaApi.slideNodes().forEach((slide) => resizeObserver.observe(slide));
+
+    return () => {
+      emblaApi.off("reInit", lockCarouselHeight);
+      resizeObserver.disconnect();
+    };
+  }, [emblaApi, resourcesItems.length]);
+
   return (
     <div
       className={`${styles.resources} ${showAll ? styles.resources_all : ""}`}
@@ -188,7 +225,9 @@ const Resources = ({
                               <h6 className={styles.resources_item_title}>
                                 {item.title}
                               </h6>
-                              <p>{item.authors}</p>
+                              <p className={styles.resources_item_authors}>
+                                {item.authors || "\u00A0"}
+                              </p>
                             </div>
                           </Link>
                         </motion.div>
@@ -197,14 +236,13 @@ const Resources = ({
                   </motion.div>
                 </div>
                 {scrollSnaps.length > 1 && (
-                  <div className={styles.resources_carousel_pagination}>
+                  <div className="carousel-pagination">
                     {scrollSnaps.map((_, index) => (
                       <button
                         key={index}
-                        className={`${styles.resources_carousel_dot} ${
-                          index === selectedIndex
-                            ? styles.resources_carousel_dot_active
-                            : ""
+                        type="button"
+                        className={`carousel-dot ${
+                          index === selectedIndex ? "carousel-dot-active" : ""
                         }`}
                         onClick={() => scrollTo(index)}
                         aria-label={`Go to slide ${index + 1}`}
