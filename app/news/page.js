@@ -4,12 +4,16 @@ import Container from "@/app/components/container";
 import { getClient } from "@/lib/apollo-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 import { calculateReadingTime } from "@/lib/utils/reading-time";
-import layoutStyles from "./page.module.css";
-import newsStyles from "@/app/components/news.module.css";
-import NewsList from "./news-list";
-import PageUnderConstruction from "@/app/components/pageUnderConstruction";
+import NewsView from "./news-view";
+import styles from "./page.module.css";
 
 export const revalidate = 60;
+
+export const metadata = {
+  title: "News | ERA LGBTI",
+  description:
+    "Browse ERA news, statements, and regional updates from across the Western Balkans and Türkiye.",
+};
 
 function formatDate(dateString) {
   if (!dateString) return "";
@@ -92,34 +96,12 @@ export default async function NewsPage() {
   }
 
   return (
-    <>
+    <div className={styles.news_page_background}>
       <Navbar />
-      <PageUnderConstruction />
-      {/* <main className={layoutStyles.news_page}>
-        <section className={newsStyles.news}>
-          <Container>
-            <div className={newsStyles.news_container}>
-              <header className={newsStyles.news_header}>
-                <h1 className={`${newsStyles.news_title} title`}>
-                  <span className="title-accent">All News</span>
-                </h1>
-                <p className={newsStyles.news_description}>
-                  Browse all ERA news, statements, and updates in one place.
-                </p>
-              </header>
-
-              {newsItems.length > 0 ? (
-                <NewsList items={newsItems} />
-              ) : (
-                <p className={layoutStyles.news_empty}>
-                  No news available at the moment.
-                </p>
-              )}
-            </div>
-          </Container>
-        </section>
-      </main> */}
+      <Container>
+        <NewsView items={newsItems} />
+      </Container>
       <Footer />
-    </>
+    </div>
   );
 }

@@ -8,6 +8,7 @@ import { FaChevronDown } from "react-icons/fa6";
 import styles from "./page.module.css";
 import cardStyles from "../components/resources.module.css";
 import ListPagination from "@/app/components/list-pagination";
+import { useGridPagination } from "@/lib/hooks/use-grid-pagination";
 import {
   formatResourceTypeLabel,
   RESOURCE_TYPE_PLACEHOLDER,
@@ -162,25 +163,52 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     resourcesTypes: ALL_SLUG,
   });
   const [searchTerm, setSearchTerm] = useState("");
+<<<<<<< Updated upstream
   const [pageSize, setPageSize] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
+=======
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [isDesktopFilters, setIsDesktopFilters] = useState(false);
+  const [overlayMounted, setOverlayMounted] = useState(false);
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    setOverlayMounted(true);
+  }, []);
+
+  const closeMobileFilters = useCallback(() => {
+    setMobileFiltersOpen(false);
+  }, []);
+
+  const applyFiltersAndSearch = useCallback(() => {
+    setMobileFiltersOpen(false);
+    searchInputRef.current?.focus();
+  }, []);
+>>>>>>> Stashed changes
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const updatePageSize = () => {
+    const updateDesktopFilters = () => {
       const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
+<<<<<<< Updated upstream
       setPageSize(isDesktop ? 9 : 6);
       setCurrentPage(1);
+=======
+      setIsDesktopFilters(isDesktop);
+      if (isDesktop) {
+        setMobileFiltersOpen(false);
+      }
+>>>>>>> Stashed changes
     };
 
-    updatePageSize();
+    updateDesktopFilters();
 
     const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    mediaQuery.addEventListener("change", updatePageSize);
+    mediaQuery.addEventListener("change", updateDesktopFilters);
 
     return () => {
-      mediaQuery.removeEventListener("change", updatePageSize);
+      mediaQuery.removeEventListener("change", updateDesktopFilters);
     };
   }, []);
 
@@ -229,24 +257,16 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     return result;
   }, [resources, activeFilters, searchTerm]);
 
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [activeFilters, resources.length, searchTerm]);
-
-  const totalPages = useMemo(
-    () =>
-      pageSize > 0
-        ? Math.max(1, Math.ceil(filteredResources.length / pageSize))
-        : 1,
-    [filteredResources.length, pageSize],
-  );
-
-  const paginatedResources = useMemo(() => {
-    if (pageSize <= 0) return filteredResources;
-    const start = (currentPage - 1) * pageSize;
-    const end = start + pageSize;
-    return filteredResources.slice(start, end);
-  }, [filteredResources, currentPage, pageSize]);
+  const {
+    containerRef: gridContainerRef,
+    currentPage,
+    setCurrentPage,
+    pageItems: paginatedResources,
+    totalPages,
+  } = useGridPagination("resources", filteredResources, {
+    measureWidth: true,
+    resetDeps: [activeFilters, resources.length, searchTerm],
+  });
 
   const handlePageChange = (page) => {
     if (page < 1 || page > totalPages) return;
@@ -325,7 +345,7 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
         </div>
       </div>
 
-      <div className={styles.resources_list}>
+      <div ref={gridContainerRef} className={styles.resources_list}>
         {paginatedResources.length > 0 ? (
           <div className={styles.resources_grid}>
             {paginatedResources.map((item) => {
@@ -380,7 +400,7 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
           </p>
         )}
 
-        {filteredResources.length > 0 && totalPages >= 1 ? (
+        {filteredResources.length > 0 && totalPages > 1 ? (
           <ListPagination
             currentPage={currentPage}
             totalPages={totalPages}

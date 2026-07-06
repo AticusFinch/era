@@ -60,7 +60,7 @@ export default async function NewsWrapper() {
     const { data, error } = await client.query({
       query: GET_POSTS,
       variables: {
-        first: 6, // Limit to 6 news items for the homepage (4 on mobile, 6 on desktop)
+        first: 5,
       },
       fetchPolicy: "network-only", // Use network-only to avoid cache issues
     });
