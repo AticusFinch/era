@@ -12,6 +12,8 @@ import {
 } from "@/lib/utils/resource-taxonomies";
 import ResourceLanguageDownloads from "./resource-language-downloads";
 
+export const revalidate = 60;
+
 export default async function ResourcePage({ params }) {
   const { slug } = await params;
   let resource = null;

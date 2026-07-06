@@ -1,9 +1,16 @@
 "use client";
 
-import { useState, useRef, useLayoutEffect, useEffect, useCallback } from "react";
+import {
+  useState,
+  useRef,
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+  memo,
+} from "react";
 import styles from "./page.module.css";
 import carouselStyles from "../components/resources.module.css";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { IoMdArrowDropright } from "react-icons/io";
@@ -63,28 +70,12 @@ const pillars = [
   },
 ];
 
-const carouselStaggerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.06 },
-  },
-};
-
-function getSlideVariants(y) {
-  return {
-    hidden: { opacity: 0, y },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.45, ease: "easeInOut" },
-    },
-  };
-}
-
 const MOTION_EASE = [0.22, 1, 0.36, 1];
 const MOTION_DURATION = 0.45;
+const PILLAR_COUNT = pillars.length;
+const loopPillars = [...pillars, ...pillars];
 
-function PillarCard({ pillar, index }) {
+const PillarCard = memo(function PillarCard({ pillar, index }) {
   const [expanded, setExpanded] = useState(false);
   const expandedRef = useRef(expanded);
   expandedRef.current = expanded;
@@ -113,19 +104,15 @@ function PillarCard({ pillar, index }) {
     };
 
     measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    return () => ro.disconnect();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
   }, [pillar.id]);
 
   const hCollapsed = heights.collapsed ?? 96;
   const hExpanded = heights.expanded ?? hCollapsed;
 
   return (
-    <article
-      className={styles.our_work_card}
-      style={{ "--pillar-index": index }}
-    >
+    <article className={styles.our_work_card}>
       <div className={styles.our_work_card_top}>
         <span className={styles.our_work_card_index} aria-hidden>
           {String(index + 1).padStart(2, "0")}
@@ -135,17 +122,12 @@ function PillarCard({ pillar, index }) {
         </div>
       </div>
       <div className={styles.our_work_card_body}>
-        <h2 className={styles.our_work_section_title}>{pillar.title}</h2>
+        <h2 className={styles.our_work_card_title}>{pillar.title}</h2>
         <motion.div
           className={styles.our_work_card_intro_motion}
           initial={false}
-          animate={{
-            height: expanded ? hExpanded : hCollapsed,
-          }}
-          transition={{
-            duration: MOTION_DURATION,
-            ease: MOTION_EASE,
-          }}
+          animate={{ height: expanded ? hExpanded : hCollapsed }}
+          transition={{ duration: MOTION_DURATION, ease: MOTION_EASE }}
           onAnimationStart={() => {
             const el = innerRef.current;
             if (!el) return;
@@ -163,7 +145,7 @@ function PillarCard({ pillar, index }) {
         >
           <div
             ref={innerRef}
-            className={`${styles.our_work_text_stack} ${styles.our_work_card_intro}`}
+            className={`${styles.our_work_text_stack} ${styles.our_work_card_intro} ${!expanded ? styles.our_work_body_inner_collapsed : ""}`}
           >
             {pillar.paragraphs.map((text, i) => (
               <p key={i} className={styles.our_work_section_body}>
@@ -187,12 +169,41 @@ function PillarCard({ pillar, index }) {
       </div>
     </article>
   );
-}
+});
+
+const CarouselPagination = memo(function CarouselPagination({
+  scrollSnaps,
+  selectedIndex,
+  onSelect,
+}) {
+  if (scrollSnaps.length <= 1) return null;
+
+  return (
+    <div
+      className={`${carouselStyles.resources_carousel_pagination} ${styles.our_work_carousel_pagination}`}
+      role="tablist"
+      aria-label="Pillar carousel"
+    >
+      {scrollSnaps.map((_, index) => (
+        <button
+          key={index}
+          type="button"
+          role="tab"
+          className={`${carouselStyles.resources_carousel_dot} ${
+            index === selectedIndex
+              ? carouselStyles.resources_carousel_dot_active
+              : ""
+          }`}
+          onClick={() => onSelect(index)}
+          aria-label={`Go to pillar ${index + 1}`}
+          aria-selected={index === selectedIndex}
+        />
+      ))}
+    </div>
+  );
+});
 
 export default function OurWorkPillars() {
-  const prefersReducedMotion = useReducedMotion();
-  const slideVariants = getSlideVariants(prefersReducedMotion ? 0 : 20);
-
   const [autoplayPlugin] = useState(() =>
     Autoplay({
       delay: 4000,
@@ -206,7 +217,6 @@ export default function OurWorkPillars() {
     {
       align: "start",
       slidesToScroll: 1,
-      containScroll: "trimSnaps",
       dragFree: false,
       loop: false,
     },
@@ -241,58 +251,31 @@ export default function OurWorkPillars() {
     };
   }, [emblaApi, onSelect]);
 
-  useEffect(() => {
-    if (!emblaApi) return;
-    const root = emblaApi.rootNode();
-    const ro = new ResizeObserver(() => {
-      emblaApi.reInit();
-    });
-    ro.observe(root);
-    return () => ro.disconnect();
-  }, [emblaApi]);
-
   return (
     <div className={styles.our_work_sections}>
       <div className={styles.our_work_carousel_shell}>
-        <div className={carouselStyles.resources_carousel} ref={emblaRef}>
-          <motion.div
-            className={carouselStyles.resources_slider}
-            variants={carouselStaggerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "0px 0px -8% 0px" }}
-          >
+        <div
+          ref={emblaRef}
+          className={`${carouselStyles.resources_carousel} ${styles.our_work_carousel_viewport}`}
+        >
+          <div className={carouselStyles.resources_slider}>
             {pillars.map((pillar, index) => (
-              <motion.div
+              <div
                 key={pillar.id}
                 className={`${carouselStyles.resources_slide} ${styles.our_work_pillars_slide}`}
-                variants={slideVariants}
               >
                 <div className={styles.our_work_carousel_slide}>
                   <PillarCard pillar={pillar} index={index} />
                 </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-        {scrollSnaps.length > 1 && (
-          <div className={carouselStyles.resources_carousel_pagination}>
-            {scrollSnaps.map((_, index) => (
-              <button
-                key={index}
-                type="button"
-                className={`${carouselStyles.resources_carousel_dot} ${
-                  index === selectedIndex
-                    ? carouselStyles.resources_carousel_dot_active
-                    : ""
-                }`}
-                onClick={() => scrollTo(index)}
-                aria-label={`Go to pillar ${index + 1}`}
-                aria-current={index === selectedIndex ? "true" : "false"}
-              />
+              </div>
             ))}
           </div>
-        )}
+        </div>
+        <CarouselPagination
+          scrollSnaps={scrollSnaps}
+          selectedIndex={selectedIndex}
+          onSelect={scrollTo}
+        />
       </div>
     </div>
   );

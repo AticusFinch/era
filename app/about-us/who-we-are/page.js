@@ -1,15 +1,22 @@
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer";
-import PageUnderConstruction from "../../components/pageUnderConstruction";
+import Container from "../../components/container";
+import WhoWeAreView from "./who-we-are-view";
 
-const WhoWeArePage = () => {
+export const metadata = {
+  title: "Who We Are | ERA LGBTI",
+  description:
+    "ERA-LGBTI is a regional network of civil society organisations advancing human rights, equality, and social justice for LGBTIQ people across the Western Balkans and Türkiye.",
+};
+
+export default function WhoWeArePage() {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
+      <Container>
+        <WhoWeAreView />
+      </Container>
       <Footer />
     </>
   );
-};
-
-export default WhoWeArePage;
+}

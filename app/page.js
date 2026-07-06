@@ -9,6 +9,8 @@ import Counter from "./components/counter";
 import Footer from "./components/footer";
 import Donate from "./components/donate";
 
+export const revalidate = 60;
+
 export default function Home() {
   return (
     <>

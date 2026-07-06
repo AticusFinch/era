@@ -1,5 +1,5 @@
 const CONTACT_EMAIL =
-  process.env.CONTACT_EMAIL_TO || "office@lgbti-era.org";
+  process.env.CONTACT_EMAIL_TO || "stasabastrica05@gmail.com";
 
 const SUBJECT_LABELS = {
   general: "General inquiry",

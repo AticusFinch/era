@@ -5,7 +5,6 @@ import Container from "../components/container";
 import ContactForm from "./contact-form";
 import styles from "./page.module.css";
 import { MdEmail } from "react-icons/md";
-import PageUnderConstruction from "../components/pageUnderConstruction";
 
 export const metadata = {
   title: "Contact | ERA LGBTI",
@@ -17,8 +16,7 @@ export default function ContactPage() {
   return (
     <>
       <Navbar />
-      <PageUnderConstruction />
-      {/* <main className={styles.contact_page}>
+      <main className={styles.contact_page}>
         <Container>
           <header className={styles.contact_header}>
             <h1 className={styles.contact_title}>
@@ -26,9 +24,8 @@ export default function ContactPage() {
             </h1>
             <p className={styles.contact_intro}>
               Whether you have a question about our work, want to explore a
-              partnership, or need to reach our team, we would love to hear
-              from you. Fill out the form and we will respond as soon as we
-              can.
+              partnership, or need to reach our team, we would love to hear from
+              you. Fill out the form and we will respond as soon as we can.
             </p>
           </header>
 
@@ -60,7 +57,7 @@ export default function ContactPage() {
             <ContactForm />
           </div>
         </Container>
-      </main> */}
+      </main>
       <Footer />
     </>
   );

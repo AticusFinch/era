@@ -1,0 +1,433 @@
+.who_we_are_page {
+  position: relative;
+  padding-top: clamp(6rem, 5.143rem + 4.29vw, 12rem);
+  padding-bottom: clamp(3rem, 2.571rem + 2.14vw, 6rem);
+}
+
+.who_we_are_glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Hero */
+.who_we_are_hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2rem, 1.5rem + 2.5vw, 3.5rem);
+  margin-bottom: clamp(2rem, 1.714rem + 1.43vw, 3.5rem);
+  padding-bottom: clamp(1.5rem, 1.25rem + 1.25vw, 2.5rem);
+  border-bottom: 1px solid rgba(11, 11, 11, 0.06);
+}
+
+.who_we_are_kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0 0 0.85rem;
+  font-size: clamp(0.65rem, 0.6rem + 0.25vw, 0.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.who_we_are_kicker svg {
+  font-size: 1.1rem;
+}
+
+.who_we_are_title {
+  margin: 0;
+  color: var(--color-font-primary);
+}
+
+.who_we_are_intro {
+  margin: 0.85rem 0 0;
+  max-width: 38rem;
+  color: var(--color-font-secondary);
+  line-height: 1.7;
+  font-size: clamp(0.95rem, 0.886rem + 0.32vw, 1.12rem);
+}
+
+.who_we_are_cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 1.35rem;
+  padding: 0.65rem 1.15rem;
+  border-radius: 9999px;
+  background-color: var(--color-primary);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(237, 18, 109, 0.28);
+}
+
+.who_we_are_cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(237, 18, 109, 0.34);
+}
+
+.who_we_are_cta svg {
+  font-size: 1.1rem;
+  transition: transform 0.2s ease;
+}
+
+.who_we_are_cta:hover svg {
+  transform: translateX(3px);
+}
+
+.who_we_are_hero_visual {
+  position: relative;
+  min-height: clamp(14rem, 10rem + 12vw, 22rem);
+}
+
+/* Stats */
+.who_we_are_stats {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  margin-bottom: clamp(2rem, 1.714rem + 1.43vw, 3.5rem);
+  border-radius: clamp(1rem, 0.85rem + 0.75vw, 1.5rem);
+  overflow: hidden;
+  background-color: var(--color-surface);
+  box-shadow:
+    0 8px 32px rgba(15, 23, 42, 0.07),
+    0 0 0 1px rgba(255, 255, 255, 0.85);
+}
+
+.who_we_are_stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: clamp(1.15rem, 1rem + 0.75vw, 1.75rem);
+  text-align: center;
+  position: relative;
+}
+
+.who_we_are_stat:not(:nth-child(2n))::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 18%;
+  bottom: 18%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(11, 11, 11, 0.1),
+    transparent
+  );
+}
+
+.who_we_are_stat:nth-child(-n + 2)::before {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(11, 11, 11, 0.08),
+    transparent
+  );
+}
+
+.who_we_are_stat_value {
+  font-size: clamp(1.65rem, 1.35rem + 1.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-primary);
+}
+
+.who_we_are_stat_label {
+  font-size: clamp(0.62rem, 0.58rem + 0.2vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-font-secondary);
+  line-height: 1.3;
+  max-width: 12ch;
+}
+
+/* Section cards grid */
+.who_we_are_sections {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1rem, 0.85rem + 0.75vw, 1.5rem);
+  margin-bottom: clamp(1rem, 0.85rem + 0.75vw, 1.5rem);
+}
+
+.who_we_are_card_wide {
+  grid-column: 1 / -1;
+}
+
+.who_we_are_card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  background: var(--color-surface);
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.who_we_are_card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 12px 36px rgba(15, 23, 42, 0.09),
+    0 0 0 1px rgba(237, 18, 109, 0.1);
+}
+
+.who_we_are_card_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.35rem 1.35rem 0;
+}
+
+.who_we_are_card_index {
+  font-size: clamp(2rem, 1.65rem + 1.75vw, 3rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(237, 18, 109, 0.12);
+  user-select: none;
+}
+
+.who_we_are_card_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.65rem;
+  background-color: rgba(237, 18, 109, 0.1);
+  color: var(--color-primary);
+  font-size: 1.15rem;
+}
+
+.who_we_are_card_body {
+  padding: 0.75rem 1.35rem 1.35rem;
+}
+
+.who_we_are_card_kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.who_we_are_card_title {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.35rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: var(--color-font-primary);
+}
+
+.who_we_are_card_text {
+  margin: 0;
+  color: var(--color-font-secondary);
+  line-height: 1.65;
+  font-size: clamp(0.88rem, 0.82rem + 0.2vw, 1rem);
+}
+
+.who_we_are_countries {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.who_we_are_country_chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  border-radius: 9999px;
+  background: rgba(237, 18, 109, 0.07);
+  border: 1px solid rgba(237, 18, 109, 0.14);
+  color: var(--color-font-primary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.who_we_are_country_chip:hover {
+  background: rgba(237, 18, 109, 0.12);
+  border-color: rgba(237, 18, 109, 0.28);
+}
+
+/* Values panel */
+.who_we_are_values {
+  position: relative;
+  margin: 0;
+  grid-column: 1 / -1;
+  padding: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
+  border-radius: 1.5rem;
+  border: none;
+  background: linear-gradient(
+    135deg,
+    rgba(237, 18, 109, 0.92),
+    rgba(237, 18, 109, 0.78) 45%,
+    rgba(255, 120, 160, 0.85)
+  );
+  box-shadow: 0 16px 40px rgba(237, 18, 109, 0.22);
+  overflow: hidden;
+}
+
+.who_we_are_values::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 90% 10%,
+    rgba(255, 255, 255, 0.22),
+    transparent 45%
+  );
+  pointer-events: none;
+}
+
+.who_we_are_values_icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.85rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.who_we_are_values_kicker {
+  position: relative;
+  margin: 0 0 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.who_we_are_values_quote {
+  position: relative;
+  margin: 0;
+  max-width: 52rem;
+  font-size: clamp(1.05rem, 0.95rem + 0.5vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+
+/* Vision closing */
+.who_we_are_vision {
+  position: relative;
+  padding: clamp(1.5rem, 1.25rem + 1.25vw, 2.25rem);
+  padding-left: clamp(1.35rem, 1.1rem + 1.25vw, 2rem);
+  border-radius: 1.25rem;
+  background: var(--color-surface);
+  box-shadow:
+    0 4px 24px rgba(15, 23, 42, 0.06),
+    0 0 0 1px rgba(255, 255, 255, 0.8);
+  border: 2px solid var(--color-primary);
+}
+
+.who_we_are_vision_kicker {
+  margin: 0 0 0.65rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.who_we_are_vision_text {
+  margin: 0;
+  max-width: 58rem;
+  color: var(--color-font-secondary);
+  line-height: 1.7;
+  font-size: clamp(0.95rem, 0.88rem + 0.35vw, 1.1rem);
+}
+
+@media (min-width: 768px) {
+  .who_we_are_sections {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .who_we_are_values {
+    grid-column: auto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .who_we_are_stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .who_we_are_stat:nth-child(-n + 2)::before {
+    display: none;
+  }
+
+  .who_we_are_stat:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 18%;
+    bottom: 18%;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(11, 11, 11, 0.1),
+      transparent
+    );
+  }
+
+  .who_we_are_stat:last-child::after {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .who_we_are_hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    align-items: center;
+    gap: clamp(2rem, 2vw, 4rem);
+  }
+
+  .who_we_are_hero_visual {
+    min-height: clamp(18rem, 14rem + 10vw, 26rem);
+  }
+}

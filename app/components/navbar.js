@@ -18,6 +18,30 @@ import { motion, AnimatePresence } from "framer-motion";
 const SCROLL_THRESHOLD = 20;
 const MOBILE_FLOAT_MAX_PX = 899;
 
+const mobileDropdownTransition = {
+  height: { duration: 0.42, ease: [0.22, 1, 0.36, 1] },
+  opacity: { duration: 0.3, ease: "easeOut" },
+};
+
+function MobileNavDropdown({ isOpen, children }) {
+  return (
+    <AnimatePresence initial={false}>
+      {isOpen ? (
+        <motion.div
+          key="dropdown"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ height: "auto", opacity: 1 }}
+          exit={{ height: 0, opacity: 0 }}
+          transition={mobileDropdownTransition}
+          className={styles.navbar_mobile_dropdown_wrap}
+        >
+          <div className={styles.navbar_mobile_dropdown}>{children}</div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
 const Navbar = () => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
@@ -188,37 +212,36 @@ const Navbar = () => {
               <Container>
                 <div className={styles.navbar_mobile_content}>
                   <div className={styles.navbar_mobile_links}>
+                    <p className={styles.navbar_mobile_nav_label}>Menu</p>
                     <motion.div
+                      className={`${styles.navbar_mobile_nav_item} ${
+                        isAboutDropdownOpen
+                          ? styles.navbar_mobile_nav_item_open
+                          : ""
+                      }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.1 }}
                     >
                       <div className={styles.navbar_mobile_link}>
                         <Link href="/about-us">About Us</Link>
-                        <motion.div
+                        <motion.button
+                          type="button"
+                          className={styles.navbar_mobile_chevron}
                           onClick={toggleAboutDropdown}
+                          aria-expanded={isAboutDropdownOpen}
+                          aria-label="Toggle About Us submenu"
                           initial={{ rotate: 0 }}
                           animate={{ rotate: isAboutDropdownOpen ? 90 : 0 }}
                           transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
+                            duration: 0.42,
+                            ease: [0.22, 1, 0.36, 1],
                           }}
-                          style={{ cursor: "pointer" }}
                         >
-                          <RxChevronRight />
-                        </motion.div>
+                          <RxChevronRight aria-hidden />
+                        </motion.button>
                       </div>
-                      {isAboutDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
-                          }}
-                          className={styles.navbar_mobile_dropdown}
-                        >
+                      <MobileNavDropdown isOpen={isAboutDropdownOpen}>
                           <div>
                             <Link
                               href="/about-us/who-we-are"
@@ -251,10 +274,14 @@ const Navbar = () => {
                               Partners & Donors
                             </Link>
                           </div>
-                        </motion.div>
-                      )}
+                      </MobileNavDropdown>
                     </motion.div>
                     <motion.div
+                      className={`${styles.navbar_mobile_nav_item} ${
+                        isOurWorkDropdownOpen
+                          ? styles.navbar_mobile_nav_item_open
+                          : ""
+                      }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.15 }}
@@ -263,31 +290,24 @@ const Navbar = () => {
                         <Link href="/our-work" onClick={toggleMenu}>
                           Our Work
                         </Link>
-                        <motion.div
+                        <motion.button
+                          type="button"
+                          className={styles.navbar_mobile_chevron}
                           onClick={toggleOurWorkDropdown}
+                          aria-expanded={isOurWorkDropdownOpen}
+                          aria-label="Toggle Our Work submenu"
                           initial={{ rotate: 0 }}
                           animate={{ rotate: isOurWorkDropdownOpen ? 90 : 0 }}
                           transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
+                            duration: 0.42,
+                            ease: [0.22, 1, 0.36, 1],
                           }}
-                          style={{ cursor: "pointer" }}
                         >
-                          <RxChevronRight />
-                        </motion.div>
+                          <RxChevronRight aria-hidden />
+                        </motion.button>
                       </div>
 
-                      {isOurWorkDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
-                          }}
-                          className={styles.navbar_mobile_dropdown}
-                        >
+                      <MobileNavDropdown isOpen={isOurWorkDropdownOpen}>
                           {ourWorkSubnavLinks.map(({ href, label }) => (
                             <div key={href}>
                               <Link href={href} onClick={toggleMenu}>
@@ -295,19 +315,28 @@ const Navbar = () => {
                               </Link>
                             </div>
                           ))}
-                        </motion.div>
-                      )}
+                      </MobileNavDropdown>
                     </motion.div>
                     <motion.div
+                      className={styles.navbar_mobile_nav_item}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.2 }}
                     >
-                      <Link href="/resources" onClick={toggleMenu}>
+                      <Link
+                        className={styles.navbar_mobile_nav_link}
+                        href="/resources"
+                        onClick={toggleMenu}
+                      >
                         Resources
                       </Link>
                     </motion.div>
                     <motion.div
+                      className={`${styles.navbar_mobile_nav_item} ${
+                        isGetInvolvedDropdownOpen
+                          ? styles.navbar_mobile_nav_item_open
+                          : ""
+                      }`}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.25 }}
@@ -316,32 +345,25 @@ const Navbar = () => {
                         <Link href="/get-involved" onClick={toggleMenu}>
                           Get Involved
                         </Link>
-                        <motion.div
+                        <motion.button
+                          type="button"
+                          className={styles.navbar_mobile_chevron}
                           onClick={toggleGetInvolvedDropdown}
+                          aria-expanded={isGetInvolvedDropdownOpen}
+                          aria-label="Toggle Get Involved submenu"
                           initial={{ rotate: 0 }}
                           animate={{
                             rotate: isGetInvolvedDropdownOpen ? 90 : 0,
                           }}
                           transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
+                            duration: 0.42,
+                            ease: [0.22, 1, 0.36, 1],
                           }}
-                          style={{ cursor: "pointer" }}
                         >
-                          <RxChevronRight />
-                        </motion.div>
+                          <RxChevronRight aria-hidden />
+                        </motion.button>
                       </div>
-                      {isGetInvolvedDropdownOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          transition={{
-                            duration: 0.3,
-                            ease: [0.43, 0.13, 0.23, 0.96],
-                          }}
-                          className={styles.navbar_mobile_dropdown}
-                        >
+                      <MobileNavDropdown isOpen={isGetInvolvedDropdownOpen}>
                           <div>
                             <Link
                               href="/get-involved/partner-with-us"
@@ -366,24 +388,33 @@ const Navbar = () => {
                               Other Calls
                             </Link>
                           </div>
-                        </motion.div>
-                      )}
+                      </MobileNavDropdown>
                     </motion.div>
                     <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ duration: 0.3, delay: 0.25 }}
-                    >
-                      <Link href="/news" onClick={toggleMenu}>
-                        News
-                      </Link>
-                    </motion.div>
-                    <motion.div
+                      className={styles.navbar_mobile_nav_item}
                       initial={{ opacity: 0, x: -20 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.3, delay: 0.3 }}
                     >
-                      <Link href="/contact" onClick={toggleMenu}>
+                      <Link
+                        className={styles.navbar_mobile_nav_link}
+                        href="/news"
+                        onClick={toggleMenu}
+                      >
+                        News
+                      </Link>
+                    </motion.div>
+                    <motion.div
+                      className={styles.navbar_mobile_nav_item}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ duration: 0.3, delay: 0.35 }}
+                    >
+                      <Link
+                        className={styles.navbar_mobile_nav_link}
+                        href="/contact"
+                        onClick={toggleMenu}
+                      >
                         Contact
                       </Link>
                     </motion.div>
