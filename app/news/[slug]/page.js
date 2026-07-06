@@ -2,34 +2,110 @@ import { getClient } from "@/lib/apollo-client";
 import { GET_POST_BY_SLUG } from "@/lib/graphql/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import { calculateReadingTime } from "@/lib/utils/reading-time";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
+import { MdOutlineArrowBack } from "react-icons/md";
 import styles from "./page.module.css";
+
+export const revalidate = 60;
+
+function formatDate(dateString) {
+  if (!dateString) return "";
+  return new Date(dateString).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
+function stripHtml(html) {
+  if (!html) return "";
+  return html
+    .replace(/<[^>]*>/g, "")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function removeExcerptTruncation(text) {
+  if (!text) return "";
+  return text
+    .replace(/\s*\[\s*&hellip;\s*\]\s*$/i, "")
+    .replace(/\s*\[\s*\.\.\.\s*\]\s*$/i, "")
+    .replace(/\s*&hellip;\s*$/i, "")
+    .replace(/\s*…\s*$/, "")
+    .replace(/\s*\.\.\.\s*$/, "")
+    .trim();
+}
+
+function getLeadParagraph(excerpt, content) {
+  if (!excerpt) return null;
+
+  const cleaned = removeExcerptTruncation(excerpt);
+  if (!cleaned) return null;
+
+  const excerptText = stripHtml(cleaned);
+  const contentText = stripHtml(content);
+
+  if (!excerptText) return null;
+
+  if (
+    contentText.startsWith(excerptText) ||
+    excerptText.startsWith(
+      contentText.slice(0, Math.min(120, contentText.length)),
+    )
+  ) {
+    return null;
+  }
+
+  return cleaned;
+}
+
+async function getPost(slug) {
+  const client = getClient();
+  const { data, error } = await client.query({
+    query: GET_POST_BY_SLUG,
+    variables: { slug },
+    fetchPolicy: "cache-first",
+  });
+
+  if (error) {
+    console.error("Error fetching post:", error);
+    return null;
+  }
+
+  return data?.post ?? null;
+}
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
+
+  if (!post) {
+    return { title: "Article not found | ERA LGBTI" };
+  }
+
+  const description =
+    stripHtml(removeExcerptTruncation(post.excerpt)) ||
+    stripHtml(post.content).slice(0, 160);
+
+  return {
+    title: `${post.title} | ERA LGBTI`,
+    description,
+  };
+}
 
 export default async function NewsPostPage({ params }) {
   const { slug } = await params;
   let post = null;
 
   try {
-    const client = getClient();
-    const { data, error } = await client.query({
-      query: GET_POST_BY_SLUG,
-      variables: {
-        slug: slug,
-      },
-      fetchPolicy: "cache-first",
-    });
-
-    if (error) {
-      console.error("Error fetching post:", error);
-      notFound();
-    }
-
-    post = data?.post;
+    post = await getPost(slug);
 
     if (!post) {
       notFound();
@@ -42,63 +118,16 @@ export default async function NewsPostPage({ params }) {
   const featuredImage = post.featuredImage?.node;
   const author = post.author?.node;
   const category = post.categories?.nodes?.[0];
-
-  // Calculate reading time using shared utility
   const readingTime = calculateReadingTime(post.content);
-
-  // Get full excerpt - remove WordPress truncation markers
-  function getFullExcerpt(excerpt, content) {
-    // If excerpt exists and doesn't have truncation markers, use it
-    if (
-      excerpt &&
-      !excerpt.includes("[&hellip;]") &&
-      !excerpt.includes("[...]")
-    ) {
-      return excerpt;
-    }
-
-    // Otherwise, extract from content (first 300 words or so)
-    if (content) {
-      const text = content.replace(/<[^>]*>/g, ""); // Strip HTML
-      const words = text.split(/\s+/).filter((word) => word.length > 0);
-      const excerptWords = words.slice(0, 300).join(" ");
-      return excerptWords + (words.length > 300 ? "..." : "");
-    }
-
-    return excerpt || "";
-  }
-
-  const fullExcerpt = getFullExcerpt(post.excerpt, post.content);
-
-  // Format date
-  function formatDate(dateString) {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }
+  const leadParagraph = getLeadParagraph(post.excerpt, post.content);
 
   return (
     <>
       <Navbar />
-      <article className={styles.news_post}>
+      <main className={styles.news_post}>
         <Container>
-          <div className={styles.news_post_header}>
-            {featuredImage && (
-              <div className={styles.news_post_image}>
-                <Image
-                  src={featuredImage.sourceUrl}
-                  alt={featuredImage.altText || post.title}
-                  width={featuredImage.mediaDetails?.width || 1200}
-                  height={featuredImage.mediaDetails?.height || 800}
-                  style={{ width: "100%", height: "auto" }}
-                />
-              </div>
-            )}
-            <div className={styles.news_post_meta}>
+          <article className={styles.news_post_article}>
+            <header className={styles.news_post_header}>
               {category && (
                 <span className={styles.news_post_category}>
                   {category.name}
@@ -106,38 +135,54 @@ export default async function NewsPostPage({ params }) {
               )}
               <h1 className={styles.news_post_title}>{post.title}</h1>
               <div className={styles.news_post_info}>
-                {author && (
-                  <p className={styles.news_post_author}>By {author.name}</p>
-                )}
                 {post.date && (
-                  <time className={styles.news_post_date}>
-                    <CiCalendarDate />
+                  <time dateTime={post.date}>
+                    <CiCalendarDate aria-hidden />
                     {formatDate(post.date)}
                   </time>
                 )}
-                <span className={styles.news_post_readingTime}>
-                  <IoReaderOutline />
+                <span>
+                  <IoReaderOutline aria-hidden />
                   {readingTime}
                 </span>
               </div>
-            </div>
-          </div>
+              {featuredImage && (
+                <div className={styles.news_post_image}>
+                  <Image
+                    src={featuredImage.sourceUrl}
+                    alt={featuredImage.altText || post.title}
+                    width={featuredImage.mediaDetails?.width || 1200}
+                    height={featuredImage.mediaDetails?.height || 800}
+                    style={{ width: "100%", height: "auto" }}
+                    priority
+                  />
+                </div>
+              )}
+            </header>
 
-          {fullExcerpt && (
-            <div
-              className={styles.news_post_excerpt}
-              dangerouslySetInnerHTML={{ __html: fullExcerpt }}
-            />
-          )}
+            {leadParagraph && (
+              <div
+                className={styles.news_post_lead}
+                dangerouslySetInnerHTML={{ __html: leadParagraph }}
+              />
+            )}
 
-          {post.content && (
-            <div
-              className={styles.news_post_content}
-              dangerouslySetInnerHTML={{ __html: post.content }}
-            />
-          )}
+            {post.content && (
+              <div
+                className={styles.news_post_content}
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
+            )}
+
+            <footer className={styles.news_post_footer}>
+              <Link href="/news" className={styles.news_post_footer_link}>
+                <MdOutlineArrowBack aria-hidden />
+                All news
+              </Link>
+            </footer>
+          </article>
         </Container>
-      </article>
+      </main>
       <Footer />
     </>
   );
