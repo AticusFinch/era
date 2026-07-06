@@ -163,54 +163,6 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     resourcesTypes: ALL_SLUG,
   });
   const [searchTerm, setSearchTerm] = useState("");
-<<<<<<< Updated upstream
-  const [pageSize, setPageSize] = useState(10);
-  const [currentPage, setCurrentPage] = useState(1);
-=======
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
-  const [isDesktopFilters, setIsDesktopFilters] = useState(false);
-  const [overlayMounted, setOverlayMounted] = useState(false);
-  const searchInputRef = useRef(null);
-
-  useEffect(() => {
-    setOverlayMounted(true);
-  }, []);
-
-  const closeMobileFilters = useCallback(() => {
-    setMobileFiltersOpen(false);
-  }, []);
-
-  const applyFiltersAndSearch = useCallback(() => {
-    setMobileFiltersOpen(false);
-    searchInputRef.current?.focus();
-  }, []);
->>>>>>> Stashed changes
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const updateDesktopFilters = () => {
-      const isDesktop = window.matchMedia("(min-width: 1024px)").matches;
-<<<<<<< Updated upstream
-      setPageSize(isDesktop ? 9 : 6);
-      setCurrentPage(1);
-=======
-      setIsDesktopFilters(isDesktop);
-      if (isDesktop) {
-        setMobileFiltersOpen(false);
-      }
->>>>>>> Stashed changes
-    };
-
-    updateDesktopFilters();
-
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-    mediaQuery.addEventListener("change", updateDesktopFilters);
-
-    return () => {
-      mediaQuery.removeEventListener("change", updateDesktopFilters);
-    };
-  }, []);
 
   const sortedFilterOptions = useMemo(() => {
     const sortByName = (items) =>
