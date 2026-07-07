@@ -106,8 +106,6 @@ export default async function ResourcesPage() {
 
         const textInputs = node.textInputs || {};
 
-        const type = textInputs.category || "Publication";
-
         let authors = "";
         if (textInputs.authors) {
           if (Array.isArray(textInputs.authors)) {
@@ -129,7 +127,6 @@ export default async function ResourcesPage() {
 
         return {
           id: node.id,
-          type,
           title: node.title || "",
           author: authors,
           authors,
