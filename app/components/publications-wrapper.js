@@ -77,7 +77,7 @@ export default async function PublicationsWrapper() {
     if (data && !data.publications) {
       console.warn(
         "⚠️ 'publications' field not found in GraphQL response. Available fields:",
-        Object.keys(data)
+        Object.keys(data),
       );
       debugInfo = {
         availableFields: Object.keys(data),
@@ -146,7 +146,7 @@ export default async function PublicationsWrapper() {
 
         // Get excerpt, strip HTML tags, and remove WordPress truncation markers
         const excerpt = removeExcerptTruncation(
-          stripHtmlTags(node.excerpt || "")
+          stripHtmlTags(node.excerpt || ""),
         );
 
         return {
