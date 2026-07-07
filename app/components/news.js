@@ -61,7 +61,9 @@ function CarouselCard({ item }) {
           />
         </div>
         <div className={styles.news_carousel_card_body}>
-          <span className={styles.news_card_category}>{item.category}</span>
+          {item.topicsLabel ? (
+            <span className={styles.news_card_topic}>{item.topicsLabel}</span>
+          ) : null}
           <h3 className={styles.news_carousel_card_title}>{item.title}</h3>
           <p className={styles.news_carousel_card_excerpt}>
             {item.excerpt || "\u00A0"}
@@ -101,7 +103,9 @@ function FeaturedCard({ item }) {
           />
         </div>
         <div className={styles.news_featured_body}>
-          <span className={styles.news_card_category}>{item.category}</span>
+          {item.topicsLabel ? (
+            <span className={styles.news_card_topic}>{item.topicsLabel}</span>
+          ) : null}
           <h3 className={styles.news_featured_title}>{item.title}</h3>
           {item.excerpt && (
             <p className={styles.news_featured_excerpt}>{item.excerpt}</p>
@@ -144,7 +148,9 @@ function GridCard({ item }) {
           />
         </div>
         <div className={styles.news_card_body}>
-          <span className={styles.news_card_category}>{item.category}</span>
+          {item.topicsLabel ? (
+            <span className={styles.news_card_topic}>{item.topicsLabel}</span>
+          ) : null}
           <h3 className={styles.news_card_title}>{item.title}</h3>
           {item.excerpt && (
             <p className={styles.news_card_excerpt}>{item.excerpt}</p>

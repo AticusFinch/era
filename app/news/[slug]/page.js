@@ -7,6 +7,10 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import { calculateReadingTime } from "@/lib/utils/reading-time";
+import {
+  mapTaxonomyNodes,
+  formatTaxonomyLabel,
+} from "@/lib/utils/resource-taxonomies";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 import { MdOutlineArrowBack } from "react-icons/md";
@@ -117,7 +121,9 @@ export default async function NewsPostPage({ params }) {
 
   const featuredImage = post.featuredImage?.node;
   const author = post.author?.node;
-  const category = post.categories?.nodes?.[0];
+  const topicsLabel = formatTaxonomyLabel(
+    mapTaxonomyNodes(post.topics?.nodes),
+  );
   const readingTime = calculateReadingTime(post.content);
   const leadParagraph = getLeadParagraph(post.excerpt, post.content);
 
@@ -128,11 +134,9 @@ export default async function NewsPostPage({ params }) {
         <Container>
           <article className={styles.news_post_article}>
             <header className={styles.news_post_header}>
-              {category && (
-                <span className={styles.news_post_category}>
-                  {category.name}
-                </span>
-              )}
+              {topicsLabel ? (
+                <span className={styles.news_post_topic}>{topicsLabel}</span>
+              ) : null}
               <h1 className={styles.news_post_title}>{post.title}</h1>
               <div className={styles.news_post_info}>
                 {post.date && (

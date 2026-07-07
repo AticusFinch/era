@@ -2,8 +2,9 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import { getClient } from "@/lib/apollo-client";
-import { GET_POSTS } from "@/lib/graphql/queries";
+import { GET_POSTS, GET_POST_FILTERS } from "@/lib/graphql/queries";
 import { calculateReadingTime } from "@/lib/utils/reading-time";
+import { mapTaxonomyNodes, formatTaxonomyLabel } from "@/lib/utils/resource-taxonomies";
 import NewsView from "./news-view";
 import styles from "./page.module.css";
 
@@ -55,22 +56,42 @@ function removeExcerptTruncation(text) {
 
 export default async function NewsPage() {
   let newsItems = [];
+  let filterOptions = {
+    topics: [],
+    postYears: [],
+    geographies: [],
+  };
 
   try {
     const client = getClient();
 
-    const { data } = await client.query({
-      query: GET_POSTS,
-      variables: {
-        first: 100,
-      },
-      fetchPolicy: "network-only",
-    });
+    const [{ data }, filtersResult] = await Promise.all([
+      client.query({
+        query: GET_POSTS,
+        variables: {
+          first: 100,
+        },
+        fetchPolicy: "network-only",
+      }),
+      client.query({
+        query: GET_POST_FILTERS,
+        fetchPolicy: "cache-first",
+      }),
+    ]);
+
+    const filtersData = filtersResult?.data;
+    if (filtersData) {
+      filterOptions = {
+        topics: filtersData.topics?.nodes ?? [],
+        postYears: filtersData.postYears?.nodes ?? [],
+        geographies: filtersData.geographies?.nodes ?? [],
+      };
+    }
 
     if (data?.posts?.edges) {
       newsItems = data.posts.edges.map((edge) => {
         const node = edge.node;
-        const category = node.categories?.nodes?.[0]?.name || "News";
+        const topics = mapTaxonomyNodes(node.topics?.nodes);
         const imageUrl =
           node.featuredImage?.node?.sourceUrl || "/img/hero/lgbt.jpg";
         const formattedDate = formatDate(node.date);
@@ -84,10 +105,15 @@ export default async function NewsPage() {
           title: node.title || "",
           slug: node.slug || "",
           image: imageUrl,
-          category,
+          topicsLabel: formatTaxonomyLabel(topics),
           date: formattedDate,
           readingTime,
           excerpt,
+          taxonomies: {
+            topics,
+            postYears: mapTaxonomyNodes(node.postYears?.nodes),
+            geographies: mapTaxonomyNodes(node.geographies?.nodes),
+          },
         };
       });
     }
@@ -99,7 +125,7 @@ export default async function NewsPage() {
     <div className={styles.news_page_background}>
       <Navbar />
       <Container>
-        <NewsView items={newsItems} />
+        <NewsView items={newsItems} filterOptions={filterOptions} />
       </Container>
       <Footer />
     </div>

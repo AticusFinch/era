@@ -115,7 +115,7 @@ export const teamMembers = [
   },
   {
     id: "sila",
-    name: "Bugu Sila",
+    name: "Buğu Sıla Evren",
     role: "Project and Research Coordinator",
     organization: "",
     image: "/img/our-team/team/Sila.png",

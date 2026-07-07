@@ -6,6 +6,7 @@
 import { getClient } from "@/lib/apollo-client";
 import { GET_POSTS } from "@/lib/graphql/queries";
 import { calculateReadingTime } from "@/lib/utils/reading-time";
+import { mapTaxonomyNodes, formatTaxonomyLabel } from "@/lib/utils/resource-taxonomies";
 import News from "./news";
 
 // Helper function to format date (YYYY-MM-DD format)
@@ -94,8 +95,7 @@ export default async function NewsWrapper() {
       newsItems = data.posts.edges.map((edge) => {
         const node = edge.node;
 
-        // Get category name (first category)
-        const category = node.categories?.nodes?.[0]?.name || "News";
+        const topics = mapTaxonomyNodes(node.topics?.nodes);
 
         // Get featured image or fallback
         const imageUrl =
@@ -117,7 +117,7 @@ export default async function NewsWrapper() {
           title: node.title || "",
           slug: node.slug || "",
           image: imageUrl,
-          category: category,
+          topicsLabel: formatTaxonomyLabel(topics),
           date: formattedDate,
           readingTime: readingTime,
           excerpt: excerpt,

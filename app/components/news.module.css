@@ -330,7 +330,7 @@
 }
 
 /* Shared card elements */
-.news_card_category {
+.news_card_topic {
   display: inline-flex;
   align-self: flex-start;
   padding: 0.2rem 0.55rem;

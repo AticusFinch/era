@@ -12,7 +12,7 @@ const fadeUp = {
   transition: { duration: 0.5, ease: "easeOut" },
 };
 
-export default function NewsView({ items = [] }) {
+export default function NewsView({ items = [], filterOptions = {} }) {
   return (
     <main className={styles.news_page}>
       <header className={styles.news_hero}>
@@ -33,7 +33,7 @@ export default function NewsView({ items = [] }) {
       </header>
 
       {items.length > 0 ? (
-        <NewsList items={items} />
+        <NewsList items={items} filterOptions={filterOptions} />
       ) : (
         <p className={styles.news_empty}>No news available at the moment.</p>
       )}

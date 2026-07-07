@@ -32,7 +32,7 @@ const countries = [
 ];
 
 const stats = [
-  { value: "7", label: "Countries connected" },
+  { value: "9", label: "Countries connected" },
   { value: "80+", label: "Member organisations" },
   { value: "Regional", label: "Coordinated action" },
   { value: "10+", label: "Years of impact" },

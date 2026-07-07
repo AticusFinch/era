@@ -85,9 +85,6 @@ export default async function ResourcesWrapper() {
         // Get ACF fields
         const textInputs = node.textInputs || {};
 
-        // Get publication type from ACF (category field)
-        const type = textInputs.category || "Book";
-
         // Get authors from ACF (authors field)
         // Handle both string and array formats
         let authors = "";
@@ -114,7 +111,6 @@ export default async function ResourcesWrapper() {
 
         return {
           id: node.id,
-          type: type,
           title: node.title || "",
           author: authors, // Keep for backward compatibility
           authors: authors, // Add plural version for component
