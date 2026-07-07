@@ -1,5 +1,5 @@
 import { getClient } from "@/lib/apollo-client";
-import { GET_POST_BY_SLUG } from "@/lib/graphql/queries";
+import { GET_POST_BY_SLUG, GET_POSTS } from "@/lib/graphql/queries";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,6 +11,11 @@ import {
   mapTaxonomyNodes,
   formatTaxonomyLabel,
 } from "@/lib/utils/resource-taxonomies";
+import { mapPostNewsAcf } from "@/lib/utils/news-acf";
+import { mapNewsListItem } from "@/lib/utils/news-map";
+import { pickRelatedPosts } from "@/lib/utils/news-related";
+import NewsGallery from "./news-gallery";
+import RelatedNews from "./related-news";
 import { IoReaderOutline } from "react-icons/io5";
 import { CiCalendarDate } from "react-icons/ci";
 import { MdOutlineArrowBack } from "react-icons/md";
@@ -86,6 +91,21 @@ async function getPost(slug) {
   return data?.post ?? null;
 }
 
+async function getAllNewsItems() {
+  const client = getClient();
+  const { data, error } = await client.query({
+    query: GET_POSTS,
+    variables: { first: 100 },
+    fetchPolicy: "cache-first",
+  });
+
+  if (error || !data?.posts?.edges) {
+    return [];
+  }
+
+  return data.posts.edges.map((edge) => mapNewsListItem(edge.node));
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getPost(slug);
@@ -119,13 +139,17 @@ export default async function NewsPostPage({ params }) {
     notFound();
   }
 
+  const allNewsItems = await getAllNewsItems();
+  const currentItem = mapNewsListItem(post);
+  const relatedItems = pickRelatedPosts(allNewsItems, currentItem, 5);
+
   const featuredImage = post.featuredImage?.node;
-  const author = post.author?.node;
   const topicsLabel = formatTaxonomyLabel(
     mapTaxonomyNodes(post.topics?.nodes),
   );
   const readingTime = calculateReadingTime(post.content);
   const leadParagraph = getLeadParagraph(post.excerpt, post.content);
+  const { gallery, image: acfImage } = mapPostNewsAcf(post.news);
 
   return (
     <>
@@ -178,6 +202,21 @@ export default async function NewsPostPage({ params }) {
               />
             )}
 
+            {acfImage && (
+              <figure className={styles.news_post_acf_image}>
+                <Image
+                  src={acfImage.src}
+                  alt={acfImage.alt || post.title}
+                  width={acfImage.width}
+                  height={acfImage.height}
+                  className={styles.news_post_acf_image_media}
+                  sizes="(min-width: 1024px) 52rem, 100vw"
+                />
+              </figure>
+            )}
+
+            <NewsGallery images={gallery} />
+
             <footer className={styles.news_post_footer}>
               <Link href="/news" className={styles.news_post_footer_link}>
                 <MdOutlineArrowBack aria-hidden />
@@ -185,6 +224,8 @@ export default async function NewsPostPage({ params }) {
               </Link>
             </footer>
           </article>
+
+          <RelatedNews items={relatedItems} />
         </Container>
       </main>
       <Footer />
