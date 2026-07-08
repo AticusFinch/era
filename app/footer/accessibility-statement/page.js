@@ -2,6 +2,7 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import LegalContactButton from "@/app/components/legal-contact-button";
+import LegalToc from "@/app/components/legal-toc";
 import styles from "../legal-page.module.css";
 import { MdAccessibility, MdGavel, MdVerified } from "react-icons/md";
 import { HiOutlineScale, HiOutlineDocumentText } from "react-icons/hi2";
@@ -110,18 +111,7 @@ export default function AccessibilityStatementPage() {
           </div>
 
           <div className={styles.legal_layout}>
-            <nav className={styles.legal_toc} aria-label="On this page">
-              <p className={styles.legal_toc_heading}>On this page</p>
-              <ol className={styles.legal_toc_list}>
-                {TOC.map(({ id, label }) => (
-                  <li key={id}>
-                    <a href={`#${id}`} className={styles.legal_toc_link}>
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <LegalToc items={TOC} />
 
             <div className={styles.legal_sections}>
               <LegalSection id="scope" number="01" title="Scope of Application">

@@ -2,6 +2,7 @@ import Navbar from "@/app/components/navbar";
 import Footer from "@/app/components/footer";
 import Container from "@/app/components/container";
 import LegalContactButton from "@/app/components/legal-contact-button";
+import LegalToc from "@/app/components/legal-toc";
 import styles from "../legal-page.module.css";
 import {
   MdGavel,
@@ -129,18 +130,7 @@ export default function TermsOfUsePage() {
           </div>
 
           <div className={styles.legal_layout}>
-            <nav className={styles.legal_toc} aria-label="On this page">
-              <p className={styles.legal_toc_heading}>On this page</p>
-              <ol className={styles.legal_toc_list}>
-                {TOC.map(({ id, label }) => (
-                  <li key={id}>
-                    <a href={`#${id}`} className={styles.legal_toc_link}>
-                      {label}
-                    </a>
-                  </li>
-                ))}
-              </ol>
-            </nav>
+            <LegalToc items={TOC} />
 
             <div className={styles.legal_sections}>
               <LegalSection id="purpose" number="01" title="Purpose of the Website">

@@ -103,17 +103,6 @@ export const teamMembers = [
     ],
   },
   {
-    id: "jelena",
-    name: "Jelena Jeremić",
-    role: "PR and Comms Officer",
-    organization: "",
-    image: "/img/our-team/team/Jelena.png",
-    bio: [
-      "My background is rooted in over a decade of creative work in design and communication, both across the Balkans and globally. ERA gave me the chance to bring that work home, to put my skills in service of something bigger than myself. Here, creativity becomes activism, and storytelling becomes a tool for justice. I see communication as both shield and bridge: a shield that protects us from invisibility, and a bridge that connects us with one another and with broader society. At ERA, I have the privilege of turning design and storytelling into tools of resistance, into signals of hope, and into records of change.",
-      "Being part of ERA means carrying responsibility, but also immense privilege. My daily work contributes to giving strength to people who may be seeing their own stories reflected for the first time. It also means being surrounded by colleagues whose courage, brilliance, and persistence remind me every day why this work matters. When I think about ERA, I don’t see only reports, strategies, or campaigns. I see moments of recognition, solidarity, and shared resistance. I see activists across borders coming together, communities reclaiming space, and the quiet but powerful shifts that happen when a message lands, when a visual resonates, when someone feels less invisible because of the story we told. That is what communication means to me, and that is what ERA has allowed me to build. What inspires me most is the knowledge that our work is never abstract, it is deeply human. Every campaign is a story of survival and courage. Every visual identity we create carries the memory of those who fought before us. Every press release, policy brief, or social media post is a step towards making equality not an idea, but a lived reality. This is what ERA means to me: a collective heartbeat that keeps us moving forward, even when the odds are against us. It is a place where professionalism and passion meet, where activism is sharpened by creativity, and where solidarity is written into every line and image we put into the world. To me, that is the soul of communication-and that is the ERA I am proud to be part of.",
-    ],
-  },
-  {
     id: "sila",
     name: "Buğu Sıla Evren",
     role: "Project and Research Coordinator",
@@ -122,6 +111,17 @@ export const teamMembers = [
     bio: [
       "ERA reminds me of what’s possible when people work together with care, trust, and determination. In a region where advocating for LGBTIQ+ rights is really challenging, being part of ERA means having a team that supports each other, shares knowledge, and strengthens one another. It also means being part of a much larger network of organizations and colleagues across the region, each bringing unique expertise, experience, and approaches—creating a rich web of collaboration and mutual support.",
       "I’m Buğu Sıla Evren, a feminist killjoy at heart and Project Coordinator at ERA. I bring my passion for justice, persistence in challenging inequality, and commitment to collective action to every step of our work. At ERA, I find a space where commitment to equality is not just talked about, it’s lived, shared, and celebrated every day.",
+    ],
+  },
+  {
+    id: "jelena",
+    name: "Jelena Jeremić",
+    role: "PR and Comms Officer",
+    organization: "",
+    image: "/img/our-team/team/Jelena.png",
+    bio: [
+      "My background is rooted in over a decade of creative work in design and communication, both across the Balkans and globally. ERA gave me the chance to bring that work home, to put my skills in service of something bigger than myself. Here, creativity becomes activism, and storytelling becomes a tool for justice. I see communication as both shield and bridge: a shield that protects us from invisibility, and a bridge that connects us with one another and with broader society. At ERA, I have the privilege of turning design and storytelling into tools of resistance, into signals of hope, and into records of change.",
+      "Being part of ERA means carrying responsibility, but also immense privilege. My daily work contributes to giving strength to people who may be seeing their own stories reflected for the first time. It also means being surrounded by colleagues whose courage, brilliance, and persistence remind me every day why this work matters. When I think about ERA, I don’t see only reports, strategies, or campaigns. I see moments of recognition, solidarity, and shared resistance. I see activists across borders coming together, communities reclaiming space, and the quiet but powerful shifts that happen when a message lands, when a visual resonates, when someone feels less invisible because of the story we told. That is what communication means to me, and that is what ERA has allowed me to build. What inspires me most is the knowledge that our work is never abstract, it is deeply human. Every campaign is a story of survival and courage. Every visual identity we create carries the memory of those who fought before us. Every press release, policy brief, or social media post is a step towards making equality not an idea, but a lived reality. This is what ERA means to me: a collective heartbeat that keeps us moving forward, even when the odds are against us. It is a place where professionalism and passion meet, where activism is sharpened by creativity, and where solidarity is written into every line and image we put into the world. To me, that is the soul of communication-and that is the ERA I am proud to be part of.",
     ],
   },
 ];

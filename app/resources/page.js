@@ -2,7 +2,7 @@ import Navbar from "../components/navbar";
 import Footer from "../components/footer";
 import Container from "../components/container";
 import styles from "./page.module.css";
-import ResourcesList from "./resources-list";
+import ResourcesView from "./resources-view";
 import { getClient } from "@/lib/apollo-client";
 import { GET_RESOURCES, GET_RESOURCE_FILTERS } from "@/lib/graphql/queries";
 import {
@@ -154,14 +154,7 @@ export default async function ResourcesPage() {
     <>
       <Navbar />
       <Container>
-        <div className={styles.resources_container}>
-          <div className={styles.resources_header}>
-            <h1 className={styles.resources_title}>
-              <span className="title-accent">Resources</span>
-            </h1>
-          </div>
-
-          <ResourcesList resources={resources} filterOptions={filterOptions} />
+        <ResourcesView resources={resources} filterOptions={filterOptions} />
 
           {debugInfo && resources.length === 0 && (
             <div className={styles.resources_debug}>
@@ -193,7 +186,6 @@ export default async function ResourcesPage() {
               )}
             </div>
           )}
-        </div>
       </Container>
       <Footer />
     </>

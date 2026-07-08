@@ -314,7 +314,7 @@
   }
 }
 
-@media (min-width: 1700px) {
+@media (min-width: 1400px) {
   .mop_grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

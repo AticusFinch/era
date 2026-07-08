@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import Container from "@/app/components/container";
 import { encodePublicImagePath, membersByCountry } from "@/lib/data/members";
 import styles from "./page.module.css";
@@ -22,6 +23,47 @@ import { IoMdArrowDropright } from "react-icons/io";
 import { FiSearch } from "react-icons/fi";
 
 const ALL_CODE = "ALL";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.5, ease: "easeOut" },
+};
+
+const gridStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.06 },
+  },
+};
+
+const gridItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
+};
+
+const filterStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.05, delayChildren: 0.04 },
+  },
+};
+
+const filterItem = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: "easeOut" },
+  },
+};
 
 const SOCIAL_LINKS = [
   { key: "website", Icon: FaGlobe, label: "Website" },
@@ -319,10 +361,12 @@ export default function MemberOrganizationsView() {
     ? "All organizations (A–Z)"
     : (activeCountry?.countryName ?? "");
 
+  const gridKey = `${activeCode}-${currentPage}-${searchTerm.trim()}`;
+
   return (
     <main className={styles.mop_page}>
       <Container>
-        <header className={styles.mop_header}>
+        <motion.header className={styles.mop_header} {...fadeUp}>
           <h1 className={styles.mop_title}>
             <span className={`title ${styles.mop_title_inner}`}>
               <span className="title-accent">
@@ -333,24 +377,40 @@ export default function MemberOrganizationsView() {
             </span>
           </h1>
           <p className={styles.mop_intro}>
-            ERA brings together LGBTI+ organizations across the region.{" "}
-            <strong>All organizations</strong> lists everyone in alphabetical
-            order; choose a country to see only that country&apos;s members.
+            At our core is a network of member organisations committed to
+            advancing LGBTIQ+ equality, human rights, and social inclusion
+            across the Western Balkans and Türkiye.
+            <br />
+            <br />
+            Through their work at local, national, and regional levels, ERA
+            members contribute to policy development, community support, and the
+            strengthening of democratic values. Explore our members to learn
+            more about the organizations driving change across the region.
           </p>
-        </header>
+        </motion.header>
 
-        <div className={styles.mop_country_filter}>
+        <motion.div
+          className={styles.mop_country_filter}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.06 }}
+        >
           <MobileCountryFilter
             activeCode={activeCode}
             setActiveCode={setActiveCode}
           />
 
-          <div
+          <motion.div
             className={styles.mop_country_buttons}
             role="tablist"
             aria-label="Filter by country"
+            variants={filterStagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
           >
-            <button
+            <motion.button
               type="button"
               role="tab"
               aria-selected={activeCode === ALL_CODE}
@@ -360,11 +420,12 @@ export default function MemberOrganizationsView() {
                   : styles.mop_country_btn
               }
               onClick={() => setActiveCode(ALL_CODE)}
+              variants={filterItem}
             >
               All organizations
-            </button>
+            </motion.button>
             {membersByCountry.map((country) => (
-              <button
+              <motion.button
                 key={country.countryCode}
                 type="button"
                 role="tab"
@@ -375,11 +436,12 @@ export default function MemberOrganizationsView() {
                     : styles.mop_country_btn
                 }
                 onClick={() => setActiveCode(country.countryCode)}
+                variants={filterItem}
               >
                 {country.countryName}
-              </button>
+              </motion.button>
             ))}
-          </div>
+          </motion.div>
 
           <div className={styles.mop_search}>
             <FiSearch className={styles.mop_search_icon} aria-hidden />
@@ -393,11 +455,13 @@ export default function MemberOrganizationsView() {
               autoComplete="off"
             />
           </div>
-        </div>
+        </motion.div>
 
-        <section
+        <motion.section
           className={styles.mop_section}
           aria-labelledby={sectionHeadingId}
+          {...fadeUp}
+          transition={{ ...fadeUp.transition, delay: 0.08 }}
         >
           <h2 id={sectionHeadingId} className={styles.mop_section_title}>
             {sectionTitle}
@@ -409,20 +473,33 @@ export default function MemberOrganizationsView() {
                 : "No organizations match your search. Try different words or clear the search."}
             </p>
           ) : (
-            <ul className={styles.mop_grid}>
+            <motion.ul
+              key={gridKey}
+              className={styles.mop_grid}
+              variants={gridStagger}
+              initial="hidden"
+              animate="visible"
+            >
               {paginatedMembers.map((member) => (
-                <li key={member.id} className={styles.mop_card}>
+                <motion.li
+                  key={member.id}
+                  className={styles.mop_card}
+                  variants={gridItem}
+                >
                   <MemberCard member={member} showCountry={isAll} />
-                </li>
+                </motion.li>
               ))}
-            </ul>
+            </motion.ul>
           )}
 
           {membersMatched.length > 0 && totalPages > 1 && (
-            <div
+            <motion.div
               className={styles.mop_pagination}
               role="navigation"
               aria-label="Member list pages"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
             >
               <button
                 type="button"
@@ -486,9 +563,9 @@ export default function MemberOrganizationsView() {
               >
                 Next
               </button>
-            </div>
+            </motion.div>
           )}
-        </section>
+        </motion.section>
       </Container>
     </main>
   );

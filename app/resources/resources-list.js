@@ -11,6 +11,7 @@ import {
 import { createPortal } from "react-dom";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { FiSearch, FiX } from "react-icons/fi";
 import { TbLayoutGrid } from "react-icons/tb";
 import { FaChevronDown } from "react-icons/fa6";
@@ -24,6 +25,47 @@ import {
 } from "@/lib/utils/resource-taxonomies";
 
 const ALL_SLUG = "ALL";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.5, ease: "easeOut" },
+};
+
+const gridStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.06 },
+  },
+};
+
+const gridItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: "easeOut" },
+  },
+};
+
+const filterStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.06, delayChildren: 0.04 },
+  },
+};
+
+const filterItem = {
+  hidden: { opacity: 0, y: 12 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.35, ease: "easeOut" },
+  },
+};
 
 const FILTER_CONFIG = [
   {
@@ -239,32 +281,41 @@ function FiltersContent({
 }) {
   return (
     <>
-      <div
+      <motion.div
         className={styles.resources_filters}
         role="group"
         aria-label="Filter resources"
+        variants={filterStagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
       >
         {visibleFilters.map(({ key, label, allLabel }) => (
-          <FilterDropdown
-            key={key}
-            filterKey={key}
-            label={label}
-            allLabel={allLabel}
-            options={sortedFilterOptions[key]}
-            value={activeFilters[key]}
-            onChange={(slug) => onFilterChange(key, slug)}
-          />
+          <motion.div key={key} variants={filterItem}>
+            <FilterDropdown
+              filterKey={key}
+              label={label}
+              allLabel={allLabel}
+              options={sortedFilterOptions[key]}
+              value={activeFilters[key]}
+              onChange={(slug) => onFilterChange(key, slug)}
+            />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
       {hasActiveFilters ? (
-        <button
+        <motion.button
           type="button"
           className={styles.resources_clear_filters}
           onClick={onClearFilters}
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.35, ease: "easeOut", delay: 0.15 }}
         >
           <FiX className={styles.resources_clear_filters_icon} aria-hidden />
           <span>Clear filters</span>
-        </button>
+        </motion.button>
       ) : null}
     </>
   );
@@ -430,6 +481,8 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
     onClearFilters: clearFilters,
   };
 
+  const gridKey = `${currentPage}-${searchTerm.trim()}-${JSON.stringify(activeFilters)}`;
+
   const mobileFiltersOverlay =
     overlayMounted && mobileFiltersOpen && !isDesktopFilters
       ? createPortal(
@@ -476,63 +529,69 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
 
   return (
     <>
-      <div className={styles.resources_toolbar}>
-        <div className={styles.resources_search}>
-          <FiSearch className={styles.resources_search_icon} aria-hidden />
-          <input
-            ref={searchInputRef}
-            type="search"
-            className={styles.resources_search_input}
-            placeholder="Search by title, author, or description…"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            aria-label="Search resources"
-            autoComplete="off"
-          />
+      <motion.div
+        className={styles.resources_toolbar}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.06 }}
+      >
+        <div className={styles.resources_search_row}>
+          <div className={styles.resources_search}>
+            <FiSearch className={styles.resources_search_icon} aria-hidden />
+            <input
+              ref={searchInputRef}
+              type="search"
+              className={styles.resources_search_input}
+              placeholder="Search by title, author, or description…"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              aria-label="Search resources"
+              autoComplete="off"
+            />
+          </div>
         </div>
 
-        {visibleFilters.length > 0 && (
+        {visibleFilters.length > 0 ? (
           <div className={styles.resources_filters_row}>
             {!isDesktopFilters ? (
-              <>
-                <button
-                  type="button"
-                  className={styles.resources_filters_toggle}
-                  onClick={() => setMobileFiltersOpen((open) => !open)}
-                  aria-expanded={mobileFiltersOpen}
-                  aria-controls="resources-filters-panel"
-                  aria-haspopup="dialog"
-                  aria-label={
-                    activeFilterCount > 0
-                      ? `Filters, ${activeFilterCount} active`
-                      : "Filters"
-                  }
-                >
-                  <TbLayoutGrid
-                    className={styles.resources_filters_toggle_icon}
-                    aria-hidden
-                  />
-                  <span className={styles.resources_filters_toggle_text}>
-                    Filters
-                    {activeFilterCount > 0 ? (
-                      <span
-                        className={styles.resources_filters_toggle_badge}
-                        aria-hidden
-                      >
-                        {activeFilterCount}
-                      </span>
-                    ) : null}
-                  </span>
-                  <FaChevronDown
-                    className={`${styles.resources_filters_toggle_chevron} ${
-                      mobileFiltersOpen
-                        ? styles.resources_filters_toggle_chevron_open
-                        : ""
-                    }`}
-                    aria-hidden
-                  />
-                </button>
-              </>
+              <button
+                type="button"
+                className={styles.resources_filters_toggle}
+                onClick={() => setMobileFiltersOpen((open) => !open)}
+                aria-expanded={mobileFiltersOpen}
+                aria-controls="resources-filters-panel"
+                aria-haspopup="dialog"
+                aria-label={
+                  activeFilterCount > 0
+                    ? `Filters, ${activeFilterCount} active`
+                    : "Filters"
+                }
+              >
+                <TbLayoutGrid
+                  className={styles.resources_filters_toggle_icon}
+                  aria-hidden
+                />
+                <span className={styles.resources_filters_toggle_text}>
+                  Filters
+                  {activeFilterCount > 0 ? (
+                    <span
+                      className={styles.resources_filters_toggle_badge}
+                      aria-hidden
+                    >
+                      {activeFilterCount}
+                    </span>
+                  ) : null}
+                </span>
+                <FaChevronDown
+                  className={`${styles.resources_filters_toggle_chevron} ${
+                    mobileFiltersOpen
+                      ? styles.resources_filters_toggle_chevron_open
+                      : ""
+                  }`}
+                  aria-hidden
+                />
+              </button>
             ) : (
               <div className={styles.resources_filters_desktop}>
                 <div className={styles.resources_filters_panel_inner}>
@@ -541,12 +600,23 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
               </div>
             )}
           </div>
-        )}
-      </div>
+        ) : null}
+      </motion.div>
 
-      <div ref={gridContainerRef} className={styles.resources_list}>
+      <motion.div
+        ref={gridContainerRef}
+        className={styles.resources_list}
+        {...fadeUp}
+        transition={{ ...fadeUp.transition, delay: 0.08 }}
+      >
         {paginatedResources.length > 0 ? (
-          <div className={styles.resources_grid}>
+          <motion.div
+            key={gridKey}
+            className={styles.resources_grid}
+            variants={gridStagger}
+            initial="hidden"
+            animate="visible"
+          >
             {paginatedResources.map((item) => {
               const resourceTypeLabel = formatResourceTypeLabel(
                 item.taxonomies?.resourcesTypes,
@@ -555,9 +625,10 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
                 resourceTypeLabel === RESOURCE_TYPE_PLACEHOLDER;
 
               return (
-                <div
+                <motion.div
                   key={item.id || item.slug}
                   className={styles.resources_grid_item}
+                  variants={gridItem}
                 >
                   <Link
                     href={`/resources/${item.slug}`}
@@ -587,10 +658,10 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
                       <p>{item.authors}</p>
                     </div>
                   </Link>
-                </div>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         ) : (
           <p className={styles.resources_empty} role="status">
             {resources.length === 0
@@ -600,14 +671,20 @@ const ResourcesList = ({ resources = [], filterOptions = {} }) => {
         )}
 
         {filteredResources.length > 0 && totalPages > 1 ? (
-          <ListPagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={handlePageChange}
-            ariaLabel="Resource list pages"
-          />
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, ease: "easeOut", delay: 0.2 }}
+          >
+            <ListPagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              ariaLabel="Resource list pages"
+            />
+          </motion.div>
         ) : null}
-      </div>
+      </motion.div>
       {mobileFiltersOverlay}
     </>
   );

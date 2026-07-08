@@ -19,6 +19,13 @@
   margin-top: clamp(2rem, 1.714rem + 1.43vw, 3rem);
 }
 
+.resources_search_row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+}
+
 .resources_search {
   position: relative;
   z-index: 1;
@@ -274,7 +281,7 @@
 }
 
 .resources_filters_desktop {
-  width: 100%;
+  display: none;
 }
 
 .resources_filters_panel_inner {
@@ -461,10 +468,22 @@
 
   .resources_filters_row {
     order: 1;
+    flex: 1 1 auto;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1rem 1.25rem;
+    min-width: 0;
   }
 
-  .resources_search {
+  .resources_search_row {
     order: 2;
+    flex: 0 1 auto;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    width: auto;
+    max-width: none;
+    gap: 0.75rem 1rem;
   }
 
   .resources_filters_toggle {
@@ -485,14 +504,6 @@
     overflow: visible;
   }
 
-  .resources_filters_row {
-    flex: 1 1 auto;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 1rem 1.25rem;
-    min-width: 0;
-  }
-
   .resources_filters {
     flex: 1 1 auto;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -505,10 +516,9 @@
   }
 
   .resources_search {
-    flex: 0 1 22rem;
-    width: auto;
+    flex: 1 1 14rem;
     max-width: 22rem;
-    min-width: min(100%, 14rem);
+    width: auto;
   }
 }
 
@@ -519,18 +529,19 @@
 .resources_grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 @media (min-width: 640px) {
   .resources_grid {
-    gap: 1rem;
+    gap: 1.25rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
 @media (min-width: 1024px) {
   .resources_grid {
+    gap: 1.5rem;
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -538,7 +549,7 @@
 @media (min-width: 1280px) {
   .resources_grid {
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 1.25rem;
+    gap: 1.75rem;
   }
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import styles from "./contact-form.module.css";
 
 const SUBJECT_OPTIONS = [
@@ -46,6 +47,23 @@ function validate(form) {
 
   return errors;
 }
+
+const formStagger = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.12 },
+  },
+};
+
+const formItem = {
+  hidden: { opacity: 0, y: 16 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.4, ease: "easeOut" },
+  },
+};
 
 export default function ContactForm() {
   const [form, setForm] = useState(INITIAL_FORM);
@@ -112,14 +130,27 @@ export default function ContactForm() {
   }
 
   return (
-    <div className={styles.form_card}>
-      <form
+    <motion.div
+      className={styles.form_card}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-40px" }}
+      transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
+    >
+      <motion.form
         className={styles.form_grid}
         onSubmit={handleSubmit}
         noValidate
         aria-busy={status === "submitting"}
+        variants={formStagger}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-40px" }}
       >
-        <div className={`${styles.form_field} ${styles.form_field_full}`}>
+        <motion.div
+          className={`${styles.form_field} ${styles.form_field_full}`}
+          variants={formItem}
+        >
           <label className={styles.form_honeypot} htmlFor="website">
             Website
           </label>
@@ -133,9 +164,9 @@ export default function ContactForm() {
             value={form.website}
             onChange={handleChange}
           />
-        </div>
+        </motion.div>
 
-        <div className={styles.form_field}>
+        <motion.div className={styles.form_field} variants={formItem}>
           <label className={styles.form_label} htmlFor="name">
             Name <span className={styles.form_required}>*</span>
           </label>
@@ -155,9 +186,9 @@ export default function ContactForm() {
               {errors.name}
             </p>
           ) : null}
-        </div>
+        </motion.div>
 
-        <div className={styles.form_field}>
+        <motion.div className={styles.form_field} variants={formItem}>
           <label className={styles.form_label} htmlFor="email">
             Email <span className={styles.form_required}>*</span>
           </label>
@@ -177,9 +208,12 @@ export default function ContactForm() {
               {errors.email}
             </p>
           ) : null}
-        </div>
+        </motion.div>
 
-        <div className={`${styles.form_field} ${styles.form_field_full}`}>
+        <motion.div
+          className={`${styles.form_field} ${styles.form_field_full}`}
+          variants={formItem}
+        >
           <label className={styles.form_label} htmlFor="organization">
             Organization
           </label>
@@ -192,9 +226,12 @@ export default function ContactForm() {
             onChange={handleChange}
             autoComplete="organization"
           />
-        </div>
+        </motion.div>
 
-        <div className={`${styles.form_field} ${styles.form_field_full}`}>
+        <motion.div
+          className={`${styles.form_field} ${styles.form_field_full}`}
+          variants={formItem}
+        >
           <label className={styles.form_label} htmlFor="subject">
             Topic <span className={styles.form_required}>*</span>
           </label>
@@ -218,9 +255,12 @@ export default function ContactForm() {
               {errors.subject}
             </p>
           ) : null}
-        </div>
+        </motion.div>
 
-        <div className={`${styles.form_field} ${styles.form_field_full}`}>
+        <motion.div
+          className={`${styles.form_field} ${styles.form_field_full}`}
+          variants={formItem}
+        >
           <label className={styles.form_label} htmlFor="message">
             Message <span className={styles.form_required}>*</span>
           </label>
@@ -239,9 +279,12 @@ export default function ContactForm() {
               {errors.message}
             </p>
           ) : null}
-        </div>
+        </motion.div>
 
-        <div className={`${styles.form_actions} ${styles.form_field_full}`}>
+        <motion.div
+          className={`${styles.form_actions} ${styles.form_field_full}`}
+          variants={formItem}
+        >
           <button
             type="submit"
             className={styles.form_submit}
@@ -262,8 +305,8 @@ export default function ContactForm() {
               {statusMessage}
             </p>
           ) : null}
-        </div>
-      </form>
-    </div>
+        </motion.div>
+      </motion.form>
+    </motion.div>
   );
 }
