@@ -176,9 +176,7 @@ export default function MemberDetailView({
             Member organization
           </p>
           <p className={styles.mop_detail_country}>{countryName}</p>
-          <h1 className={styles.mop_detail_title}>
-            <span className="title-accent">{member.name}</span>
-          </h1>
+          <h1 className={styles.mop_detail_title}>{member.name}</h1>
 
           {website ? (
             <p className={styles.mop_detail_web_hint}>

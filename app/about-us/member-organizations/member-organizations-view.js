@@ -395,70 +395,72 @@ export default function MemberOrganizationsView() {
         </motion.header>
 
         <motion.div
-          className={styles.mop_country_filter}
+          className={styles.mop_toolbar}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-40px" }}
           transition={{ duration: 0.5, ease: "easeOut", delay: 0.06 }}
         >
-          <MobileCountryFilter
-            activeCode={activeCode}
-            setActiveCode={setActiveCode}
-          />
-
-          <motion.div
-            className={styles.mop_country_buttons}
-            role="tablist"
-            aria-label="Filter by country"
-            variants={filterStagger}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-40px" }}
-          >
-            <motion.button
-              type="button"
-              role="tab"
-              aria-selected={activeCode === ALL_CODE}
-              className={
-                activeCode === ALL_CODE
-                  ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
-                  : styles.mop_country_btn
-              }
-              onClick={() => setActiveCode(ALL_CODE)}
-              variants={filterItem}
-            >
-              All organizations
-            </motion.button>
-            {membersByCountry.map((country) => (
-              <motion.button
-                key={country.countryCode}
-                type="button"
-                role="tab"
-                aria-selected={activeCode === country.countryCode}
-                className={
-                  activeCode === country.countryCode
-                    ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
-                    : styles.mop_country_btn
-                }
-                onClick={() => setActiveCode(country.countryCode)}
-                variants={filterItem}
-              >
-                {country.countryName}
-              </motion.button>
-            ))}
-          </motion.div>
-
           <div className={styles.mop_search}>
             <FiSearch className={styles.mop_search_icon} aria-hidden />
             <input
               type="search"
               className={styles.mop_search_input}
-              placeholder="Search by organization name, description, or country…"
+              placeholder="Search organizations…"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              aria-label="Search member organizations"
+              aria-label="Search member organizations by name, description, or country"
               autoComplete="off"
             />
+          </div>
+
+          <div className={styles.mop_country_filter}>
+            <MobileCountryFilter
+              activeCode={activeCode}
+              setActiveCode={setActiveCode}
+            />
+
+            <motion.div
+              className={styles.mop_country_buttons}
+              role="tablist"
+              aria-label="Filter by country"
+              variants={filterStagger}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-40px" }}
+            >
+              <motion.button
+                type="button"
+                role="tab"
+                aria-selected={activeCode === ALL_CODE}
+                className={
+                  activeCode === ALL_CODE
+                    ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
+                    : styles.mop_country_btn
+                }
+                onClick={() => setActiveCode(ALL_CODE)}
+                variants={filterItem}
+              >
+                All organizations
+              </motion.button>
+              {membersByCountry.map((country) => (
+                <motion.button
+                  key={country.countryCode}
+                  type="button"
+                  role="tab"
+                  aria-selected={activeCode === country.countryCode}
+                  className={
+                    activeCode === country.countryCode
+                      ? `${styles.mop_country_btn} ${styles.mop_country_btn_active}`
+                      : styles.mop_country_btn
+                  }
+                  onClick={() => setActiveCode(country.countryCode)}
+                  variants={filterItem}
+                >
+                  {country.countryName}
+                </motion.button>
+              ))}
+            </motion.div>
           </div>
         </motion.div>
 
