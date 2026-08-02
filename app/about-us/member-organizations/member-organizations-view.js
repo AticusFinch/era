@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Container from "@/app/components/container";
-import { encodePublicImagePath, membersByCountry } from "@/lib/data/members";
+import {
+  encodePublicImagePath,
+  getMemberDescriptionParagraphs,
+  memberDescriptionToPlainText,
+  membersByCountry,
+} from "@/lib/data/members";
 import styles from "./page.module.css";
 import {
   FaBluesky,
@@ -124,7 +129,7 @@ function MemberCard({ member, showCountry }) {
         <p
           className={`${styles.mop_card_desc} ${styles.mop_card_desc_clamped}`}
         >
-          {member.description}
+          {getMemberDescriptionParagraphs(member.description)[0] ?? ""}
         </p>
         <Link
           href={`/about-us/member-organizations/${member.id}`}
@@ -311,7 +316,7 @@ export default function MemberOrganizationsView() {
       activeCode !== ALL_CODE ? (activeCountry?.countryName ?? "") : "";
     return membersForGrid.filter((m) => {
       const name = (m.name ?? "").toLowerCase();
-      const desc = (m.description ?? "").toLowerCase();
+      const desc = memberDescriptionToPlainText(m.description).toLowerCase();
       const country = (m.countryName ?? fallbackCountry).toLowerCase();
       return name.includes(q) || desc.includes(q) || country.includes(q);
     });

@@ -218,6 +218,41 @@
   line-height: 1.8;
 }
 
+.resource_content ul,
+.resource_content ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+}
+
+.resource_content ul {
+  list-style-type: disc;
+}
+
+.resource_content ol {
+  list-style-type: decimal;
+}
+
+.resource_content ul ul {
+  list-style-type: circle;
+  margin-bottom: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.resource_content ol ol {
+  list-style-type: lower-alpha;
+  margin-bottom: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.resource_content li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+.resource_content li::marker {
+  color: var(--color-primary);
+}
+
 .resource_content h2,
 .resource_content h3,
 .resource_content h4 {
