@@ -103,14 +103,14 @@ export const teamMembers = [
     ],
   },
   {
-    id: "sila",
-    name: "Buğu Sıla Evren",
-    role: "Project and Research Coordinator",
+    id: "none",
+    name: "Project and Research Coordinator",
+    role: "Name and personal details withheld for safety and security reasons.",
     organization: "",
-    image: "/img/our-team/team/Sila.png",
+    image: "/img/our-team/team/avatar.jpg",
     bio: [
       "ERA reminds me of what’s possible when people work together with care, trust, and determination. In a region where advocating for LGBTIQ+ rights is really challenging, being part of ERA means having a team that supports each other, shares knowledge, and strengthens one another. It also means being part of a much larger network of organizations and colleagues across the region, each bringing unique expertise, experience, and approaches—creating a rich web of collaboration and mutual support.",
-      "I’m Buğu Sıla Evren, a feminist killjoy at heart and Project Coordinator at ERA. I bring my passion for justice, persistence in challenging inequality, and commitment to collective action to every step of our work. At ERA, I find a space where commitment to equality is not just talked about, it’s lived, shared, and celebrated every day.",
+      "I’m a feminist killjoy at heart and Project Coordinator at ERA. I bring my passion for justice, persistence in challenging inequality, and commitment to collective action to every step of our work. At ERA, I find a space where commitment to equality is not just talked about, it’s lived, shared, and celebrated every day.",
     ],
   },
   {
