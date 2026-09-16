@@ -256,7 +256,9 @@
 }
 
 .team_carousel_slide_inner {
+  display: flex;
   width: 100%;
+  height: 100%;
   min-width: 0;
 }
 
@@ -319,6 +321,7 @@
 
 .team_card_body {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: clamp(0.3rem, 0.2rem + 0.35vw, 0.45rem);
   padding: clamp(0.55rem, 0.45rem + 0.45vw, 0.85rem)
@@ -328,15 +331,18 @@
 
 .team_card_role {
   margin: 0;
+  min-height: calc(3 * 1.35em);
   font-size: clamp(0.58rem, 0.54rem + 0.15vw, 0.68rem);
   font-weight: 700;
   letter-spacing: 0.1em;
+  line-height: 1.35;
   text-transform: uppercase;
   color: var(--color-primary);
 }
 
 .team_card_name {
   margin: 0;
+  min-height: calc(2 * 1.2em);
   font-size: clamp(0.88rem, 0.8rem + 0.35vw, 1.15rem);
   font-weight: 700;
   line-height: 1.2;
@@ -345,7 +351,7 @@
 }
 
 .team_card_org {
-  margin: 0;
+  margin: auto 0 0;
   font-size: clamp(0.72rem, 0.68rem + 0.2vw, 0.88rem);
   color: var(--color-font-secondary);
   line-height: 1.35;
@@ -355,7 +361,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  margin: clamp(0.15rem, 0.1rem + 0.25vw, 0.25rem) 0 0;
+  margin: auto 0 0;
   padding: 0;
   border: none;
   background: none;
